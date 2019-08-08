@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - KillVolume
+  - Ground
+  - Obstacle
+  - Score
+  - GravityField
+  - DangerZone
+  - Shield
+  - ViewContent
+  - BonusGP
+  - ComposedObstacle
+  - WarpDrive
+  - SpeedBoost
+  - Margins
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - SkyBox
+  - Obstacles
+  - Gravity
+  - Collector
+  - Margins
+  - PostProcessing
+  - Extras
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
