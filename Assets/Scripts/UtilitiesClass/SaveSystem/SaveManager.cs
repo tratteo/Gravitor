@@ -1,0 +1,71 @@
+﻿using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+
+/// <summary>
+/// SaveManager
+/// </summary>
+public class SaveManager
+{
+    private static SaveManager instance = null;
+
+    /// <summary>
+    /// Get the singleton instance of the SaveManager
+    /// </summary>
+    public static SaveManager GetInstance()
+    {
+        if (instance == null)
+            instance = new SaveManager();
+        return instance;
+    }
+
+    //Can write here the statics file names to use in the game
+    //
+    public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
+    public static readonly string GRAVITYPOINTS_PATH = Application.persistentDataPath + "/gravity_points.data";
+    public static readonly string HIGHSCORE_PATH = Application.persistentDataPath + "/highscore.data";
+    public static readonly string SKILLSDATA_PATH = Application.persistentDataPath + "/skills.data";
+    public static readonly string SETTINGS_PATH = Application.persistentDataPath + "/settings.data";
+    public static readonly string ACHIEVMENTS_PATH = Application.persistentDataPath + "/achievments.data";
+    //
+    //I.E 
+    //public static readonly string PLAYER_DATA = "player_data";
+    //Calling the methods will look like:
+    //SaveManager.GetInstance().SavePersistentData<T>(data, SaveManager.PLAYER_DATA);
+
+    /// <summary>
+    /// Save a type of data in the persistent data path. Only the file name without extensions is needed
+    /// </summary>
+    public SaveObject SavePersistentData<T>(T data, string path)
+    {
+        SaveObject saveObject = new SaveObject(data);
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+        formatter.Serialize(stream, data);
+        stream.Close();
+        return saveObject;
+    }
+
+    /// <summary>
+    /// Load a SaveObject that contains the type of data in the selected path. Get the data with the generic method saveObject.GetData()
+    /// If the data is not present a null SaveObject will be returned
+    /// </summary>
+    public SaveObject LoadPersistentData(string path)
+    {
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+            if (stream.Length == 0)
+                return null;
+            object data = formatter.Deserialize(stream);
+            SaveObject saveObject = new SaveObject(data);
+            stream.Close();
+            return saveObject;
+        }
+        else
+        {
+            return null;
+        }
+    }
+}

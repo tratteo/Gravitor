@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3869474549198410696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3869474549198410698}
+  - component: {fileID: 3869474549198410699}
+  - component: {fileID: 3869474549198410693}
+  - component: {fileID: 3869474549198410692}
+  m_Layer: 0
+  m_Name: GameMode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &3869474549198410698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869474549198410696}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2000, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3869474549198410699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869474549198410696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b355652a1f5654e8b68f66ee9b13f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUps:
+  - {fileID: 1942656736390226775, guid: 34c9bfb76a74c464f841097594527e3d, type: 3}
+  - {fileID: 9145960066595700166, guid: 3fca9c451ed08e84a9a3b635d78e1ea5, type: 3}
+  - {fileID: 7568984893206684663, guid: df9714f4ec9b598429704ac952be7087, type: 3}
+  randXSpawn: {x: -200, y: 200}
+  randYSpawn: {x: -200, y: 200}
+  randZSpawn: {x: 1000, y: 1000}
+  pickUpSpawnRateRange: {x: 0.06, y: 0.5}
+  isPaused: 0
+  isGameOver: 0
+  playerManager: {fileID: 0}
+  hudManager: {fileID: 0}
+  sessionGravityPoints: 0
+  sessionScore: 0
+  timeDistortion: 1
+--- !u!114 &3869474549198410693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869474549198410696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf4b53ac32bca243a54f95870a1d0f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolsCategory:
+  - name: Obstacles
+    pools:
+    - tag: Planet
+      prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
+        type: 3}
+      poolSize: 150
+      spawnProbability: 0.85
+    - tag: Star
+      prefab: {fileID: 3010830646087042782, guid: 7e26b872983bbf644852b255444256ec,
+        type: 3}
+      poolSize: 100
+      spawnProbability: 0.3
+    - tag: WhiteDwarf
+      prefab: {fileID: 3010830646087042782, guid: f739e7623a479554cb9070449135aa53,
+        type: 3}
+      poolSize: 80
+      spawnProbability: 0.1
+    - tag: NeutronStar
+      prefab: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
+        type: 3}
+      poolSize: 50
+      spawnProbability: 0.04
+  - name: BackObstacles
+    pools:
+    - tag: Planet
+      prefab: {fileID: 3010830646087042782, guid: bb898cc4547993f4280a6e0801987de6,
+        type: 3}
+      poolSize: 50
+      spawnProbability: 0.8
+    - tag: Star
+      prefab: {fileID: 3010830646087042782, guid: 10e717715b932b048a34987f59cff779,
+        type: 3}
+      poolSize: 25
+      spawnProbability: 0.2
+--- !u!114 &3869474549198410692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869474549198410696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7ab08d85317f947b89093915506c2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randXSpawn: {x: -1000, y: 1000}
+  randYSpawn: {x: -600, y: 600}
+  randZSpawn: {x: 1500, y: 1500}
+  exceptionCentre: {x: 0, y: 0, z: 1500}
+  spawnException: {x: 400, y: 300, z: 0}
+  randomSpawnRateRange: {x: 1, y: 2}
