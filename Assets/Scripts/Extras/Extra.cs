@@ -14,7 +14,7 @@ public abstract class Extra : MonoBehaviour
         if (other.tag.Equals("Player"))
         {
             PlayerManager playerManager = other.gameObject.GetComponent<PlayerManager>();
-            playerManager.pickupManager.ApplyPickUp(this);
+            playerManager.extraManager.ApplyPickUp(this);
             if(effect)
                 effect.Stop();
             PoolManager.GetInstance().DeactivateObject(gameObject);

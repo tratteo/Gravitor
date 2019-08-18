@@ -60,7 +60,7 @@ Spawn exception methods
 	this means that geometrically speaking the rectangle edges length will be: width * 2, height * 2, depth * 2.
 	To create a cube exception, for example, at position (x, y, z) with edge of N units, pass the position as the centre, and then N / 2 for all the dimensions.
 	Note that if one bound of the exception exceeds the Spawner spawn area the bound of the exception will be set as the bound of the area.
-	If the exception is completely outside the area a System.Exception will be thrown.
+	If the exception is completely outside the area, a System.Exception will be thrown.
 
 
 - SpawnException(MonoBehaviour context, Spawner spawner, Vector3 centre, float width, float height, float depth)
@@ -83,4 +83,7 @@ Spawn exception methods
 	Calling this function will provide a Vector3 representing a valid random position inside the 3D area of the Spawner considering an eventual SpawnException,
 	this means that the function will not return a point inside the SpawnException if active.
 
+
+Note that the Spawner supports only 1 SpawnException, so creating another exception while there is already one active will cause the active exception to be stopped and 
+overridden with the new exception.
 	

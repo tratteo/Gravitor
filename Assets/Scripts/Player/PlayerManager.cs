@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
     //Player references
     [HideInInspector] public MovementManager movementManager;
     [HideInInspector] public SkillManager skillManager;
-    [HideInInspector] public ExtraManager pickupManager;
+    [HideInInspector] public ExtraManager extraManager;
     [HideInInspector] public AchievementsManager achievementsManager;
 
     //References
@@ -97,7 +97,7 @@ public class PlayerManager : MonoBehaviour
             movementManager.initialMovementSpeed /= 12.5f;
         }
         skillManager = GetComponent<SkillManager>();
-        pickupManager = GetComponent<ExtraManager>();
+        extraManager = GetComponent<ExtraManager>();
         achievementsManager = GetComponent<AchievementsManager>();
 
         playerData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
@@ -192,7 +192,7 @@ public class PlayerManager : MonoBehaviour
             Time.timeScale = 1 / collisionTimerMultiplier;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
-            if (!pickupManager.isShielded)
+            if (!extraManager.isShielded)
             {
                 Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
                 float damage = 0;
@@ -215,7 +215,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                pickupManager.DestroyShield();
+                extraManager.DestroyShield();
             }
         }
     }

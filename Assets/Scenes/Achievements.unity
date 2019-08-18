@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 359689408}
   - component: {fileID: 359689407}
   m_Layer: 5
-  m_Name: session_120Td
+  m_Name: session_60Td
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1199,7 +1199,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.5
-  m_Text: <b>Warp time for a total of 120 seconds in a game</b>
+  m_Text: <b>Warp time for a total of 1 hour in a game</b>
 --- !u!222 &858323901
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1619,7 +1619,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <b>Warp time for a total of 90 seconds in a game</b>
+  m_Text: <b>Warp time for a total of 45 minutes in a game</b>
 --- !u!222 &1123081294
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2293,8 +2293,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 325437213}
   m_HandleRect: {fileID: 325437212}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.47630727
+  m_Value: 1.0000002
+  m_Size: 0.49659812
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2409,7 +2409,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <b>Warp time for a total of 60 seconds in a game</b>
+  m_Text: <b>Warp time for a total of 30 minutes in a game</b>
 --- !u!222 &1547061812
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2635,7 +2635,7 @@ GameObject:
   - component: {fileID: 1812505251}
   - component: {fileID: 1812505250}
   m_Layer: 5
-  m_Name: session_90Td
+  m_Name: session_45Td
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2711,7 +2711,7 @@ GameObject:
   - component: {fileID: 1852615692}
   - component: {fileID: 1852615691}
   m_Layer: 5
-  m_Name: session_60Td
+  m_Name: session_30Td
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

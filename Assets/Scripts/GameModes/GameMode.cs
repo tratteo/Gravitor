@@ -90,15 +90,15 @@ public abstract class GameMode : MonoBehaviour
         playerManager.SubscribeToPlayerDeathEvent(EndSession);
         GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
 
-        playerManager.movementManager.SpeedEffect(1.5f, 8f);
-        CameraManager.GetInstance().SmoothInAndOutFOV(null, 175f, 10f, 0.15f, 1.5f);
+        playerManager.movementManager.SpeedEffect(1.25f, 8f);
+        CameraManager.GetInstance().SmoothInAndOutFOV(null, 175f, 10f, 0.15f, 1.15f);
     }
 
     private void FixedUpdate()
     {
         if (Time.timeSinceLevelLoad > 1f && !isGameOver)
         {
-            sessionScore += Time.fixedDeltaTime * 12f * playerManager.movementManager.currentSlingMultiplier * playerManager.timeDistortion;
+            sessionScore += Time.fixedDeltaTime * 20f * playerManager.movementManager.currentSlingMultiplier * playerManager.timeDistortion;
         }
         if (!highScoreReached && sessionScore > currentHighScore)
         {

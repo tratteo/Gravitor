@@ -27,14 +27,14 @@ public class SaveManager
     public static readonly string SKILLSDATA_PATH = Application.persistentDataPath + "/skills.data";
     public static readonly string SETTINGS_PATH = Application.persistentDataPath + "/settings.data";
     public static readonly string ACHIEVMENTS_PATH = Application.persistentDataPath + "/achievments.data";
-    //
     //I.E 
-    //public static readonly string PLAYER_DATA = "player_data";
+    //public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
     //Calling the methods will look like:
     //SaveManager.GetInstance().SavePersistentData<T>(data, SaveManager.PLAYER_DATA);
 
     /// <summary>
-    /// Save a type of data in the persistent data path. Only the file name without extensions is needed
+    /// Save a generic type of data in the application persisten data path.
+    /// <para>Returns a SaveObject that can be used to check if data has been saved correctly and to retrieve data</para>
     /// </summary>
     public SaveObject SavePersistentData<T>(T data, string path)
     {
@@ -47,8 +47,8 @@ public class SaveManager
     }
 
     /// <summary>
-    /// Load a SaveObject that contains the type of data in the selected path. Get the data with the generic method saveObject.GetData()
-    /// If the data is not present a null SaveObject will be returned
+    /// Load a SaveObject that contains the type of data in the selected path.
+    /// <para>Return a SaveObject. Use saveObject.GetData() to retrieve data. If the data is not present a null SaveObject will be returned</para>
     /// </summary>
     public SaveObject LoadPersistentData(string path)
     {

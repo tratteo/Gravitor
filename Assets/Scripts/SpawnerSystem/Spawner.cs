@@ -73,11 +73,21 @@ public class Spawner
     
     public SpawnException CreateSpawnException(Vector3 centre, float width, float height, float depth)
     {
+        if(spawnException != null)
+        {
+            spawnException.StopException();
+        }
+
         spawnException = new SpawnException(context, this, centre, width, height, depth);
         return spawnException;
     }
     public SpawnException CreateSpawnException(Vector3 centre, float width, float height, float depth, float duration, bool startNow)
     {
+        if (spawnException != null)
+        {
+            spawnException.StopException();
+        }
+
         spawnException = new SpawnException(context, this, centre, width, height, depth, duration, startNow);
         return spawnException;
     }

@@ -115,16 +115,16 @@ public class MenuManager : MonoBehaviour
         switch(objectData.GetData<PlayerData>().playerState)
         {
             case PlayerManager.PlayerState.ASTEROID:
-                adBonusGP = 3500;
+                adBonusGP = 4000;
                 break;
             case PlayerManager.PlayerState.COMET:
-                adBonusGP = 5000;
+                adBonusGP = 6000;
                 break;
             case PlayerManager.PlayerState.DENSE_PLANET:
-                adBonusGP = 7500;
+                adBonusGP = 10000;
                 break;
             case PlayerManager.PlayerState.STAR:
-                adBonusGP = 12000;
+                adBonusGP = 20000;
                 break;
         }
 

@@ -3,9 +3,9 @@
 [System.Serializable]
 public class PlayerAchievementsData
 {
+    public const string SESSION_30TD = "session_30Td";
+    public const string SESSION_45TD = "session_45Td";
     public const string SESSION_60TD = "session_60Td";
-    public const string SESSION_90TD = "session_90Td";
-    public const string SESSION_120TD = "session_120Td";
     public const string SESSION_M_TD = "session_M_td";
     public const string SESSION_H_300K = "session_H_300K";
     public const string SESSION_H_500K = "session_H_500K";

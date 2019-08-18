@@ -229,7 +229,7 @@ public class SkillManager : MonoBehaviour
         }
 
         InstantiateEffect(gammaRayEffect);
-        HUDManager.GetInstance().CoolDownSkill(Skill.GAMMARAY_BURST, 65f);
+        HUDManager.GetInstance().CoolDownSkill(Skill.GAMMARAY_BURST, 50f);
 
         RaycastHit[] hitColliders = Physics.SphereCastAll(transform.position, scaledGammaRayRadius, new Vector3(0f, 0f, 1f), gammaRayLength, mask);
 

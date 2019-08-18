@@ -13,7 +13,7 @@ public class GameplayMath
     private GameplayMath() { }
 
     private const float c = 299.792458f;
-    private const double G = 2.5E-10f;
+    private const double G = 2E-10f;
     private const float RadToDegree = 57.3f;
     private const double TD_CONST = 2f * G/(c*c);
 
@@ -47,7 +47,7 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return (0.0025f * mass) / 20000;
+        return (0.0035f * mass) / 20000;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)

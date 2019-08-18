@@ -18,6 +18,7 @@ public class ExtraManager : MonoBehaviour
 
     private int shieldCount = 0;
     private WarpDrive warpDrive;
+    public int enqueuedShields = 0;
 
     private void Start()
     {
@@ -50,7 +51,7 @@ public class ExtraManager : MonoBehaviour
     public int Shield()
     {
         if (shieldCount <= 0) return -1;
-
+        enqueuedShields++;
         shieldCount--;
         Shield shield = shields.Dequeue();
         currentShield = shield;
@@ -86,10 +87,13 @@ public class ExtraManager : MonoBehaviour
             shieldSys.Stop();
         }
         yield return new WaitForSeconds(0.75f);
+        enqueuedShields--;
         isShielded = false;
     }
+
     public void DestroyShield()
     {
+        enqueuedShields--;
         StopCoroutine(shield_c);
         HUDManager.GetInstance().ShieldDestroyed();
         isShielded = false;
@@ -102,6 +106,7 @@ public class ExtraManager : MonoBehaviour
 
     private IEnumerator WarpDrive(WarpDrive speedBoost)
     {
+        playerManager.skillManager.isGravitable = false;
         CameraManager cameraManager = CameraManager.GetInstance();
         Collider playerCollider = GetComponent<Collider>();
 
@@ -111,7 +116,7 @@ public class ExtraManager : MonoBehaviour
         playerManager.movementManager.DisableMovement();
 
         cameraManager.SmoothInAndOutFOV(null, speedBoost.viewDistortion, 15f, 0.2f, speedBoost.duration);
-        playerManager.movementManager.SpeedEffect(speedBoost.duration - 0.2f, 5f);
+        playerManager.movementManager.SpeedEffect(speedBoost.duration, 5f);
         playerManager.timeDistortion = speedBoost.scoreMultiplier;
 
         yield return new WaitForSeconds(speedBoost.duration);
@@ -119,5 +124,6 @@ public class ExtraManager : MonoBehaviour
         playerManager.timeDistortion = 1f;
         playerCollider.enabled = true;
         playerManager.movementManager.EnableMovement();
+        playerManager.skillManager.isGravitable = true;
     }
 }

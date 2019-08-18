@@ -58,9 +58,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f5368d717a964346a93d56263c6eeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2
-  viewDistortion: 170
-  scoreMultiplier: 150
+  duration: 2.5
+  viewDistortion: 175
+  scoreMultiplier: 225
 --- !u!1001 &7515728236452483134
 PrefabInstance:
   m_ObjectHideFlags: 0

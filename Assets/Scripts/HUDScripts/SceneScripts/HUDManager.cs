@@ -80,6 +80,7 @@ public class HUDManager : MonoBehaviour
     private int resumeTimer;
     private Sound levelSound;
     private IEnumerator checkAdC = null;
+    private Text enqueuedShieldsText = null;
 
     //Events
 
@@ -151,6 +152,8 @@ public class HUDManager : MonoBehaviour
         StartCoroutine(UpdateStats_C(delay));
 
         levelSound = AudioManager.GetInstance().PlaySound(AudioManager.LEVEL_SONG);
+
+        enqueuedShieldsText = shieldChargeIcon.GetComponentInChildren<Text>();
     }
 
     private void Update()
@@ -158,6 +161,16 @@ public class HUDManager : MonoBehaviour
         if (gameMode.playerManager.resilience > 0)
         {
             scoreText.text = gameMode.sessionScore.ToString("0");
+        }
+        int enqShields = playerManager.extraManager.enqueuedShields;
+        
+        if(enqShields > 0)
+        {
+            enqueuedShieldsText.text = enqShields.ToString();
+        }
+        else
+        {
+            enqueuedShieldsText.text = "";
         }
     }
 
@@ -420,7 +433,7 @@ public class HUDManager : MonoBehaviour
     }
     public void UseShield()
     {
-        int res = playerManager.pickupManager.Shield();
+        int res = playerManager.extraManager.Shield();
         if (res != -1)
         {
             shieldsText.text = res.ToString();
@@ -439,7 +452,8 @@ public class HUDManager : MonoBehaviour
             StopCoroutine(shieldHUDAnim_C);
         }
 
-        shieldHUDAnim_C = SharedUtilities.GetInstance().UnfillImage(this, shieldChargeIcon, playerManager.pickupManager.GetCurrentShield().duration - 0.25f, 0.03f, null);
+        shieldHUDAnim_C = SharedUtilities.GetInstance().UnfillImage(this, shieldChargeIcon, playerManager.extraManager.GetCurrentShield().duration - 0.25f, 0.03f, null);
+
     }
     public void ShieldDestroyed()
     {

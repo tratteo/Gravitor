@@ -563,27 +563,27 @@ MonoBehaviour:
       prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
         type: 3}
       poolSize: 150
-      spawnProbability: 0.8
+      spawnProbability: 0.85
     - tag: Star
       prefab: {fileID: 3010830646087042782, guid: 7e26b872983bbf644852b255444256ec,
         type: 3}
       poolSize: 100
-      spawnProbability: 0.4
+      spawnProbability: 0.25
     - tag: WhiteDwarf
       prefab: {fileID: 3010830646087042782, guid: f739e7623a479554cb9070449135aa53,
         type: 3}
       poolSize: 80
-      spawnProbability: 0.2
+      spawnProbability: 0.1
     - tag: NeutronStar
       prefab: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
         type: 3}
       poolSize: 40
-      spawnProbability: 0.1
+      spawnProbability: 0.05
     - tag: OrbNeutronStars
       prefab: {fileID: 8324389532378526095, guid: 3327f8b37123819438a376f9ed82a3ea,
         type: 3}
       poolSize: 20
-      spawnProbability: 0.05
+      spawnProbability: 0.01
   - name: BackObstacles
     pools:
     - tag: Planet
@@ -2006,6 +2006,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &1571233072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1571233073}
+  - component: {fileID: 1571233075}
+  - component: {fileID: 1571233074}
+  m_Layer: 5
+  m_Name: EnqueuedShieldsText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1571233073
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571233072}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2005051908435407839}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 20, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1571233074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571233072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9411765}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 94fe6f37e73598549ba58911e3145272, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &1571233075
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571233072}
+  m_CullTransparentMesh: 0
 --- !u!1 &1795125642
 GameObject:
   m_ObjectHideFlags: 0
@@ -3070,7 +3149,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 94fe6f37e73598549ba58911e3145272, type: 3}
-    m_FontSize: 30
+    m_FontSize: 34
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -3264,7 +3343,7 @@ MonoBehaviour:
     rgba: 0
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
-  playSound: 1
+  playSound: 0
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -3622,14 +3701,15 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1571233073}
   m_Father: {fileID: 4746752885275069680}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30, y: -2.5}
-  m_SizeDelta: {x: -40, y: -15}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: -30, y: 0}
+  m_SizeDelta: {x: 15, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2102032711375725803
 CanvasRenderer:
@@ -6469,7 +6549,7 @@ MonoBehaviour:
   starMaterial: {fileID: 2100000, guid: 2b5009ea23f91464e84f560b76b25bdd, type: 2}
   movementManager: {fileID: 1446062192}
   skillManager: {fileID: 1446062193}
-  pickupManager: {fileID: 0}
+  extraManager: {fileID: 0}
   achievementsManager: {fileID: 0}
   gameMode: {fileID: 393936534}
   resilience: 0
@@ -6611,7 +6691,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 150, y: -410}
-  m_SizeDelta: {x: 125, y: 125}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4908708543117338158
 RectTransform:
@@ -6627,9 +6707,9 @@ RectTransform:
   m_Father: {fileID: 4746752885275069680}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -14.200001, y: 18.3}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4952283273536108124
@@ -6881,6 +6961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxCollectableShields: 3
   isShielded: 0
+  enqueuedShields: 0
 --- !u!114 &5493033752557026285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6894,11 +6975,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   achievementsInfo:
-  - id: session_60Td
+  - id: session_30Td
     sprite: {fileID: 21300000, guid: 38c0b05f534f76e4784363b69b8f4428, type: 3}
-  - id: session_90Td
+  - id: session_45Td
     sprite: {fileID: 21300000, guid: 24c9eceb68c6b5b44aed3662a388601e, type: 3}
-  - id: session_120Td
+  - id: session_60Td
     sprite: {fileID: 21300000, guid: 029c0f32f190d194cb98a50f67e10dee, type: 3}
   - id: session_M_td
     sprite: {fileID: 21300000, guid: 43547dfe329226f468d8f6eb78354c10, type: 3}

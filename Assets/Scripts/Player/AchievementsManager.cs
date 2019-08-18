@@ -32,19 +32,19 @@ public class AchievementsManager : MonoBehaviour
     private void CheckAchievements(PlayerManager.SessionStats stats)
     {
         //TODO change Td achievements
-        if (stats.distortedTime > 60)
+        if (stats.distortedTime > 1800)
+        {
+            NotifyAchievement(PlayerAchievementsData.SESSION_30TD);
+        }
+        if (stats.distortedTime > 2700)
+        {
+            NotifyAchievement(PlayerAchievementsData.SESSION_45TD);
+        }
+        if (stats.distortedTime > 3600)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_60TD);
         }
-        if (stats.distortedTime > 90)
-        {
-            NotifyAchievement(PlayerAchievementsData.SESSION_90TD);
-        }
-        if (stats.distortedTime > 120)
-        {
-            NotifyAchievement(PlayerAchievementsData.SESSION_120TD);
-        }
-        if(stats.distortedTime > 180f)
+        if(stats.distortedTime > 5400)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_M_TD);
         }
