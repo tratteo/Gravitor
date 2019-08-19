@@ -19,7 +19,7 @@ public class UpgradeManager : MonoBehaviour
     public const short QUANTUMTUNNEL_MAX_POINTS = 20;
     public const short SOLARFLARE_MAX_POINTS = 20;
 
-    public const short HEALTH_MAX_POINTS = 15;
+    public const short RESILIENCE_MAX_POINTS = 15;
     public const short THRUSTFORCE_MAX_POINTS = 30;
 
     #region Variables
@@ -221,7 +221,7 @@ public class UpgradeManager : MonoBehaviour
             thrustCostText.text = thrustForceUpgradeCost.ToString();
         }
 
-        if (playerData.GetHealthPoints() < HEALTH_MAX_POINTS)
+        if (playerData.GetHealthPoints() < RESILIENCE_MAX_POINTS)
         {
             healthCostText.text = healthUpgradeCost.ToString();
         }
@@ -419,7 +419,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeResilience()
     {
-        if (playerData.GetHealthPoints() >= HEALTH_MAX_POINTS)
+        if (playerData.GetHealthPoints() >= RESILIENCE_MAX_POINTS)
         {
             toast.ShowToast("Already at max level", null, 1.5f);
             return;

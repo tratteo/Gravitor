@@ -98,7 +98,7 @@ public abstract class GameMode : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad > 1f && !isGameOver)
         {
-            sessionScore += Time.fixedDeltaTime * 20f * playerManager.movementManager.currentSlingMultiplier * playerManager.timeDistortion;
+            sessionScore += Time.fixedDeltaTime * 5f * (4f * playerManager.movementManager.currentSlingMultiplier + 12f * playerManager.timeDistortion);
         }
         if (!highScoreReached && sessionScore > currentHighScore)
         {

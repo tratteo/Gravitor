@@ -12,8 +12,14 @@ public class InfoManager : MonoBehaviour
     [SerializeField] private InputField feedbackField;
     [SerializeField] private InputField mailField;
     [SerializeField] private ToastScript toast;
+    [SerializeField] private Text versionText;
 
     private ushort feedbackCount = 0;
+
+    void Start()
+    {
+        versionText.text = "Version: " + Application.version;
+    }
 
     public void SendFeedback()
     {

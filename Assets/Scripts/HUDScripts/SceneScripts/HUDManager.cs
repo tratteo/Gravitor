@@ -389,7 +389,7 @@ public class HUDManager : MonoBehaviour
 
     public void QuantumTunnel()
     {
-        if (!skillManager.isQuantumTunnelSelectionActive)
+        if (skillManager.canCastSkill && !skillManager.isQuantumTunnelSelectionActive)
         {
             QuantumTunnelSelectionActive(true);
             quantumTunnelBtn.GetComponentsInChildren<Image>()[1].fillAmount = 1f;

@@ -107,6 +107,7 @@ public class ExtraManager : MonoBehaviour
     private IEnumerator WarpDrive(WarpDrive speedBoost)
     {
         playerManager.skillManager.isGravitable = false;
+        playerManager.skillManager.canCastSkill = false;
         CameraManager cameraManager = CameraManager.GetInstance();
         Collider playerCollider = GetComponent<Collider>();
 
@@ -124,6 +125,7 @@ public class ExtraManager : MonoBehaviour
         playerManager.timeDistortion = 1f;
         playerCollider.enabled = true;
         playerManager.movementManager.EnableMovement();
+        playerManager.skillManager.canCastSkill = true;
         playerManager.skillManager.isGravitable = true;
     }
 }

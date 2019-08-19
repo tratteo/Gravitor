@@ -320,7 +320,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -30, y: -30}
+  m_SizeDelta: {x: -50, y: -50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &20671709
 MonoBehaviour:
@@ -795,8 +795,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -40}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchoredPosition: {x: 150, y: -50}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &195183082
 MonoBehaviour:
@@ -1365,8 +1365,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -40}
-  m_SizeDelta: {x: 500, y: 80}
+  m_AnchoredPosition: {x: 250, y: -50}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &415942278
 MonoBehaviour:
@@ -1497,7 +1497,7 @@ GameObject:
   - component: {fileID: 445759081}
   - component: {fileID: 445759080}
   m_Layer: 5
-  m_Name: MagneticField
+  m_Name: MagneticShield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1680,8 +1680,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -40}
-  m_SizeDelta: {x: 300, y: 80}
+  m_AnchoredPosition: {x: 150, y: -50.00003}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &597981366
 MonoBehaviour:
@@ -2196,8 +2196,8 @@ MonoBehaviour:
   m_Text: "During a game it is possible to stack up maximum <b>three</b> shields
     and use them when needed. When a shield is used a <color=cyan>duration is shown</color>
     near the shield icon. \nKeep in mind that it is possible to activate more than
-    one shield in order to form a queue: hen there are more shield enqueued, as soon
-    as the current shield expires or gets destroyed, another shield is automatically
+    one shield in order to form a queue: when there are more shield enqueued, as
+    soon as the current shield expires or gets destroyed, another shield is automatically
     activated. The number of the shield enqueued is shown under the duration animation."
 --- !u!222 &830061713
 CanvasRenderer:
@@ -2356,7 +2356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 115, y: -67.5}
+  m_AnchoredPosition: {x: 115, y: -67.50003}
   m_SizeDelta: {x: -230, y: -135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &862438818
@@ -2540,8 +2540,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 595.5, y: -275.54993}
-  m_SizeDelta: {x: 1191, y: 551.1}
+  m_AnchoredPosition: {x: 595.5, y: -300.54993}
+  m_SizeDelta: {x: 1191, y: 601.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &913036935
 GameObject:
@@ -2577,8 +2577,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -40}
-  m_SizeDelta: {x: 500, y: 80}
+  m_AnchoredPosition: {x: 250, y: -50}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &913036937
 MonoBehaviour:
@@ -2657,8 +2657,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 595.5, y: -943.35}
-  m_SizeDelta: {x: 1191, y: 684.5}
+  m_AnchoredPosition: {x: 595.5, y: -1047.7007}
+  m_SizeDelta: {x: 1191, y: 793.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1061335493
 GameObject:
@@ -2869,7 +2869,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -617.94, y: 15}
-  m_SizeDelta: {x: 1235.9, y: 2924.7}
+  m_SizeDelta: {x: 1235.9, y: 3283}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1123133192
 GameObject:
@@ -3518,8 +3518,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 595.5, y: -2462.95}
-  m_SizeDelta: {x: 1191, y: 863.5}
+  m_AnchoredPosition: {x: 595.5, y: -2752.35}
+  m_SizeDelta: {x: 1191, y: 1001.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1456167129
 GameObject:
@@ -4464,7 +4464,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Magnetic Field
+  m_Text: Magnetic Shield
 --- !u!222 &1882135134
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4623,8 +4623,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 595.5, y: -1658.3999}
-  m_SizeDelta: {x: 1191, y: 645.6}
+  m_AnchoredPosition: {x: 595.5, y: -1848}
+  m_SizeDelta: {x: 1191, y: 707.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1924765950
 GameObject:

@@ -40,6 +40,7 @@ public class SkillManager : MonoBehaviour
     private PlayerSkillsData skillsData = null;
     private float antigravityCooldown, quantumtunnelCooldown, solarflareCooldown;
     private float solarflareRadius;
+    [HideInInspector] public bool canCastSkill = true;
 
     #endregion
 
@@ -57,12 +58,12 @@ public class SkillManager : MonoBehaviour
 
     private void Update()
     {
-        if (isQuantumTunnelSelectionActive)
+        if (canCastSkill && isQuantumTunnelSelectionActive)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartCoroutine(QuantumTunnel_C(Input.mousePosition));
-            }
+            //if (Input.GetMouseButtonDown(0))
+            //{
+            //    StartCoroutine(QuantumTunnel_C(Input.mousePosition));
+            //}
 
             if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
@@ -79,7 +80,10 @@ public class SkillManager : MonoBehaviour
     //AntiGravity
     public void AntiGravity()
     {
-        StartCoroutine(AntiGravity_C());
+        if (canCastSkill)
+        {
+            StartCoroutine(AntiGravity_C());
+        }
     }
     private IEnumerator AntiGravity_C()
     {
@@ -110,15 +114,11 @@ public class SkillManager : MonoBehaviour
         int layerMask = LayerMask.GetMask("UI");
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
-            //Debug.DrawLine(transform.position, hit.point, Color.cyan, 10f);
             playerManager.timeDistortion = 1f;
             Vector3 pos = transform.position;
             pos.x = hit.point.x;
             pos.y = hit.point.y;
-            //if (IsValidQuantumTunnelLocation(hit))
-            //{
-                
-            //}
+
             HUDManager.GetInstance().QuantumTunnelSelectionActive(false);
             InstantiateEffect(quantumDisappearEff);
             yield return new WaitForSeconds(0.2f);
@@ -157,7 +157,10 @@ public class SkillManager : MonoBehaviour
     //SolarFlare
     public void SolarFlare()
     {
-        StartCoroutine(SolarFlare_C());
+        if (canCastSkill)
+        {
+            StartCoroutine(SolarFlare_C());
+        }
     }
     private IEnumerator SolarFlare_C()
     {
@@ -195,7 +198,10 @@ public class SkillManager : MonoBehaviour
     //GammaRayBurst
     public void GammaRayBurst()
     {
-        StartCoroutine(GammaRayBurst_C());
+        if (canCastSkill)
+        {
+            StartCoroutine(GammaRayBurst_C());
+        }
     }
 
     private IEnumerator GammaRayAsyncLoad_C()
@@ -229,7 +235,7 @@ public class SkillManager : MonoBehaviour
         }
 
         InstantiateEffect(gammaRayEffect);
-        HUDManager.GetInstance().CoolDownSkill(Skill.GAMMARAY_BURST, 50f);
+        HUDManager.GetInstance().CoolDownSkill(Skill.GAMMARAY_BURST, 45f);
 
         RaycastHit[] hitColliders = Physics.SphereCastAll(transform.position, scaledGammaRayRadius, new Vector3(0f, 0f, 1f), gammaRayLength, mask);
 
