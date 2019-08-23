@@ -12,10 +12,13 @@ public class MenuManager : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private Text highScoreText = null;
     [SerializeField] private Text gravityPointsText = null;
-    [Header("Buttons")]
+    [Header("Ads")]
     [SerializeField] private GameObject showAdButton = null;
+    [SerializeField] private GameObject loadingAdObj = null;
     [Header("Toast")]
     [SerializeField] private ToastScript toast = null;
+
+
 
 
     private SceneLoader loader;
@@ -47,18 +50,23 @@ public class MenuManager : MonoBehaviour
 
     private IEnumerator CheckAd_C()
     {
+        yield return new WaitForSeconds(8f);
+
         while(true)
         {
             if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.BONUS_GP))
             {
+                loadingAdObj.SetActive(false);
                 showAdButton.SetActive(true);
                 showAdButton.GetComponentInChildren<Text>().text = adBonusGP.ToString();
             }
             else
             {
                 showAdButton.SetActive(false);
+                loadingAdObj.SetActive(true);
+                GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.BONUS_GP);
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(8f);
         }
     }
 
@@ -89,6 +97,8 @@ public class MenuManager : MonoBehaviour
 
     public void ShowRewardedAd()
     {
+        showAdButton.SetActive(false);
+        loadingAdObj.SetActive(true);
         GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.BONUS_GP);
     }
 
@@ -155,15 +165,5 @@ public class MenuManager : MonoBehaviour
         }
         currentGP = objectData.GetData<int>();
         gravityPointsText.text = "Gravity points\n" + currentGP.ToString();
-
-
-        if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.BONUS_GP))
-        {
-            showAdButton.SetActive(true);
-        }
-        else
-        {
-            showAdButton.SetActive(false);
-        }
     }
 }

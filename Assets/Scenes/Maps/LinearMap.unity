@@ -3987,7 +3987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1932077347
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4040,7 +4040,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <b><i>Loading Ad . . .</i></b>
+  m_Text: <b><i>Loading extra attempt . . .</i></b>
 --- !u!222 &1932077349
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10588,7 +10588,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8860004521311727368
 MonoBehaviour:
   m_ObjectHideFlags: 0

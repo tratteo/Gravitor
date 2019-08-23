@@ -48,7 +48,9 @@ public class GoogleAdsManager : MonoBehaviour
             extraAttemptID = "ca-app-pub-2239617021238574/7600245152";
             bonusGPID = "ca-app-pub-2239617021238574/6299605927";
         }
-        StartCoroutine(LoadAds_C());
+        LoadAd(RewardedAdType.BONUS_GP);
+        LoadAd(RewardedAdType.EXTRA_ATTEMPT);
+        //StartCoroutine(LoadAds_C());
     }
 
     public bool IsRewardedAdLoaded(RewardedAdType type)
@@ -103,27 +105,27 @@ public class GoogleAdsManager : MonoBehaviour
     }
 
 
-    private IEnumerator LoadAds_C()
-    {
-        LoadAd(RewardedAdType.EXTRA_ATTEMPT);
-        LoadAd(RewardedAdType.BONUS_GP);
+    //private IEnumerator LoadAds_C()
+    //{
+    //    LoadAd(RewardedAdType.EXTRA_ATTEMPT);
+    //    LoadAd(RewardedAdType.BONUS_GP);
 
-        yield return new WaitForSeconds(6f);
-        while (true)
-        {
-            if (!extraAttempt.IsLoaded())
-            {
-                LoadAd(RewardedAdType.EXTRA_ATTEMPT);
-            }
-            if (!bonusGP.IsLoaded())
-            {
-                LoadAd(RewardedAdType.BONUS_GP);
-            }
-            yield return new WaitForSeconds(6f);
-        }
-    }
+    //    yield return new WaitForSeconds(5f);
+    //    while (true)
+    //    {
+    //        if (!extraAttempt.IsLoaded())
+    //        {
+    //            LoadAd(RewardedAdType.EXTRA_ATTEMPT);
+    //        }
+    //        if (!bonusGP.IsLoaded())
+    //        {
+    //            LoadAd(RewardedAdType.BONUS_GP);
+    //        }
+    //        yield return new WaitForSeconds(10f);
+    //    }
+    //}
 
-    private void LoadAd(RewardedAdType type)
+    public void LoadAd(RewardedAdType type)
     {
         AdRequest request;
         switch (type)

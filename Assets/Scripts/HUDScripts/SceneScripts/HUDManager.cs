@@ -357,6 +357,8 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator CheckAd_C()
     {
+        yield return new WaitForSeconds(8f);
+
         while (true)
         {
             if (!gameMode.attemptUsed)
@@ -370,6 +372,7 @@ public class HUDManager : MonoBehaviour
                 {
                     adButton.SetActive(false);
                     loadingAdText.gameObject.SetActive(true);
+                    GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT);
                 }
             }
             else
@@ -377,7 +380,7 @@ public class HUDManager : MonoBehaviour
                 adButton.SetActive(false);
                 loadingAdText.gameObject.SetActive(false);
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(8f);
         }
     }
 
