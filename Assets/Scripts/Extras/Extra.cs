@@ -23,5 +23,9 @@ public abstract class Extra : MonoBehaviour
         {
             PoolManager.GetInstance().DeactivateObject(gameObject);
         }
+        else if (other.tag.Equals("Obstacle"))
+        {
+            PoolManager.GetInstance().DeactivateObject(gameObject);
+        }
     } 
 }

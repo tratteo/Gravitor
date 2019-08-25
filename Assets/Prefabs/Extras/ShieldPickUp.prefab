@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe84ad643316a84899914ff2342d0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 8
+  duration: 10
   shieldEffect: {fileID: 1253372487661935805, guid: c075d42bb7f91f74e8345196074bfa3c,
     type: 3}
   destroyShieldEffect: {fileID: 3992505816184032464, guid: bf228336eb4affe4e8c5fd876f1338a8,
@@ -70,6 +70,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1942656736390226768}
     m_Modifications:
+    - target: {fileID: 5677643573601958526, guid: 62783a6ea5fb9f842b888945020230b4,
+        type: 3}
+      propertyPath: m_Name
+      value: ShieldPickUpEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677643573601958526, guid: 62783a6ea5fb9f842b888945020230b4,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 5677643573602117214, guid: 62783a6ea5fb9f842b888945020230b4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -139,16 +149,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5677643573601958526, guid: 62783a6ea5fb9f842b888945020230b4,
-        type: 3}
-      propertyPath: m_Name
-      value: ShieldPickUpEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 5677643573601958526, guid: 62783a6ea5fb9f842b888945020230b4,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5677643573587960602, guid: 62783a6ea5fb9f842b888945020230b4,
         type: 3}

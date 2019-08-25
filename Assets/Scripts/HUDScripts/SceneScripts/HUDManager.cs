@@ -81,6 +81,7 @@ public class HUDManager : MonoBehaviour
     private Sound levelSound;
     private IEnumerator checkAdC = null;
     private Text enqueuedShieldsText = null;
+    private bool isAdLoading = false;
 
     //Events
 
@@ -154,6 +155,9 @@ public class HUDManager : MonoBehaviour
         levelSound = AudioManager.GetInstance().PlaySound(AudioManager.LEVEL_SONG);
 
         enqueuedShieldsText = shieldChargeIcon.GetComponentInChildren<Text>();
+
+        checkAdC = CheckAd_C();
+        StartCoroutine(checkAdC);
     }
 
     private void Update()
@@ -250,12 +254,12 @@ public class HUDManager : MonoBehaviour
                 rectTransform = gammaRayBurstBtn.GetComponent<RectTransform>();
                 rectTransform.anchorMin = zero;
                 rectTransform.anchorMax = zero;
-                rectTransform.anchoredPosition = new Vector2(150f, 450f);
+                rectTransform.anchoredPosition = new Vector2(150f, 425f);
 
                 rectTransform = shieldBtn.GetComponent<RectTransform>();
-                rectTransform.anchorMin = new Vector2(0f, 1f); ;
-                rectTransform.anchorMax = new Vector2(0f, 1f); ;
-                rectTransform.anchoredPosition = new Vector2(150f, -410f);
+                rectTransform.anchorMin = new Vector2(0f, 0.5f); ;
+                rectTransform.anchorMax = new Vector2(0f, 0.5f); ;
+                rectTransform.anchoredPosition = new Vector2(150f, 150f);
                 break;
 
             case SettingsData.ControlsLayout.JOYSTICK_LEFT:
@@ -284,12 +288,12 @@ public class HUDManager : MonoBehaviour
                 rectTransform = gammaRayBurstBtn.GetComponent<RectTransform>();
                 rectTransform.anchorMin = new Vector2(1f, 0f);
                 rectTransform.anchorMax = new Vector2(1f, 0f);
-                rectTransform.anchoredPosition = new Vector2(-150f, 450f);
+                rectTransform.anchoredPosition = new Vector2(-150f, 425f);
 
                 rectTransform = shieldBtn.GetComponent<RectTransform>();
-                rectTransform.anchorMin = new Vector2(1f, 1f); ;
-                rectTransform.anchorMax = new Vector2(1f, 1f); ;
-                rectTransform.anchoredPosition = new Vector2(-150f, -410f);
+                rectTransform.anchorMin = new Vector2(1f, 0.5f); ;
+                rectTransform.anchorMax = new Vector2(1f, 0.5f); ;
+                rectTransform.anchoredPosition = new Vector2(-150f, 150);
                 break;
         }
     }
@@ -318,7 +322,7 @@ public class HUDManager : MonoBehaviour
         Text timerText = timerPanel.GetComponentInChildren<Text>();
         timerText.text = resumeTimer.ToString();
         timerPanel.gameObject.SetActive(true);
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.25f);
         while (resumeTimer > 0)
         {
             yield return new WaitForSecondsRealtime(1);
@@ -357,8 +361,6 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator CheckAd_C()
     {
-        yield return new WaitForSeconds(8f);
-
         while (true)
         {
             if (!gameMode.attemptUsed)
@@ -372,7 +374,11 @@ public class HUDManager : MonoBehaviour
                 {
                     adButton.SetActive(false);
                     loadingAdText.gameObject.SetActive(true);
-                    GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT);
+                    if (!isAdLoading)
+                    {
+                        GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT);
+                        isAdLoading = true;
+                    }
                 }
             }
             else
@@ -380,7 +386,7 @@ public class HUDManager : MonoBehaviour
                 adButton.SetActive(false);
                 loadingAdText.gameObject.SetActive(false);
             }
-            yield return new WaitForSeconds(8f);
+            yield return new WaitForSeconds(4f);
         }
     }
 
@@ -455,7 +461,7 @@ public class HUDManager : MonoBehaviour
             StopCoroutine(shieldHUDAnim_C);
         }
 
-        shieldHUDAnim_C = SharedUtilities.GetInstance().UnfillImage(this, shieldChargeIcon, playerManager.extraManager.GetCurrentShield().duration - 0.25f, 0.03f, null);
+        shieldHUDAnim_C = SharedUtilities.GetInstance().UnfillImage(this, shieldChargeIcon, playerManager.extraManager.GetCurrentShield().duration);
 
     }
     public void ShieldDestroyed()
@@ -484,9 +490,6 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayGameOver()
     {
-        checkAdC = CheckAd_C();
-        StartCoroutine(checkAdC);
-
         float score = gameMode.sessionScore;
         float gravityPoints = gameMode.sessionGravityPoints;
         QuantumTunnelSelectionActive(false);
@@ -532,6 +535,7 @@ public class HUDManager : MonoBehaviour
     public void ShowRewardedAd()
     {
         GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT);
+        isAdLoading = false;
     }
 
     private void UpdatePlayerHealth(float health, float initialHealth)
@@ -577,10 +581,7 @@ public class HUDManager : MonoBehaviour
 
     public void CoolDownSkill(SkillManager.Skill skill, float duration)
     {
-        StartCoroutine(CoolDown(skill, duration));
-    }
-    private IEnumerator CoolDown(SkillManager.Skill skill, float duration)
-    {
+        //StartCoroutine(CoolDown(skill, duration));
         EventTrigger eventTrigger = null;
         Image cooldownOverlay = null;
         switch (skill)
@@ -606,16 +607,13 @@ public class HUDManager : MonoBehaviour
                 break;
         }
         eventTrigger.enabled = false;
-        cooldownOverlay.fillAmount = 1f;
-        do
-        {
-            cooldownOverlay.fillAmount -= 0.02f;
-            yield return new WaitForSeconds(duration * 0.016f);
-        }
-        while (cooldownOverlay.fillAmount > 0);
-        cooldownOverlay.fillAmount = 0f;
+        SharedUtilities.GetInstance().UnfillImage<EventTrigger>(this, cooldownOverlay, duration, EnableEventTrigger, eventTrigger);
+    }
+    private void EnableEventTrigger(EventTrigger eventTrigger)
+    {
         eventTrigger.enabled = true;
     }
+
 
     private IEnumerator UpdateStats_C(float delay)
     {

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Obstacle class
@@ -35,7 +34,8 @@ public class GameObstacle : Obstacle, IDestroyEffect
     {
         base.OnCollisionEnter(collision);
 
-        if (collision.collider.tag == "Player")
+        string tag = collision.collider.tag;
+        if (tag.Equals("Player"))
         {
             Destroy(true);
         }
@@ -44,6 +44,13 @@ public class GameObstacle : Obstacle, IDestroyEffect
     protected new void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
+        if (other.tag.Equals("Obstacle"))
+        {
+            if (this.targetScale < other.GetComponent<GameObstacle>().targetScale)
+            {
+                base.DeactivateObstacle();
+            }
+        }
     }
     //
     public override void SetupObstacle()
@@ -54,21 +61,20 @@ public class GameObstacle : Obstacle, IDestroyEffect
 
         SphereCollider dangerZone = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<SphereCollider>(gameObject, "DangerZone");
         SphereCollider gravityField = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<SphereCollider>(gameObject, "GravityField");
-        gravityField.radius = (0.75E-2f * Mathf.Sqrt(mass)) / targetScale;
+        gravityField.radius = (0.65E-2f * Mathf.Sqrt(mass)) / targetScale;
 
         if (gravityField.radius <= 0.8f)
         {
             gravityField.radius = 2f;
         }
 
-        dangerZone.radius = gravityField.radius / 12.5f;
+        dangerZone.radius = gravityField.radius / 14f;
         if (dangerZone.radius <= 0.55f)
         {
             dangerZone.radius = 0.6f;
         }
 
         base.SetupObstacle();
-
     }
 
     public void Destroy(bool instantiateEffect)

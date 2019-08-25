@@ -8,6 +8,7 @@ public class GameDevManager : MonoBehaviour
     [SerializeField] private GameObject gravFieldsUnlockable;
     [SerializeField] private GameObject gravTimeDilation1Unlockable;
     [SerializeField] private GameObject gravTimeDilation2Unlockable;
+    [SerializeField] private GameObject velocityTimeDilationUnlockable;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class GameDevManager : MonoBehaviour
         gravityUnlockable.SetActive(achievementsData.IsAchievementUnlocked(PlayerAchievementsData.SESSION_H_300K));
         gravFieldsUnlockable.SetActive(achievementsData.IsAchievementUnlocked(PlayerAchievementsData.SESSION_H_500K));
         gravTimeDilation1Unlockable.SetActive(achievementsData.IsAchievementUnlocked(PlayerAchievementsData.SESSION_30TD));
-        gravTimeDilation2Unlockable.SetActive(achievementsData.IsAchievementUnlocked(PlayerAchievementsData.SESSION_60TD));
+        gravTimeDilation2Unlockable.SetActive(achievementsData.IsAchievementUnlocked(PlayerAchievementsData.SESSION_45TD));
+        velocityTimeDilationUnlockable.SetActive(achievementsData.IsAchievementUnlocked(PlayerAchievementsData.SESSION_VMAX));
     }
 }

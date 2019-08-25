@@ -31,7 +31,7 @@ public class AchievementsManager : MonoBehaviour
 
     private void CheckAchievements(PlayerManager.SessionStats stats)
     {
-        //TODO change Td achievements
+        //TD
         if (stats.distortedTime > 1800)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_30TD);
@@ -49,6 +49,7 @@ public class AchievementsManager : MonoBehaviour
             NotifyAchievement(PlayerAchievementsData.SESSION_M_TD);
         }
 
+        //SCORE
         if(stats.score >= 300000)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_H_300K);
@@ -61,7 +62,12 @@ public class AchievementsManager : MonoBehaviour
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_H_1M);
         }
+        if(stats.score >= 1500000)
+        {
+            NotifyAchievement(PlayerAchievementsData.SESSION_H_1_5M);
+        }
 
+        //HIT
         if (stats.obstaclesHit >= 10)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_HIT_10);
@@ -75,6 +81,7 @@ public class AchievementsManager : MonoBehaviour
             NotifyAchievement(PlayerAchievementsData.SESSION_HIT_30);
         }
 
+        //TP
         if(stats.timePlayed >= 60)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_60TP);
@@ -88,6 +95,7 @@ public class AchievementsManager : MonoBehaviour
             NotifyAchievement(PlayerAchievementsData.SESSION_300TP);
         }
 
+        //SPEED
         if(stats.maxSpeedReached == MovementManager.MAX_SPEED)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_VMAX);

@@ -10,6 +10,7 @@ public class PlayerAchievementsData
     public const string SESSION_H_300K = "session_H_300K";
     public const string SESSION_H_500K = "session_H_500K";
     public const string SESSION_H_1M = "session_H_1M";
+    public const string SESSION_H_1_5M = "session_H_1_5M";
     public const string SESSION_HIT_10 = "session_HIT_10";
     public const string SESSION_HIT_20 = "session_HIT_20";
     public const string SESSION_HIT_30 = "session_HIT_30";

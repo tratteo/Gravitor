@@ -68,24 +68,44 @@ public class SharedUtilities
     }
 
 
-    public IEnumerator UnfillImage(MonoBehaviour context, Image image, float duration, float stride, Action funcToCall)
+    public IEnumerator UnfillImage(MonoBehaviour context, Image image, float duration)
     {
-        IEnumerator coroutine = UnfillImage_C(image, duration, stride, funcToCall);
+        IEnumerator coroutine = UnfillImage_C(image, duration);
         context.StartCoroutine(coroutine);
         return coroutine;
     }
-    private IEnumerator UnfillImage_C(Image image, float duration, float stride, Action funcToCall)
+    public IEnumerator UnfillImage<T>(MonoBehaviour context, Image image, float duration, Action<T> funcToCall, T funcParameters)
+    {
+        IEnumerator coroutine = UnfillImage_C<T>(image, duration, funcToCall, funcParameters);
+        context.StartCoroutine(coroutine);
+        return coroutine;
+    }
+
+    private IEnumerator UnfillImage_C(Image image, float duration)
     {
         image.fillAmount = 1f;
+        float stride = Time.fixedDeltaTime / duration;
         while (image.fillAmount - stride > 0)
         {
             image.fillAmount -= stride;
-            yield return new WaitForSeconds(duration * stride);
+            yield return new WaitForFixedUpdate();
+        }
+        image.fillAmount = 0f;
+    }
+
+    private IEnumerator UnfillImage_C<T>(Image image, float duration, Action<T> funcToCall, T funcParameters)
+    {
+        image.fillAmount = 1f;
+        float stride = Time.fixedDeltaTime / duration;
+        while (image.fillAmount - stride > 0)
+        {
+            image.fillAmount -= stride;
+            yield return new WaitForFixedUpdate();
         }
         image.fillAmount = 0f;
         if (funcToCall != null)
         {
-            funcToCall();
+            funcToCall(funcParameters);
         }
     }
 

@@ -48,8 +48,6 @@ public class GoogleAdsManager : MonoBehaviour
             extraAttemptID = "ca-app-pub-2239617021238574/7600245152";
             bonusGPID = "ca-app-pub-2239617021238574/6299605927";
         }
-        LoadAd(RewardedAdType.BONUS_GP);
-        LoadAd(RewardedAdType.EXTRA_ATTEMPT);
         //StartCoroutine(LoadAds_C());
     }
 
@@ -150,7 +148,6 @@ public class GoogleAdsManager : MonoBehaviour
     {
         string type = args.Type;
         Debug.Log(type);
-        //TODO
         RewardClaimed(type);
     }
 }

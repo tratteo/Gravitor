@@ -27,6 +27,7 @@ public class MenuManager : MonoBehaviour
 
     private int currentGP;
     private int adBonusGP;
+    private bool isAdLoading = false;
     
 
     void OnDisable()
@@ -50,8 +51,6 @@ public class MenuManager : MonoBehaviour
 
     private IEnumerator CheckAd_C()
     {
-        yield return new WaitForSeconds(8f);
-
         while(true)
         {
             if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.BONUS_GP))
@@ -64,9 +63,13 @@ public class MenuManager : MonoBehaviour
             {
                 showAdButton.SetActive(false);
                 loadingAdObj.SetActive(true);
-                GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.BONUS_GP);
+                if (!isAdLoading)
+                {
+                    GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.BONUS_GP);
+                    isAdLoading = true;
+                }
             }
-            yield return new WaitForSeconds(8f);
+            yield return new WaitForSeconds(2f);
         }
     }
 
@@ -100,6 +103,7 @@ public class MenuManager : MonoBehaviour
         showAdButton.SetActive(false);
         loadingAdObj.SetActive(true);
         GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.BONUS_GP);
+        isAdLoading = false;
     }
 
     private void InitializeData()

@@ -5,13 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerManager))]
 public class MovementManager : MonoBehaviour
 {
-    public const float MAX_SPEED = 800;
+    public const float MAX_SPEED = 1000;
 
     [Header("Movement settings")]
     public Joystick joystick;
     public float initialMovementSpeed = 110f;
     [SerializeField] private float gravitySlingSpeedMultiplier = 1.15f;
 
+    [HideInInspector] public float velocityTimeDistrotion = 1f;
     [HideInInspector] public float currentSlingMultiplier;
     private new Rigidbody rigidbody;
     private readonly float zThreshHold = 10f;
@@ -72,16 +73,27 @@ public class MovementManager : MonoBehaviour
 
     public void GravitySling()
     {
-        if (movementSpeed >= MAX_SPEED)
+        if(movementSpeed * gravitySlingSpeedMultiplier >= MAX_SPEED)
         {
+            VelocityChange(MAX_SPEED);
             maxSpeedReached = MAX_SPEED;
             return;
         }
 
         movementSpeed *= gravitySlingSpeedMultiplier;
+        VelocityChange(movementSpeed);
         maxSpeedReached = movementSpeed;
+
         currentSlingMultiplier += gravitySlingSpeedMultiplier;
     }
+
+    public void VelocityChange(float speed)
+    {
+        movementSpeed = speed;
+        float relativeSpeed = (movementSpeed * 0.7f) / 1000f;
+        velocityTimeDistrotion = GameplayMath.GetInstance().GetSpeedTd(relativeSpeed);
+    }
+
     public float GetMaxSpeedReached()
     {
         return maxSpeedReached;
@@ -91,6 +103,7 @@ public class MovementManager : MonoBehaviour
     {
         movementSpeed = initialMovementSpeed;
         currentSlingMultiplier = 1f;
+        velocityTimeDistrotion = 1f;
     }
 
     public void DisableMovement() { canMove = false; }

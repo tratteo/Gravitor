@@ -45,7 +45,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5690690267949371370
 MonoBehaviour:
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planet1: {fileID: 4996048755250850338}
   planet2: {fileID: 3740311776964659894}
-  orbitingSpeedRange: {x: 100, y: 320}
+  orbitingSpeedRange: {x: 150, y: 320}
 --- !u!1001 &3024970353917771498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69,6 +69,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2898164270356827608}
     m_Modifications:
+    - target: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
+        type: 3}
+      propertyPath: m_Name
+      value: NeutronStar1
+      objectReference: {fileID: 0}
     - target: {fileID: 8759892670832386003, guid: 6b4d9a20840f28844b724bbfe000cdc3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -124,11 +129,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
-        type: 3}
-      propertyPath: m_Name
-      value: NeutronStar1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4d9a20840f28844b724bbfe000cdc3, type: 3}
 --- !u!4 &5794929280971972921 stripped
@@ -156,6 +156,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2898164270356827608}
     m_Modifications:
+    - target: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
+        type: 3}
+      propertyPath: m_Name
+      value: NeutronStar
+      objectReference: {fileID: 0}
     - target: {fileID: 8759892670832386003, guid: 6b4d9a20840f28844b724bbfe000cdc3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -210,11 +215,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
-        type: 3}
-      propertyPath: m_Name
-      value: NeutronStar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4d9a20840f28844b724bbfe000cdc3, type: 3}

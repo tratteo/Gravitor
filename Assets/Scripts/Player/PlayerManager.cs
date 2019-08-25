@@ -60,10 +60,13 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isDead = false;
     private int sessionObstaclesHit = 0;
 
-    [HideInInspector] public float timeDistortion = 1;
+    [HideInInspector] public float scoreMultiplier = 1f;
+    [HideInInspector] public float timeDistortion = 1f;
 
-    [HideInInspector] public float properTime = 0;
-    [HideInInspector] public float relativeExTime = 0;
+    [HideInInspector] public float properTime = 0f;
+    [HideInInspector] public float relativeExTime = 0f;
+    [HideInInspector] public float velocityRelativeTime = 0f;
+
     //Events
 
     private event Action OnPlayerDeath;
@@ -147,7 +150,7 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         timeDistortion = timeDistortion < 1f ? 1f : timeDistortion;
-
+        //Debug.Log("Td: " + timeDistortion + "Sm: " + scoreMultiplier);
         if (Time.timeScale < 1 && gameMode != null && !gameMode.isPaused)
         {
             Time.timeScale += (1 / collisionSlowMotionDuration) * Time.unscaledDeltaTime;
@@ -159,10 +162,7 @@ public class PlayerManager : MonoBehaviour
     {
         if(!gameMode.isGameOver)
         {
-            relativeExTime += Time.fixedDeltaTime * timeDistortion;
-
-            //distortingTime += Time.fixedDeltaTime / timeDistortion;
-
+            relativeExTime += Time.fixedDeltaTime * timeDistortion * movementManager.velocityTimeDistrotion;
             properTime += Time.fixedDeltaTime;
         }
     }
@@ -180,14 +180,10 @@ public class PlayerManager : MonoBehaviour
             {
                 hudManagerInstance.ShowDangerZoneUI(false);
             }
-            if (gravityFieldCount == 0)
-            {
-                timeDistortion = 1;
-            }
 
             ObstacleGravity obstacleGravity = collision.gameObject.GetComponentInChildren<ObstacleGravity>();
             gravityFieldsSet.Remove(obstacleGravity.fieldID);
-            timeDistortion = 1;
+            timeDistortion = 1f;
             CameraShaker.Instance.ShakeOnce(shakeMagnitude, shakeRoughness, shakeFadeInTime, shakeFadeOutTime);
             Time.timeScale = 1 / collisionTimerMultiplier;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
@@ -199,7 +195,7 @@ public class PlayerManager : MonoBehaviour
                 switch (obstacle.type)
                 {
                     case Obstacle.ObstacleType.PLANET:
-                        damage = 50f;
+                        damage = 60f;
                         break;
                     case Obstacle.ObstacleType.STAR:
                         damage = 80f;
@@ -208,7 +204,7 @@ public class PlayerManager : MonoBehaviour
                         damage = 120f;
                         break;
                     case Obstacle.ObstacleType.NEUTRON_STAR:
-                        damage = 180f;
+                        damage = 160f;
                         break;
                 }
                 TakeDamage(damage);
@@ -226,7 +222,7 @@ public class PlayerManager : MonoBehaviour
         {
             ObstacleGravity gravityComponent = other.gameObject.GetComponent<ObstacleGravity>();
 
-            float timeDistortion = GameplayMath.GetInstance().GetTimeDistortion(gameObject, other.transform.parent.gameObject);
+            float timeDistortion = GameplayMath.GetInstance().GetGravityTd(gameObject, other.transform.parent.gameObject);
             if (!gravityFieldsSet.ContainsKey(gravityComponent.fieldID))
             {
                 gravityFieldsSet.Add(gravityComponent.fieldID, timeDistortion);
@@ -258,7 +254,7 @@ public class PlayerManager : MonoBehaviour
             }
             if (gravityFieldCount == 0)
             {
-                timeDistortion = 1;
+                timeDistortion = 1f;
             }
         }
         else if (other.gameObject.tag.Equals("DangerZone"))
@@ -282,14 +278,18 @@ public class PlayerManager : MonoBehaviour
     {
         if (other.gameObject.tag.Equals("GravityField"))
         {
-            float newTimeDistortion = GameplayMath.GetInstance().GetTimeDistortion(gameObject, other.transform.parent.gameObject);
+            float newTimeDistortion = GameplayMath.GetInstance().GetGravityTd(gameObject, other.transform.parent.gameObject);
             ObstacleGravity gravityComponent = other.gameObject.GetComponent<ObstacleGravity>();
             //Subtract current obstacle Td
-            timeDistortion -= gravityFieldsSet[gravityComponent.fieldID];
-            //Update current obstacle Td
-            gravityFieldsSet[gravityComponent.fieldID] = newTimeDistortion;
-            //Add back correct Td
-            timeDistortion += newTimeDistortion;
+            if (gravityFieldsSet.ContainsKey(gravityComponent.fieldID))
+            {
+                timeDistortion -= gravityFieldsSet[gravityComponent.fieldID];
+                //Update current obstacle Td
+                gravityFieldsSet[gravityComponent.fieldID] = newTimeDistortion;
+                //Add back correct Td
+                timeDistortion += newTimeDistortion;
+                scoreMultiplier = timeDistortion;
+            }
         }
         if(other.gameObject.tag.Equals("Margins") && !isDead)
         {

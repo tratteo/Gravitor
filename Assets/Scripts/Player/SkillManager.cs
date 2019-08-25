@@ -41,6 +41,7 @@ public class SkillManager : MonoBehaviour
     private float antigravityCooldown, quantumtunnelCooldown, solarflareCooldown;
     private float solarflareRadius;
     [HideInInspector] public bool canCastSkill = true;
+    private HUDManager hudManager;
 
     #endregion
 
@@ -54,6 +55,7 @@ public class SkillManager : MonoBehaviour
         solarflareCooldown = GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints);
         solarflareRadius = GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints);
         scaledGammaRayRadius = unscaledGammaRayRadius * ((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3);
+        hudManager = HUDManager.GetInstance();
     }
 
     private void Update()
@@ -93,9 +95,9 @@ public class SkillManager : MonoBehaviour
 
         GameObject antigravityEffRef = InstantiateEffect(antigravityEffect);
 
-        Image cooldownOverlay = HUDManager.GetInstance().antigravityBtn.GetComponentsInChildren<Image>()[1];
+        Image cooldownOverlay = hudManager.antigravityBtn.GetComponentsInChildren<Image>()[1];
         cooldownOverlay.fillAmount = 1f;
-        EventTrigger eventTrigger = HUDManager.GetInstance().antigravityBtn.GetComponent<EventTrigger>();
+        EventTrigger eventTrigger = hudManager.antigravityBtn.GetComponent<EventTrigger>();
         eventTrigger.enabled = false;
         yield return new WaitForSeconds(duration);
         Destroy(antigravityEffRef);
@@ -103,7 +105,7 @@ public class SkillManager : MonoBehaviour
         isGravitable = true;
         isAntiGravityActive = false;
 
-        HUDManager.GetInstance().CoolDownSkill(Skill.ANTI_GRAVITY, antigravityCooldown);
+        hudManager.CoolDownSkill(Skill.ANTI_GRAVITY, antigravityCooldown);
     }
 
 
@@ -117,9 +119,9 @@ public class SkillManager : MonoBehaviour
             playerManager.timeDistortion = 1f;
             Vector3 pos = transform.position;
             pos.x = hit.point.x;
-            pos.y = hit.point.y;
+            pos.y = hit.point.y * 1.5f;
 
-            HUDManager.GetInstance().QuantumTunnelSelectionActive(false);
+            hudManager.QuantumTunnelSelectionActive(false);
             InstantiateEffect(quantumDisappearEff);
             yield return new WaitForSeconds(0.2f);
             SharedUtilities.GetInstance().MakeGameObjectVisible(gameObject, false);
@@ -143,16 +145,9 @@ public class SkillManager : MonoBehaviour
                 isGravitable = true;
             }
 
-            HUDManager.GetInstance().CoolDownSkill(Skill.QUANTUM_TUNNEL, quantumtunnelCooldown);
+            hudManager.CoolDownSkill(Skill.QUANTUM_TUNNEL, quantumtunnelCooldown);
         }
     }
-
-    private bool IsValidQuantumTunnelLocation(RaycastHit hit)
-    {
-        return (hit.point.x > playerManager.gameMode.obstacleRandXSpawn.x && hit.point.x < playerManager.gameMode.obstacleRandXSpawn.y &&
-                hit.point.y > playerManager.gameMode.obstacleRandYSpawn.x && hit.point.y < playerManager.gameMode.obstacleRandYSpawn.y);
-    }
-
 
     //SolarFlare
     public void SolarFlare()
@@ -167,7 +162,7 @@ public class SkillManager : MonoBehaviour
         float animDuration = solarflareEffect.GetComponent<ParticleSystem>().main.duration;
         InstantiateEffect(solarflareEffect);
 
-        HUDManager.GetInstance().CoolDownSkill(Skill.SOLAR_FLARE, solarflareCooldown);
+        hudManager.CoolDownSkill(Skill.SOLAR_FLARE, solarflareCooldown);
         yield return new WaitForSeconds(animDuration);
 
         mask = LayerMask.GetMask("Obstacles");
@@ -181,7 +176,7 @@ public class SkillManager : MonoBehaviour
             {
                 castedObstacles++;
                 obstacleToDestroy.Destroy(true);
-                playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.gameObject.GetComponent<GameObstacle>().mass));
+                playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass));
             }
         }
         playerManager.timeDistortion = 1;
@@ -190,7 +185,7 @@ public class SkillManager : MonoBehaviour
 
         if (playerManager.dangerZoneCount <= 0)
         {
-            HUDManager.GetInstance().ShowDangerZoneUI(false);
+            hudManager.ShowDangerZoneUI(false);
         }
     }
 
@@ -206,9 +201,9 @@ public class SkillManager : MonoBehaviour
 
     private IEnumerator GammaRayAsyncLoad_C()
     {
-        Image cooldownOverlay = HUDManager.GetInstance().gammaRayBurstBtn.GetComponentsInChildren<Image>()[1];
+        Image cooldownOverlay = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<Image>(hudManager.gammaRayBurstBtn, "FilledOverlay");
         cooldownOverlay.fillAmount = 1f;
-        EventTrigger eventTrigger = HUDManager.GetInstance().gammaRayBurstBtn.GetComponent<EventTrigger>();
+        EventTrigger eventTrigger = hudManager.gammaRayBurstBtn.GetComponent<EventTrigger>();
         eventTrigger.enabled = false;
         GameObject channelGammaRayRef = InstantiateEffect(channelGammaRayEffect);
 
@@ -235,7 +230,7 @@ public class SkillManager : MonoBehaviour
         }
 
         InstantiateEffect(gammaRayEffect);
-        HUDManager.GetInstance().CoolDownSkill(Skill.GAMMARAY_BURST, 45f);
+        hudManager.CoolDownSkill(Skill.GAMMARAY_BURST, 50f);
 
         RaycastHit[] hitColliders = Physics.SphereCastAll(transform.position, scaledGammaRayRadius, new Vector3(0f, 0f, 1f), gammaRayLength, mask);
 
@@ -248,13 +243,17 @@ public class SkillManager : MonoBehaviour
             {
                 castedObstacles++;
                 obstacleToDestroy.Destroy(true);
-                playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.gameObject.GetComponent<GameObstacle>().mass));
+                playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass));
             }
         }
         playerManager.timeDistortion = 1;
         playerManager.dangerZoneCount = playerManager.dangerZoneCount > castedObstacles ? playerManager.dangerZoneCount -= (short)castedObstacles : playerManager.dangerZoneCount = 0;
         playerManager.gravityFieldCount = playerManager.gravityFieldCount > castedObstacles ? playerManager.gravityFieldCount -= (short)castedObstacles : playerManager.gravityFieldCount = 0;
-        yield return new WaitForSeconds(raySystem.main.duration);
+        if (playerManager.dangerZoneCount <= 0)
+        {
+            hudManager.ShowDangerZoneUI(false);
+        }
+        //yield return new WaitForSeconds(raySystem.main.duration);
     }
 
     //Utils

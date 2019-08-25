@@ -13,9 +13,9 @@ public class GameplayMath
     private GameplayMath() { }
 
     private const float c = 299.792458f;
-    private const double G = 2E-10f;
+    private const double G = 6.67E-11f;
     private const float RadToDegree = 57.3f;
-    private const double TD_CONST = 2f * G/(c*c);
+    private const double Td_constant = 9E5f * (G/(c*c));
 
     public float GetSpawnRateFromTime(int seconds)
     {
@@ -23,14 +23,25 @@ public class GameplayMath
         //return 0.062f * seconds + 2f;
     }
 
-    public float GetTimeDistortion(GameObject player, GameObject obstacle)
+    public float GetGravityTd(GameObject player, GameObject obstacle)
     {
-        float intern = (float)(1 - (TD_CONST * obstacle.GetComponent<GameObstacle>().mass / Vector3.Magnitude(player.transform.position - obstacle.transform.position)));
-        return 8E6f * (1f / Mathf.Sqrt(intern));
+        float intern = (float)(1f - ((Td_constant * obstacle.GetComponent<GameObstacle>().mass) / Vector3.Magnitude(player.transform.position - obstacle.transform.position)));
+        float result;
+        if (intern <= 0.05f)
+        {
+            return 15f;
+        }
+        else
+        {
+            result = (1f / Mathf.Sqrt(intern));
+        }
+        //Debug.Log("Ob: " + gameObstacle.gameObject.name +", Intern: " + intern.ToString("0.000") + ", Td: " + result);
+        return result;
+    }
 
-        //double numerator = 20E+6 * G * obstacle.GetComponent<GameObstacle>().mass;
-        //double inverseDenominator = 1f / (Vector3.Magnitude(player.transform.position - obstacle.transform.position) * c * c);
-        //return (float)(1 + (numerator * inverseDenominator));
+    public float GetSpeedTd(float speed)
+    {
+        return 1f / (Mathf.Sqrt(1f - (speed * speed)));
     }
 
     public float GetGravityIntensity(GameObject player, GameObject obstacle)
@@ -47,32 +58,32 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return (0.0035f * mass) / 20000;
+        return 2.5E-8f * mass;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)
     {
-        return ((points - 1) * Mathf.Log(5 * points + 79)) + 180f;
+        return (1.15f * ((points - 1) * Mathf.Log(8 * points + 100))) + 200f;
     }
 
     public float GetAntigravityDuration(int points)
     {
-        return (0.7f * points) + 2.5f;
+        return (0.45f * points) + 2.55f;
     }
 
     public float GetAntigravityCooldown(int points)
     {
-        return (-1.5f * points) + 29.5f;
+        return (-1.1f * points) + 31.1f;
     }
 
     public float GetQuantumTunnelCooldown(int points)
     {
-        return (-1.2f * points) + 25f;
+        return (-1.25f * points) + 30.25f;
     }
 
     public float GetSolarflareCooldown(int points)
     {
-        return (-1.8f * points) + 32f;
+        return (-1.1f * points) + 29.6f;
     }
 
     public float GetSolarflareRadius(int points)

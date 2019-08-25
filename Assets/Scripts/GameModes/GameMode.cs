@@ -90,15 +90,15 @@ public abstract class GameMode : MonoBehaviour
         playerManager.SubscribeToPlayerDeathEvent(EndSession);
         GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
 
-        playerManager.movementManager.SpeedEffect(1.25f, 8f);
-        CameraManager.GetInstance().SmoothInAndOutFOV(null, 175f, 10f, 0.15f, 1.15f);
+        playerManager.movementManager.SpeedEffect(1.25f, 12f);
+        CameraManager.GetInstance().SmoothInAndOutFOV(null, 175f, 0.25f, 0.75f);
     }
 
     private void FixedUpdate()
     {
         if (Time.timeSinceLevelLoad > 1f && !isGameOver)
         {
-            sessionScore += Time.fixedDeltaTime * 5f * (4f * playerManager.movementManager.currentSlingMultiplier + 12f * playerManager.timeDistortion);
+            sessionScore += Time.fixedDeltaTime * (220f * playerManager.movementManager.currentSlingMultiplier + 800f * (playerManager.scoreMultiplier - 0.975f));
         }
         if (!highScoreReached && sessionScore > currentHighScore)
         {
@@ -145,7 +145,7 @@ public abstract class GameMode : MonoBehaviour
         obstacleSpawner.PauseSpawnTimer(true);
         pickupsSpawner.PauseSpawnTimer(true);
 
-        sessionGravityPoints += (int)(0.2f * (0.8f * sessionScore * (playerManager.properTime / 150f)));
+        sessionGravityPoints += (int)(0.15f * (0.7f * sessionScore * (playerManager.properTime / 200f)));
 
         SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
         if (currentHighScore != default)

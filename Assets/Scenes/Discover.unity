@@ -677,9 +677,9 @@ RectTransform:
   m_Father: {fileID: 1528468676}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 607.5, y: -1927}
   m_SizeDelta: {x: 1215, y: 610.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &171993695
@@ -1520,9 +1520,9 @@ RectTransform:
   m_Father: {fileID: 1061335494}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 592.95, y: -306.35}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1185.9, y: 612.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &445759080
@@ -1759,8 +1759,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -50}
-  m_SizeDelta: {x: 500, y: 100}
+  m_AnchoredPosition: {x: 400, y: -50}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &601316166
 MonoBehaviour:
@@ -1795,7 +1795,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Warp Drive
+  m_Text: Wormhole (Einstein-Rosen Bridge)
 --- !u!222 &601316167
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2157,8 +2157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 122.75, y: -82.50003}
-  m_SizeDelta: {x: -245.5, y: -115}
+  m_AnchoredPosition: {x: 122.75, y: -70}
+  m_SizeDelta: {x: -245.5, y: -140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &830061712
 MonoBehaviour:
@@ -2320,7 +2320,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -617.94, y: 15}
-  m_SizeDelta: {x: 1235.9, y: 1135}
+  m_SizeDelta: {x: 1235.9, y: 1412.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &862438816
 GameObject:
@@ -2904,9 +2904,9 @@ RectTransform:
   m_Father: {fileID: 1528468676}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 607.5, y: -738.35}
   m_SizeDelta: {x: 1215, y: 527.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1183196456
@@ -3758,7 +3758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1583284883
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3791,7 +3791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 29923740e33feb044990aab882e44218, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -3939,8 +3939,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 122.75, y: -75.00003}
-  m_SizeDelta: {x: -245.5, y: -100}
+  m_AnchoredPosition: {x: 122.75, y: -62.5}
+  m_SizeDelta: {x: -245.5, y: -125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1626902909
 MonoBehaviour:
@@ -3975,11 +3975,13 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
-  m_Text: When a warp drive is collected, <color=cyan>space is distorted</color>
-    (shortened) in order to cover large distances in a relatively small amount of
-    time, as a result the score increases fast. During the Warp Drive the movement
-    and the abilities are disabled, moreover collision are undetected during the
-    whole duration.
+  m_Text: "A Wormhole is a structure linking disparate points in <b>space-time</b>
+    based on a special solution of the Einstein's field equations.\nPassing through
+    a Wormhole increases the speed up to almost the speed of light, distorting time
+    as described by Einstein's <color=cyan>speed time dilation</color>. While passing
+    through a Wormhole the movement and the abilities are disabled, moreover collision
+    are undetected during the whole duration. \n<b>Use this extra to achieve large
+    amount of dilated time in one session.</b>"
 --- !u!222 &1626902910
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4006,7 +4008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1677561737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4178,7 +4180,7 @@ GameObject:
   - component: {fileID: 1729436699}
   - component: {fileID: 1729436698}
   m_Layer: 5
-  m_Name: WarpDrive
+  m_Name: Wormhole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4201,10 +4203,10 @@ RectTransform:
   m_Father: {fileID: 1061335494}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 592.9499, y: -873.85}
-  m_SizeDelta: {x: 1185.9, y: 422.3}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1185.9, y: 699.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1729436698
 MonoBehaviour:
@@ -4370,7 +4372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4921,9 +4923,9 @@ RectTransform:
   m_Father: {fileID: 1528468676}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 607.5, y: -237.4}
   m_SizeDelta: {x: 1215, y: 474.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2101849969
@@ -5129,9 +5131,9 @@ RectTransform:
   m_Father: {fileID: 1528468676}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 607.5, y: -1311.7999}
   m_SizeDelta: {x: 1215, y: 619.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &307482129132065201
@@ -5215,8 +5217,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 307482130159894293}
   m_HandleRect: {fileID: 307482130159894292}
   m_Direction: 2
-  m_Value: 0.9999999
-  m_Size: 0.28129515
+  m_Value: 0.99999994
+  m_Size: 0.32467246
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

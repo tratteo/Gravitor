@@ -220,10 +220,18 @@ public class UpgradeManager : MonoBehaviour
         {
             thrustCostText.text = thrustForceUpgradeCost.ToString();
         }
+        else
+        {
+            thrustCostText.gameObject.SetActive(false);
+        }
 
         if (playerData.GetHealthPoints() < RESILIENCE_MAX_POINTS)
         {
             healthCostText.text = healthUpgradeCost.ToString();
+        }
+        else
+        {
+            healthCostText.gameObject.SetActive(false);
         }
 
         //ANTIGRAVITY
@@ -272,41 +280,41 @@ public class UpgradeManager : MonoBehaviour
 
             if (skillsData.antigravityPoints < ANTIGRAVITY_MAX_POINTS)
             {
-                antigravityInfoText.text = "Duration: " + GameplayMath.GetInstance().GetAntigravityDuration(skillsData.antigravityPoints).ToString("0.0") + "s"
-                                           + ", cooldown: " + GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints).ToString("0.0") + "s"
-                                           + "\n<b>Next Upgrade: </b>\n"
+                antigravityInfoText.text = "Duration: <b>" + GameplayMath.GetInstance().GetAntigravityDuration(skillsData.antigravityPoints).ToString("0.0") + "s</b>"
+                                           + ", cooldown: <b>" + GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints).ToString("0.0") + "s</b>"
+                                           + "\n<color=cyan>Next Upgrade: </color>\n"
                                            + "Duration: " + GameplayMath.GetInstance().GetAntigravityDuration(skillsData.antigravityPoints + 1).ToString("0.0") + "s"
                                            + ", cooldown: " + GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints + 1).ToString("0.0") + "s";
             }
             else
             {
-                antigravityInfoText.text = "Duration: " + GameplayMath.GetInstance().GetAntigravityDuration(skillsData.antigravityPoints).ToString("0.0") + "s"
-                                           + ", cooldown: " + GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints).ToString("0.0") + "s";
+                antigravityInfoText.text = "Duration: <b>" + GameplayMath.GetInstance().GetAntigravityDuration(skillsData.antigravityPoints).ToString("0.0") + "s</b>"
+                                           + ", cooldown: <b>" + GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints).ToString("0.0") + "s</b>";
             }
 
             if (skillsData.quantumTunnelPoints < QUANTUMTUNNEL_MAX_POINTS)
             {
-                quantumTunnelInfoText.text = "Cooldown: " + GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints).ToString("0.0") + "s"
-                                          + "\n<b>Next Upgrade:</b> \n"
+                quantumTunnelInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints).ToString("0.0") + "s</b>"
+                                          + "\n<color=cyan>Next Upgrade: </color>\n"
                                           + "Cooldown: " + GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints + 1).ToString("0.0") + "s";
             }
             else
             {
-                quantumTunnelInfoText.text = "Cooldown: " + GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints).ToString("0.0") + "s";
+                quantumTunnelInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints).ToString("0.0") + "s</b>";
             }
 
             if (skillsData.solarflarePoints < SOLARFLARE_MAX_POINTS)
             {
-                solarflareInfoText.text = "Cooldown: " + GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints).ToString("0.0") + "s"
-                                          + ", radius: " + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints).ToString("0.0")
-                                          + "\n<b>Next Upgrade: </b>\n"
+                solarflareInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints).ToString("0.0") + "s</b>"
+                                          + ", radius: <b>" + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints).ToString("0.0") + "</b>"
+                                          + "\n<color=cyan>Next Upgrade: </color>\n"
                                           + "Cooldown: " + GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints + 1).ToString("0.0") + "s"
                                           + ", radius: " + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints + 1).ToString("0.0");
             }
             else
             {
-                solarflareInfoText.text = "Cooldown: " + GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints).ToString("0.0") + "s"
-                                          + ", radius: " + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints).ToString("0.0");
+                solarflareInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints).ToString("0.0") + "s</b>"
+                                          + ", radius: <b>" + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints).ToString("0.0") + "</b>";
             }
         }
     }

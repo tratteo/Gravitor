@@ -17,7 +17,7 @@ public class ExtraManager : MonoBehaviour
     public Shield GetCurrentShield() { return currentShield; }
 
     private int shieldCount = 0;
-    private WarpDrive warpDrive;
+    private Wormhole warpDrive;
     public int enqueuedShields = 0;
 
     private void Start()
@@ -42,7 +42,7 @@ public class ExtraManager : MonoBehaviour
                 }
                 break;
             case "WarpDrive":
-                warpDrive = (WarpDrive)pickup;
+                warpDrive = (Wormhole)pickup;
                 StartCoroutine(WarpDrive(warpDrive));
                 break;
         }
@@ -90,7 +90,6 @@ public class ExtraManager : MonoBehaviour
         enqueuedShields--;
         isShielded = false;
     }
-
     public void DestroyShield()
     {
         enqueuedShields--;
@@ -104,11 +103,11 @@ public class ExtraManager : MonoBehaviour
         currentShield.DestroyShield(transform.position);
     }
 
-    private IEnumerator WarpDrive(WarpDrive speedBoost)
+    
+    private IEnumerator WarpDrive(Wormhole wormhole)
     {
         playerManager.skillManager.isGravitable = false;
         playerManager.skillManager.canCastSkill = false;
-        CameraManager cameraManager = CameraManager.GetInstance();
         Collider playerCollider = GetComponent<Collider>();
 
         playerCollider.enabled = false;
@@ -116,11 +115,12 @@ public class ExtraManager : MonoBehaviour
         HUDManager.GetInstance().ShowDangerZoneUI(false);
         playerManager.movementManager.DisableMovement();
 
-        cameraManager.SmoothInAndOutFOV(null, speedBoost.viewDistortion, 15f, 0.2f, speedBoost.duration);
-        playerManager.movementManager.SpeedEffect(speedBoost.duration, 5f);
-        playerManager.timeDistortion = speedBoost.scoreMultiplier;
+        CameraManager.GetInstance().SmoothInAndOutFOV(null, wormhole.viewDistortion, 0.3f, wormhole.duration - 0.6f);
+        playerManager.movementManager.SpeedEffect(wormhole.duration, 5f);
+        playerManager.timeDistortion = GameplayMath.GetInstance().GetSpeedTd(wormhole.speed);
+        playerManager.scoreMultiplier = wormhole.scoreMultiplier;
 
-        yield return new WaitForSeconds(speedBoost.duration);
+        yield return new WaitForSeconds(wormhole.duration);
 
         playerManager.timeDistortion = 1f;
         playerCollider.enabled = true;
