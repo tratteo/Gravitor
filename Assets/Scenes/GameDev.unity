@@ -992,8 +992,8 @@ MonoBehaviour:
     equations into a smartphone game. As engineers we love to know and understand
     how things work, the physics and the math behind them. As a result we decided
     to give you the possibility to unlock all the equations and models behind the
-    game: sharing knowledge is the greatest power of a scientist. Unlock all the
-    achievements and discover what\u2019s hidden in this game!"
+    game: sharing knowledge is the greatest power of a scientist. \n<color=cyan><b>Unlock
+    all the achievements and discover what\u2019s hidden in this game!</b></color>"
 --- !u!222 &486068233
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1382,9 +1382,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 94fe6f37e73598549ba58911e3145272, type: 3}
+    m_Font: {fileID: 12800000, guid: 7a5dd5701f9f4584e9cbfe629fdd3768, type: 3}
     m_FontSize: 70
-    m_FontStyle: 3
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100

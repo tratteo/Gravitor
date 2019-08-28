@@ -44,20 +44,23 @@ public class GameObstacle : Obstacle, IDestroyEffect
     protected new void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        if (other.tag.Equals("Obstacle"))
-        {
-            if (this.targetScale < other.GetComponent<GameObstacle>().targetScale)
-            {
-                base.DeactivateObstacle();
-            }
-        }
     }
     //
+
     public override void SetupObstacle()
     {
+        int layerMask = LayerMask.GetMask("Obstacles");
+        Collider[] colliders = Physics.OverlapSphere(transform.position, targetScale / 2, layerMask);
+        if(colliders.Length > 1)
+        {
+            //Debug.Log("Deactivating: " + colliders.Length);
+            base.DeactivateObstacle();
+            return;
+        }
+
         density = Random.Range(minDensity, maxDensity);
         mass = GameplayMath.GetInstance().GetObstacleMass(this);
-        gravityComponent.fieldID = (int)((mass * density) / 1000000000);
+        gravityComponent.fieldID = (int)((mass * density) / 1E9);
 
         SphereCollider dangerZone = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<SphereCollider>(gameObject, "DangerZone");
         SphereCollider gravityField = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<SphereCollider>(gameObject, "GravityField");

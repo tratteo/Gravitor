@@ -50,7 +50,7 @@ public class HUDManagerC_E : Editor
             script.tutorialPanel = (GameObject)EditorGUILayout.ObjectField("Tutorial", script.tutorialPanel, typeof(GameObject), true);
             script.highScorePanel = (GameObject)EditorGUILayout.ObjectField("HighScore", script.highScorePanel, typeof(GameObject), true);
             script.quantumTunnelPanel = (GameObject)EditorGUILayout.ObjectField("Quantumtunnel", script.quantumTunnelPanel, typeof(GameObject), true);
-            script.dangerZonePanel = (GameObject)EditorGUILayout.ObjectField("DangerZone", script.dangerZonePanel, typeof(GameObject), true);
+            script.highGravityFieldPanel = (GameObject)EditorGUILayout.ObjectField("HighGravityField", script.highGravityFieldPanel, typeof(GameObject), true);
         }
 
         EditorGUILayout.LabelField("Toasts", EditorStyles.helpBox);

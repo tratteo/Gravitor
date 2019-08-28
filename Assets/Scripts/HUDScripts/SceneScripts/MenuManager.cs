@@ -18,9 +18,6 @@ public class MenuManager : MonoBehaviour
     [Header("Toast")]
     [SerializeField] private ToastScript toast = null;
 
-
-
-
     private SceneLoader loader;
     private SettingsData settingsData;
     private Sound menuSound;
@@ -129,16 +126,16 @@ public class MenuManager : MonoBehaviour
         switch(objectData.GetData<PlayerData>().playerState)
         {
             case PlayerManager.PlayerState.ASTEROID:
-                adBonusGP = 4000;
+                adBonusGP = 5000;
                 break;
             case PlayerManager.PlayerState.COMET:
-                adBonusGP = 6000;
+                adBonusGP = 9000;
                 break;
             case PlayerManager.PlayerState.DENSE_PLANET:
-                adBonusGP = 10000;
+                adBonusGP = 18000;
                 break;
             case PlayerManager.PlayerState.STAR:
-                adBonusGP = 20000;
+                adBonusGP = 40000;
                 break;
         }
 
@@ -146,8 +143,15 @@ public class MenuManager : MonoBehaviour
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH);
         if (objectData == null)
         {
-            SaveManager.GetInstance().SavePersistentData(new PlayerSkillsData(), SaveManager.SKILLSDATA_PATH);
+            objectData = SaveManager.GetInstance().SavePersistentData(new PlayerSkillsData(), SaveManager.SKILLSDATA_PATH);
         }
+        PlayerSkillsData skillData = objectData.GetData<PlayerSkillsData>();
+        if (skillData.gammaRayBurstPoints == 0)
+        {
+            skillData.gammaRayBurstPoints = 1;
+            SaveManager.GetInstance().SavePersistentData(skillData, SaveManager.SKILLSDATA_PATH);
+        }
+
 
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH);
         if(objectData == null)

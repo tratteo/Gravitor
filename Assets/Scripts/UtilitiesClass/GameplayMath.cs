@@ -58,12 +58,12 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return 2.5E-8f * mass;
+        return 4.5E-8f * mass;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)
     {
-        return (1.15f * ((points - 1) * Mathf.Log(8 * points + 100))) + 200f;
+        return (1.3f * ((points - 1) * Mathf.Log(8 * points + 100))) + 200f;
     }
 
     public float GetAntigravityDuration(int points)
@@ -91,6 +91,34 @@ public class GameplayMath
         return (-1.3f * points * points) + 41.2f * points + 127f;
     }
 
+    public int GetGRBCost(int points)
+    {
+        switch(points)
+        {
+            case 1:
+                return 1200000;
+            case 2:
+                return 2500000;
+            default:
+                return -1;
+        }
+    }
+
+    public int GetGRBCooldown(int points)
+    {
+        switch (points)
+        {
+            case 1:
+                return 45;
+            case 2:
+                return 30;
+            case 3:
+                return 15;
+            default:
+                return -1;
+        }
+    }
+
     public float GetDamageWithDistance(float distance)
     {
         float x = (distance / 375f) + 0.6f;
@@ -99,7 +127,7 @@ public class GameplayMath
 
     public int GetCostFromInitCost(int points, int initCost)
     {
-        return (int)(262 * Mathf.Pow(points, 2.3f) + initCost - 262);
+        return (int)(350 * Mathf.Pow(points, 2.5f) + initCost - 350);
     }
 
     public float arctan(float x, float y)

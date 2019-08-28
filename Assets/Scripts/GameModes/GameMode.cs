@@ -98,7 +98,7 @@ public abstract class GameMode : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad > 1f && !isGameOver)
         {
-            sessionScore += Time.fixedDeltaTime * (220f * playerManager.movementManager.currentSlingMultiplier + 800f * (playerManager.scoreMultiplier - 0.975f));
+            sessionScore += Time.fixedDeltaTime * (260f * playerManager.movementManager.currentSlingMultiplier + 750f * (playerManager.scoreMultiplier - 0.975f));
         }
         if (!highScoreReached && sessionScore > currentHighScore)
         {
@@ -140,12 +140,11 @@ public abstract class GameMode : MonoBehaviour
     public void EndSession()
     {
         Time.timeScale = 1f;
-        Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
         obstacleSpawner.PauseSpawnTimer(true);
         pickupsSpawner.PauseSpawnTimer(true);
 
-        sessionGravityPoints += (int)(0.15f * (0.7f * sessionScore * (playerManager.properTime / 200f)));
+        sessionGravityPoints = (int)(0.165f * (0.6f * sessionScore * (playerManager.properTime / 300f)));
 
         SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
         if (currentHighScore != default)
@@ -160,7 +159,7 @@ public abstract class GameMode : MonoBehaviour
         SaveManager.GetInstance().SavePersistentData<int>(currentHighScore, SaveManager.HIGHSCORE_PATH);
         isGameOver = true;
         HUDManager.GetInstance().DisplayGameOver();
-        HUDManager.GetInstance().ShowDangerZoneUI(false);
+        HUDManager.GetInstance().ShowHighGravityPanel(false);
     }
 
     public void NotifySpawnException(Vector3 centre, float width, float height, float depth, float duration)

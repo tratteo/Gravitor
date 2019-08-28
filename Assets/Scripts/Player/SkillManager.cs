@@ -24,6 +24,9 @@ public class SkillManager : MonoBehaviour
     [SerializeField] private GameObject channelGammaRayEffect = null;
     [SerializeField] private float gammaRayLength = 800f;
     [SerializeField] private float unscaledGammaRayRadius = 15f;
+    [SerializeField] private Color GRB1;
+    [SerializeField] private Color GRB2;
+    [SerializeField] private Color GRB3;
     private float scaledGammaRayRadius;
     //Bools
     [HideInInspector] public bool isAntiGravityActive = false;
@@ -36,7 +39,6 @@ public class SkillManager : MonoBehaviour
     //Local variables
     private LayerMask mask;
     private ParticleSystem channelGammaRaySys;
-    private ParticleSystem raySystem;
     private PlayerSkillsData skillsData = null;
     private float antigravityCooldown, quantumtunnelCooldown, solarflareCooldown;
     private float solarflareRadius;
@@ -49,13 +51,40 @@ public class SkillManager : MonoBehaviour
     {
         playerManager = gameObject.GetComponent<PlayerManager>();
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
-
+        UpdateGRBColor();
         antigravityCooldown = GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints);
         quantumtunnelCooldown = GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints);
         solarflareCooldown = GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints);
         solarflareRadius = GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints);
         scaledGammaRayRadius = unscaledGammaRayRadius * ((transform.localScale.x + transform.localScale.y + transform.localScale.z) / 3);
         hudManager = HUDManager.GetInstance();
+    }
+
+    private void UpdateGRBColor()
+    {
+        ParticleSystemRenderer[] systems = channelGammaRayEffect.GetComponentsInChildren<ParticleSystemRenderer>();
+        Color colorToSet = new Color(255, 255, 255, 255);
+        switch (skillsData.gammaRayBurstPoints)
+        {
+            case 1:
+                colorToSet = GRB1;
+                break;
+            case 2:
+                colorToSet = GRB2;
+                break;
+            case 3:
+                colorToSet = GRB3;
+                break;
+        }
+        foreach (ParticleSystemRenderer system in systems)
+        {
+            system.sharedMaterial.SetColor("_TintColor", colorToSet);
+        }
+        systems = gammaRayEffect.GetComponentsInChildren<ParticleSystemRenderer>();
+        foreach (ParticleSystemRenderer system in systems)
+        {
+            system.sharedMaterial.SetColor("_TintColor", colorToSet);
+        }
     }
 
     private void Update()
@@ -123,13 +152,13 @@ public class SkillManager : MonoBehaviour
 
             hudManager.QuantumTunnelSelectionActive(false);
             InstantiateEffect(quantumDisappearEff);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
             SharedUtilities.GetInstance().MakeGameObjectVisible(gameObject, false);
             SharedUtilities.GetInstance().MakeGameObjectVisible(skillSpawn, false);
 
             isGravitable = false;
             transform.position = pos;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
             if (!playerManager.isDead)
             {
                 InstantiateEffect(quantumAppearEff);
@@ -185,7 +214,7 @@ public class SkillManager : MonoBehaviour
 
         if (playerManager.dangerZoneCount <= 0)
         {
-            hudManager.ShowDangerZoneUI(false);
+            hudManager.ShowHighGravityPanel(false);
         }
     }
 
@@ -209,7 +238,6 @@ public class SkillManager : MonoBehaviour
 
         mask = LayerMask.GetMask("Obstacles");
         channelGammaRaySys = channelGammaRayRef.GetComponentInChildren<ParticleSystem>();
-        raySystem = gammaRayEffect.GetComponentInChildren<ParticleSystem>();
         yield return null;
     }
 
@@ -230,7 +258,7 @@ public class SkillManager : MonoBehaviour
         }
 
         InstantiateEffect(gammaRayEffect);
-        hudManager.CoolDownSkill(Skill.GAMMARAY_BURST, 50f);
+        hudManager.CoolDownSkill(Skill.GAMMARAY_BURST, GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints));
 
         RaycastHit[] hitColliders = Physics.SphereCastAll(transform.position, scaledGammaRayRadius, new Vector3(0f, 0f, 1f), gammaRayLength, mask);
 
@@ -251,7 +279,7 @@ public class SkillManager : MonoBehaviour
         playerManager.gravityFieldCount = playerManager.gravityFieldCount > castedObstacles ? playerManager.gravityFieldCount -= (short)castedObstacles : playerManager.gravityFieldCount = 0;
         if (playerManager.dangerZoneCount <= 0)
         {
-            hudManager.ShowDangerZoneUI(false);
+            hudManager.ShowHighGravityPanel(false);
         }
         //yield return new WaitForSeconds(raySystem.main.duration);
     }

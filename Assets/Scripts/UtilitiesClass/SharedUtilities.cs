@@ -99,8 +99,8 @@ public class SharedUtilities
         float stride = Time.fixedDeltaTime / duration;
         while (image.fillAmount - stride > 0)
         {
-            image.fillAmount -= stride;
             yield return new WaitForFixedUpdate();
+            image.fillAmount -= stride;
         }
         image.fillAmount = 0f;
         if (funcToCall != null)

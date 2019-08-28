@@ -95,10 +95,6 @@ public class PlayerManager : MonoBehaviour
     {
         gameMode = FindObjectOfType<GameMode>();
         movementManager = GetComponent<MovementManager>();
-        if (gameMode.GetType().Name.Equals("OrbitingMode"))
-        {
-            movementManager.initialMovementSpeed /= 12.5f;
-        }
         skillManager = GetComponent<SkillManager>();
         extraManager = GetComponent<ExtraManager>();
         achievementsManager = GetComponent<AchievementsManager>();
@@ -154,7 +150,6 @@ public class PlayerManager : MonoBehaviour
         if (Time.timeScale < 1 && gameMode != null && !gameMode.isPaused)
         {
             Time.timeScale += (1 / collisionSlowMotionDuration) * Time.unscaledDeltaTime;
-            Time.fixedDeltaTime = Time.timeScale * 0.02f;
         }
     }
 
@@ -178,7 +173,7 @@ public class PlayerManager : MonoBehaviour
             gravityFieldCount--;
             if (dangerZoneCount == 0)
             {
-                hudManagerInstance.ShowDangerZoneUI(false);
+                hudManagerInstance.ShowHighGravityPanel(false);
             }
 
             ObstacleGravity obstacleGravity = collision.gameObject.GetComponentInChildren<ObstacleGravity>();
@@ -186,11 +181,10 @@ public class PlayerManager : MonoBehaviour
             timeDistortion = 1f;
             CameraShaker.Instance.ShakeOnce(shakeMagnitude, shakeRoughness, shakeFadeInTime, shakeFadeOutTime);
             Time.timeScale = 1 / collisionTimerMultiplier;
-            Time.fixedDeltaTime = Time.timeScale * 0.02f;
-
+            GameObstacle obstacle = null;
             if (!extraManager.isShielded)
             {
-                Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
+                obstacle = collision.gameObject.GetComponent<GameObstacle>();
                 float damage = 0;
                 switch (obstacle.type)
                 {
@@ -213,6 +207,7 @@ public class PlayerManager : MonoBehaviour
             {
                 extraManager.DestroyShield();
             }
+            gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacle.mass));
         }
     }
 
@@ -233,11 +228,7 @@ public class PlayerManager : MonoBehaviour
         else if (other.gameObject.tag.Equals("DangerZone"))
         {
             dangerZoneCount++;
-            hudManagerInstance.ShowDangerZoneUI(true);
-            if (dangerZoneCount == 1 && !skillManager.isAntiGravityActive)
-            {
-                movementManager.GravitySling();
-            }
+            hudManagerInstance.ShowHighGravityPanel(true);
         }
     }
 
@@ -259,13 +250,17 @@ public class PlayerManager : MonoBehaviour
         }
         else if (other.gameObject.tag.Equals("DangerZone"))
         {
+            if (dangerZoneCount == 1 && !skillManager.isAntiGravityActive)
+            {
+                movementManager.GravitySling();
+            }
             if (dangerZoneCount > 0)
             {
                 dangerZoneCount--;
             }
             if (dangerZoneCount == 0)
             {
-                hudManagerInstance.ShowDangerZoneUI(false);
+                hudManagerInstance.ShowHighGravityPanel(false);
             }
         }
         if (other.gameObject.tag.Equals("Margins"))

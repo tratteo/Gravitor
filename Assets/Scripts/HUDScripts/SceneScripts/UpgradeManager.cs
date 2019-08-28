@@ -5,20 +5,21 @@ using UnityEngine.UI;
 /// </summary>
 public class UpgradeManager : MonoBehaviour
 {
-    public const int INIT_HEALTH_COST = 4000;
-    public const int INIT_THRUST_COST = 1500;
-    public const int INIT_ANTIGRAVITY_COST = 5000;
-    public const int INIT_QUANTUMTUNNEL_COST = 4000;
-    public const int INIT_SOLARFLARE_COST = 3500;
+    public const int INIT_HEALTH_COST = 8000;
+    public const int INIT_THRUST_COST = 3500;
+    public const int INIT_ANTIGRAVITY_COST = 7500;
+    public const int INIT_QUANTUMTUNNEL_COST = 5500;
+    public const int INIT_SOLARFLARE_COST = 4500;
 
-    public const int COMET_EVOLVE_COST = 20000;
-    public const int DENSEPLANET_EVOLVE_COST = 80000;
-    public const int STAR_EVOLVE_COST = 150000;
+    public const int COMET_EVOLVE_COST = 25000;
+    public const int DENSEPLANET_EVOLVE_COST = 85000;
+    public const int STAR_EVOLVE_COST = 250000;
 
     public const short ANTIGRAVITY_MAX_POINTS = 20;
     public const short QUANTUMTUNNEL_MAX_POINTS = 20;
     public const short SOLARFLARE_MAX_POINTS = 20;
 
+    public const short GRB_MAX_POINTS = 3;
     public const short RESILIENCE_MAX_POINTS = 15;
     public const short THRUSTFORCE_MAX_POINTS = 30;
 
@@ -62,6 +63,12 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Text solarflareCostText = null;
     [Header("GammaRayBurstUI")]
     [SerializeField] private GameObject gammaRayBurstEffect = null;
+    [SerializeField] private Text GRBCostText = null;
+    [SerializeField] private Text GRBInfoText = null;
+    [SerializeField] private Color GRB1;
+    [SerializeField] private Color GRB2;
+    [SerializeField] private Color GRB3;
+
 
     private int healthUpgradeCost;
     private int thrustForceUpgradeCost;
@@ -69,6 +76,7 @@ public class UpgradeManager : MonoBehaviour
     private int quantumTunnelUpgradeCost;
     private int solarflareUpgradeCost;
     private int evolveCost;
+    private int GRBUpgradeCost;
 
     private int gravityPoints;
     private PlayerData playerData;
@@ -103,6 +111,7 @@ public class UpgradeManager : MonoBehaviour
         antigravityUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.antigravityPoints, INIT_ANTIGRAVITY_COST);
         quantumTunnelUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.quantumTunnelPoints, INIT_QUANTUMTUNNEL_COST);
         solarflareUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.solarflarePoints, INIT_SOLARFLARE_COST);
+        GRBUpgradeCost = GameplayMath.GetInstance().GetGRBCost(skillsData.gammaRayBurstPoints);
 
         UpdateUIBasedOnPlayerState();
         UpdateUI();
@@ -261,6 +270,16 @@ public class UpgradeManager : MonoBehaviour
         {
             solarflareCostText.gameObject.SetActive(false);
         }
+        //GRB
+        if(skillsData.gammaRayBurstPoints < GRB_MAX_POINTS)
+        {
+            GRBCostText.text = GRBUpgradeCost.ToString();
+        }
+        else
+        {
+            GRBCostText.gameObject.SetActive(false);
+        }
+        UpdateGRBColor();
 
         evolveCostText.text = evolveCost.ToString();
 
@@ -315,6 +334,17 @@ public class UpgradeManager : MonoBehaviour
             {
                 solarflareInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints).ToString("0.0") + "s</b>"
                                           + ", radius: <b>" + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints).ToString("0.0") + "</b>";
+            }
+
+            if(skillsData.gammaRayBurstPoints < GRB_MAX_POINTS)
+            {
+                GRBInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints).ToString("0.0") + "s</b>"
+                                   + "\n<color=cyan>Next Upgrade: </color>\n"
+                                   + "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints + 1).ToString("0.0") + "s</b>";
+            }
+            else
+            {
+                GRBInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints).ToString("0.0") + "s</b>";
             }
         }
     }
@@ -451,6 +481,54 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
+    public void UpgradeGRB()
+    {
+        if (skillsData.gammaRayBurstPoints >= GRB_MAX_POINTS)
+        {
+            toast.ShowToast("Already at max level", null, 1.5f);
+            return;
+        }
+        if (GRBUpgradeCost <= gravityPoints)
+        {
+            if (skillsData != null)
+            {
+                skillsData.gammaRayBurstPoints++;
+                gravityPoints -= GRBUpgradeCost;
+                GRBUpgradeCost = GameplayMath.GetInstance().GetGRBCost(skillsData.gammaRayBurstPoints);
+            }
+            SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
+            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+            UpdateUI();
+        }
+        else
+        {
+            toast.ShowToast("Not enough Gravity Points", null, 1.5f);
+        }
+
+    }
+
+    private void UpdateGRBColor()
+    {
+        ParticleSystemRenderer[] systems = gammaRayBurstEffect.GetComponentsInChildren<ParticleSystemRenderer>();
+        Color colorToSet = new Color(255, 255, 255, 255);
+        switch (skillsData.gammaRayBurstPoints)
+        {
+            case 1:
+                colorToSet = GRB1;
+                break;
+            case 2:
+                colorToSet = GRB2;
+                break;
+            case 3:
+                colorToSet = GRB3;
+                break;
+        }
+        foreach (ParticleSystemRenderer system in systems)
+        {
+            system.material.SetColor("_TintColor", colorToSet);
+        }
+    }
+
     public void Evolve()
     {
         if (gravityPoints >= evolveCost && playerData.playerState != PlayerManager.PlayerState.STAR)
@@ -483,4 +561,5 @@ public class UpgradeManager : MonoBehaviour
             toast.ShowToast("Not enough Gravity Points", null, 1.5f);
         }
     }
+
 }

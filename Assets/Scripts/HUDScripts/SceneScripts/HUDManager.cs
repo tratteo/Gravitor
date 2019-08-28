@@ -59,7 +59,7 @@ public class HUDManager : MonoBehaviour
     public GameObject tutorialPanel;
     public GameObject highScorePanel = null;
     public GameObject quantumTunnelPanel = null;
-    public GameObject dangerZonePanel = null;
+    public GameObject highGravityFieldPanel = null;
 
     public bool showToastsField;
     public ToastScript inGameToast = null;
@@ -125,7 +125,6 @@ public class HUDManager : MonoBehaviour
             healthText.gameObject.SetActive(false);
             tutorialPanel.SetActive(true);
             Time.timeScale = 0f;
-            Time.fixedDeltaTime = 0f;
             gameMode.isPaused = true;
         }
         if (showFPS)
@@ -307,7 +306,6 @@ public class HUDManager : MonoBehaviour
             gameMode.isPaused = true;
             HUDPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             Time.timeScale = 0f;
-            Time.fixedDeltaTime = 0f;
         }
         else
         {
@@ -330,7 +328,6 @@ public class HUDManager : MonoBehaviour
             timerText.text = resumeTimer.ToString();
         }
         Time.timeScale = 1;
-        Time.fixedDeltaTime = 0.02f;
         gameMode.isPaused = false;
         timerPanel.gameObject.SetActive(false);
         HUDPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -354,7 +351,6 @@ public class HUDManager : MonoBehaviour
             gameMode.isPaused = true;
             HUDPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             Time.timeScale = 0f;
-            Time.fixedDeltaTime = 0f;
             StartCoroutine(PauseResumeCountdown());
         });
     }
@@ -474,9 +470,9 @@ public class HUDManager : MonoBehaviour
     //
 
     //SHOW PANELS
-    public void ShowDangerZoneUI(bool state)
+    public void ShowHighGravityPanel(bool state)
     {
-        dangerZonePanel.SetActive(state);
+        highGravityFieldPanel.SetActive(state);
         if (!state)
         {
             gameMode.playerManager.dangerZoneCount = 0;

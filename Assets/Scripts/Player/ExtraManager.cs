@@ -6,7 +6,7 @@ using System;
 [RequireComponent(typeof(PlayerManager))]
 public class ExtraManager : MonoBehaviour
 {
-    [SerializeField] private int maxCollectableShields = 2;
+    [SerializeField] private int maxCollectableShields = 4;
     [HideInInspector] public bool isShielded = false;
     private GameObject shieldEffectRef = null;
     private PlayerManager playerManager = null;
@@ -18,7 +18,7 @@ public class ExtraManager : MonoBehaviour
 
     private int shieldCount = 0;
     private Wormhole warpDrive;
-    public int enqueuedShields = 0;
+    [HideInInspector] public int enqueuedShields = 0;
 
     private void Start()
     {
@@ -112,7 +112,7 @@ public class ExtraManager : MonoBehaviour
 
         playerCollider.enabled = false;
         playerManager.dangerZoneCount = 0;
-        HUDManager.GetInstance().ShowDangerZoneUI(false);
+        HUDManager.GetInstance().ShowHighGravityPanel(false);
         playerManager.movementManager.DisableMovement();
 
         CameraManager.GetInstance().SmoothInAndOutFOV(null, wormhole.viewDistortion, 0.3f, wormhole.duration - 0.6f);

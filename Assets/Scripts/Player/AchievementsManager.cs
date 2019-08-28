@@ -96,7 +96,7 @@ public class AchievementsManager : MonoBehaviour
         }
 
         //SPEED
-        if(stats.maxSpeedReached == MovementManager.MAX_SPEED)
+        if(stats.maxSpeedReached == playerManager.movementManager.maxSpeed)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_VMAX);
         }
