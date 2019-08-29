@@ -3346,7 +3346,7 @@ MonoBehaviour:
   gammaRayLength: 3100
   unscaledGammaRayRadius: 65
   GRB1: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 0.47058824}
-  GRB2: {r: 0.21386614, g: 0.37254903, b: 0.8627451, a: 0.50980395}
+  GRB2: {r: 0.98039216, g: 0.43137255, b: 0, a: 0.5882353}
   GRB3: {r: 0.9411765, g: 0.3137255, b: 0.84313726, a: 0.47058824}
   isAntiGravityActive: 0
   isGravitable: 1
@@ -5474,6 +5474,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 0
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -5555,6 +5556,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -6040,6 +6042,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -7028,6 +7031,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -7815,6 +7819,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -8140,8 +8145,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 534669904}
   directionArrow: {fileID: 511646593}
-  deathEffect: {fileID: 8793235789949313078, guid: 85b4e6802c734b545a3abf3878abcc4e,
+  asteroidDE: {fileID: 8793235789949313078, guid: a6d6b09a3daea13428e2fc3a026d7bff,
     type: 3}
+  cometDE: {fileID: 8793235789949313078, guid: 85b4e6802c734b545a3abf3878abcc4e, type: 3}
   damageNebula: {fileID: 8190744258326939647, guid: fd17ed045b88c0249bce7f77ee7145b2,
     type: 3}
   rightNebulaSpawner: {fileID: 697660378}
@@ -8155,9 +8161,7 @@ MonoBehaviour:
   collisionTimerMultiplier: 3.5
   collisionSlowMotionDuration: 2
   asteroidMaterial: {fileID: 2100000, guid: 069dcfc6d2eafe542b95545203f5261f, type: 2}
-  cometMaterial: {fileID: 2100000, guid: 38e2ffe1f3361c142b5e435fdcb76156, type: 2}
-  densePlanetMaterial: {fileID: 2100000, guid: fe859f41b57931c41b3871ce0141a194, type: 2}
-  starMaterial: {fileID: 2100000, guid: 2b5009ea23f91464e84f560b76b25bdd, type: 2}
+  cometMaterial: {fileID: 2100000, guid: 2b5009ea23f91464e84f560b76b25bdd, type: 2}
   movementManager: {fileID: 1446062192}
   skillManager: {fileID: 1446062193}
   extraManager: {fileID: 0}
@@ -8586,6 +8590,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -9638,7 +9643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6666667, b: 0.5376954, a: 0.11764706}
+  m_Color: {r: 0, g: 0.6666667, b: 0.5376954, a: 0.13725491}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -9889,6 +9894,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 0
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -10347,6 +10353,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 0
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -10558,6 +10565,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 0
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -11070,6 +11078,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 0
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0
@@ -11384,6 +11393,7 @@ MonoBehaviour:
   resizeOnPress: 1
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
+  soundTag: ButtonClick
   defaultColor:
     serializedVersion: 2
     rgba: 0

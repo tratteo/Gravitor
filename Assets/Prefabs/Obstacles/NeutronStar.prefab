@@ -119,8 +119,8 @@ MonoBehaviour:
   starFlare: {fileID: 0}
   rotate: 1
   targetScale: 0
-  minDensity: 25000000
-  maxDensity: 35000000
+  minDensity: 30000000
+  maxDensity: 45000000
   deathEffect: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
     type: 3}
   density: 0

@@ -10,14 +10,16 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     #region Variables
-    public enum PlayerState { ASTEROID, COMET, DENSE_PLANET, STAR };
+    public enum PlayerState { ASTEROID, COMET };
 
     //Editor variables
     [Header("References")]
     public Camera mainCamera;
     [SerializeField] private Canvas directionArrow = null;
     [Header("Effects")]
-    public GameObject deathEffect;
+    public GameObject asteroidDE;
+    public GameObject cometDE;
+    private GameObject deathEffect;
     [SerializeField] private GameObject damageNebula;
     private ParticleSystem latDamageNebulaEffect;
     private ParticleSystem verticalDamageNebulaEffect;
@@ -36,8 +38,6 @@ public class PlayerManager : MonoBehaviour
     [Header("Aspect")]
     [SerializeField] private Material asteroidMaterial = null;
     [SerializeField] private Material cometMaterial = null;
-    [SerializeField] private Material densePlanetMaterial = null;
-    [SerializeField] private Material starMaterial = null;
 
     //Player references
     [HideInInspector] public MovementManager movementManager;
@@ -121,18 +121,12 @@ public class PlayerManager : MonoBehaviour
         {
             case PlayerState.ASTEROID:
                 renderer.material = asteroidMaterial;
+                deathEffect = asteroidDE;
                 break;
 
             case PlayerState.COMET:
                 renderer.material = cometMaterial;
-                break;
-
-            case PlayerState.DENSE_PLANET:
-                renderer.material = densePlanetMaterial;
-                break;
-
-            case PlayerState.STAR:
-                renderer.material = starMaterial;
+                deathEffect = cometDE;
                 break;
         }
 

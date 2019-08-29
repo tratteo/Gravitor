@@ -145,10 +145,13 @@ public class SkillManager : MonoBehaviour
         int layerMask = LayerMask.GetMask("UI");
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
         {
+            Debug.DrawLine(ray.origin, hit.point, Color.yellow, 2f);
+            Debug.Log("x: " + hit.point.x + ", y: " + hit.point.y);
             playerManager.timeDistortion = 1f;
-            Vector3 pos = transform.position;
+            Vector3 pos;
             pos.x = hit.point.x;
-            pos.y = hit.point.y * 1.5f;
+            pos.y = 2f * hit.point.y - transform.position.y;
+            pos.z = transform.position.z;
 
             hudManager.QuantumTunnelSelectionActive(false);
             InstantiateEffect(quantumDisappearEff);
@@ -254,7 +257,7 @@ public class SkillManager : MonoBehaviour
         if (playerManager.gameMode.GetType().Name.Equals("LinearMode"))
         {
             Vector3 exceptionCentre = new Vector3(transform.position.x, transform.position.y, playerManager.gameMode.obstacleRandZSpawn.x);
-            playerManager.gameMode.NotifySpawnException(exceptionCentre, scaledGammaRayRadius, scaledGammaRayRadius, 1f, 6f);
+            playerManager.gameMode.NotifySpawnException(exceptionCentre, scaledGammaRayRadius, scaledGammaRayRadius, 1f, 8.5f);
         }
 
         InstantiateEffect(gammaRayEffect);

@@ -122,23 +122,22 @@ public class MenuManager : MonoBehaviour
         {
             objectData = SaveManager.GetInstance().SavePersistentData(new PlayerData(), SaveManager.PLAYER_DATA);
         }
-        adBonusGP = 5000;
-        switch(objectData.GetData<PlayerData>().playerState)
+        adBonusGP = 15000;
+        PlayerData playerData = objectData.GetData<PlayerData>();
+        switch (playerData.playerState)
         {
             case PlayerManager.PlayerState.ASTEROID:
-                adBonusGP = 5000;
+                adBonusGP = 15000;
                 break;
             case PlayerManager.PlayerState.COMET:
-                adBonusGP = 9000;
+                adBonusGP = 40000;
                 break;
-            case PlayerManager.PlayerState.DENSE_PLANET:
-                adBonusGP = 18000;
-                break;
-            case PlayerManager.PlayerState.STAR:
+            default:
+                playerData.playerState = PlayerManager.PlayerState.COMET;
+                SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
                 adBonusGP = 40000;
                 break;
         }
-
 
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH);
         if (objectData == null)

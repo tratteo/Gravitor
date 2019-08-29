@@ -11,6 +11,7 @@ public class ButtonPress : MonoBehaviour
     public bool resizeOnPress;
     public Vector2 pressedScaleMultiplier;
     public bool playSound = true;
+    public string soundTag = "ButtonClick";
 
     public Color32 defaultColor;
     public Image sprite;

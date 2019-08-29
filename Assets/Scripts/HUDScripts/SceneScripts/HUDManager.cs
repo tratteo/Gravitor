@@ -194,24 +194,10 @@ public class HUDManager : MonoBehaviour
                 gammaRayBurstBtn.gameObject.SetActive(false);
 
                 antigravityBtn.gameObject.SetActive(true);
-                quantumTunnelBtn.gameObject.SetActive(false);
+                quantumTunnelBtn.gameObject.SetActive(true);
                 solarflareBtn.gameObject.SetActive(false);
                 break;
             case PlayerManager.PlayerState.COMET:
-                gammaRayBurstBtn.gameObject.SetActive(false);
-
-                antigravityBtn.gameObject.SetActive(true);
-                quantumTunnelBtn.gameObject.SetActive(true);
-                solarflareBtn.gameObject.SetActive(false);
-                break;
-            case PlayerManager.PlayerState.DENSE_PLANET:
-                gammaRayBurstBtn.gameObject.SetActive(false);
-
-                antigravityBtn.gameObject.SetActive(true);
-                quantumTunnelBtn.gameObject.SetActive(true);
-                solarflareBtn.gameObject.SetActive(true);
-                break;
-            case PlayerManager.PlayerState.STAR:
                 gammaRayBurstBtn.gameObject.SetActive(true);
 
                 antigravityBtn.gameObject.SetActive(true);

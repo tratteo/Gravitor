@@ -11,9 +11,7 @@ public class UpgradeManager : MonoBehaviour
     public const int INIT_QUANTUMTUNNEL_COST = 5500;
     public const int INIT_SOLARFLARE_COST = 4500;
 
-    public const int COMET_EVOLVE_COST = 25000;
-    public const int DENSEPLANET_EVOLVE_COST = 85000;
-    public const int STAR_EVOLVE_COST = 250000;
+    public const int EVOLVE_COST = 85000;
 
     public const short ANTIGRAVITY_MAX_POINTS = 20;
     public const short QUANTUMTUNNEL_MAX_POINTS = 20;
@@ -28,8 +26,6 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private GameObject previewStateSphere = null;
     [SerializeField] private Material asteroid = null;
     [SerializeField] private Material comet = null;
-    [SerializeField] private Material densePlanet = null;
-    [SerializeField] private Material star = null;
     [SerializeField] private ToastScript toast = null;
     [SerializeField] private Text gravityPointsText = null;
     [SerializeField] private Text unlockSkillText = null;
@@ -75,7 +71,6 @@ public class UpgradeManager : MonoBehaviour
     private int antigravityUpgradeCost;
     private int quantumTunnelUpgradeCost;
     private int solarflareUpgradeCost;
-    private int evolveCost;
     private int GRBUpgradeCost;
 
     private int gravityPoints;
@@ -90,18 +85,6 @@ public class UpgradeManager : MonoBehaviour
         thrustForceUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.thrustForcePoints, INIT_THRUST_COST);
         healthUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.GetHealthPoints(), INIT_HEALTH_COST);
 
-        switch (playerData.playerState)
-        {
-            case PlayerManager.PlayerState.ASTEROID:
-                evolveCost = COMET_EVOLVE_COST;
-                break;
-            case PlayerManager.PlayerState.COMET:
-                evolveCost = DENSEPLANET_EVOLVE_COST;
-                break;
-            case PlayerManager.PlayerState.DENSE_PLANET:
-                evolveCost = STAR_EVOLVE_COST;
-                break;
-        }
         SaveObject objectData;
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
         gravityPoints = objectData != null ? gravityPoints = objectData.GetData<int>() : 0;
@@ -113,7 +96,7 @@ public class UpgradeManager : MonoBehaviour
         solarflareUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.solarflarePoints, INIT_SOLARFLARE_COST);
         GRBUpgradeCost = GameplayMath.GetInstance().GetGRBCost(skillsData.gammaRayBurstPoints);
 
-        UpdateUIBasedOnPlayerState();
+        EnableUIBasedOnPlayerState();
         UpdateUI();
     }
 
@@ -122,7 +105,7 @@ public class UpgradeManager : MonoBehaviour
         previewStateSphere.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
     }
 
-    private void UpdateUIBasedOnPlayerState()
+    private void EnableUIBasedOnPlayerState()
     {
         switch (playerData.playerState)
         {
@@ -132,9 +115,9 @@ public class UpgradeManager : MonoBehaviour
                 antigravityPointsText.gameObject.SetActive(true);
                 antigravityInfoText.gameObject.SetActive(true);
 
-                upgradeQuantumTunnelBtn.gameObject.SetActive(false);
-                quantumTunnelPointsText.gameObject.SetActive(false);
-                quantumTunnelInfoText.gameObject.SetActive(false);
+                upgradeQuantumTunnelBtn.gameObject.SetActive(true);
+                quantumTunnelPointsText.gameObject.SetActive(true);
+                quantumTunnelInfoText.gameObject.SetActive(true);
 
                 upgradeSolarflareBtn.gameObject.SetActive(false);
                 solarflarePointsText.gameObject.SetActive(false);
@@ -158,50 +141,6 @@ public class UpgradeManager : MonoBehaviour
                 quantumTunnelPointsText.gameObject.SetActive(true);
                 quantumTunnelInfoText.gameObject.SetActive(true);
 
-                upgradeSolarflareBtn.gameObject.SetActive(false);
-                solarflarePointsText.gameObject.SetActive(false);
-                solarflareInfoText.gameObject.SetActive(false);
-
-                evolveBtn.gameObject.SetActive(true);
-                evolveCostText.gameObject.SetActive(true);
-                unlockSkillText.gameObject.SetActive(true);
-
-                unlockGammaRayBurstText.gameObject.SetActive(true);
-                gammaRayBurstEffect.SetActive(false);
-                break;
-
-            case PlayerManager.PlayerState.DENSE_PLANET:
-                previewStateSphere.GetComponent<MeshRenderer>().material = densePlanet;
-                upgradeAntigravityBtn.gameObject.SetActive(true);
-                antigravityPointsText.gameObject.SetActive(true);
-                antigravityInfoText.gameObject.SetActive(true);
-
-                upgradeQuantumTunnelBtn.gameObject.SetActive(true);
-                quantumTunnelPointsText.gameObject.SetActive(true);
-                quantumTunnelInfoText.gameObject.SetActive(true);
-
-                upgradeSolarflareBtn.gameObject.SetActive(true);
-                solarflarePointsText.gameObject.SetActive(true);
-                solarflareInfoText.gameObject.SetActive(true);
-
-                evolveBtn.gameObject.SetActive(true);
-                evolveCostText.gameObject.SetActive(true);
-                unlockSkillText.gameObject.SetActive(false);
-
-                unlockGammaRayBurstText.gameObject.SetActive(true);
-                gammaRayBurstEffect.SetActive(false);
-                break;
-
-            case PlayerManager.PlayerState.STAR:
-                previewStateSphere.GetComponent<MeshRenderer>().material = star;
-                upgradeAntigravityBtn.gameObject.SetActive(true);
-                antigravityPointsText.gameObject.SetActive(true);
-                antigravityInfoText.gameObject.SetActive(true);
-
-                upgradeQuantumTunnelBtn.gameObject.SetActive(true);
-                quantumTunnelPointsText.gameObject.SetActive(true);
-                quantumTunnelInfoText.gameObject.SetActive(true);
-
                 upgradeSolarflareBtn.gameObject.SetActive(true);
                 solarflarePointsText.gameObject.SetActive(true);
                 solarflareInfoText.gameObject.SetActive(true);
@@ -213,6 +152,50 @@ public class UpgradeManager : MonoBehaviour
                 unlockGammaRayBurstText.gameObject.SetActive(false);
                 gammaRayBurstEffect.SetActive(true);
                 break;
+
+            //case PlayerManager.PlayerState.DENSE_PLANET:
+            //    previewStateSphere.GetComponent<MeshRenderer>().material = densePlanet;
+            //    upgradeAntigravityBtn.gameObject.SetActive(true);
+            //    antigravityPointsText.gameObject.SetActive(true);
+            //    antigravityInfoText.gameObject.SetActive(true);
+
+            //    upgradeQuantumTunnelBtn.gameObject.SetActive(true);
+            //    quantumTunnelPointsText.gameObject.SetActive(true);
+            //    quantumTunnelInfoText.gameObject.SetActive(true);
+
+            //    upgradeSolarflareBtn.gameObject.SetActive(true);
+            //    solarflarePointsText.gameObject.SetActive(true);
+            //    solarflareInfoText.gameObject.SetActive(true);
+
+            //    evolveBtn.gameObject.SetActive(true);
+            //    evolveCostText.gameObject.SetActive(true);
+            //    unlockSkillText.gameObject.SetActive(false);
+
+            //    unlockGammaRayBurstText.gameObject.SetActive(true);
+            //    gammaRayBurstEffect.SetActive(false);
+            //    break;
+
+            //case PlayerManager.PlayerState.STAR:
+            //    previewStateSphere.GetComponent<MeshRenderer>().material = star;
+            //    upgradeAntigravityBtn.gameObject.SetActive(true);
+            //    antigravityPointsText.gameObject.SetActive(true);
+            //    antigravityInfoText.gameObject.SetActive(true);
+
+            //    upgradeQuantumTunnelBtn.gameObject.SetActive(true);
+            //    quantumTunnelPointsText.gameObject.SetActive(true);
+            //    quantumTunnelInfoText.gameObject.SetActive(true);
+
+            //    upgradeSolarflareBtn.gameObject.SetActive(true);
+            //    solarflarePointsText.gameObject.SetActive(true);
+            //    solarflareInfoText.gameObject.SetActive(true);
+
+            //    evolveBtn.gameObject.SetActive(false);
+            //    evolveCostText.gameObject.SetActive(false);
+            //    unlockSkillText.gameObject.SetActive(false);
+
+            //    unlockGammaRayBurstText.gameObject.SetActive(false);
+            //    gammaRayBurstEffect.SetActive(true);
+            //    break;
         }
     }
 
@@ -281,7 +264,7 @@ public class UpgradeManager : MonoBehaviour
         }
         UpdateGRBColor();
 
-        evolveCostText.text = evolveCost.ToString();
+        evolveCostText.text = EVOLVE_COST.ToString();
 
         if (playerData != null)
         {
@@ -531,29 +514,13 @@ public class UpgradeManager : MonoBehaviour
 
     public void Evolve()
     {
-        if (gravityPoints >= evolveCost && playerData.playerState != PlayerManager.PlayerState.STAR)
+        if (gravityPoints >= EVOLVE_COST && playerData.playerState == PlayerManager.PlayerState.ASTEROID)
         {
-            gravityPoints -= evolveCost;
-            switch (playerData.playerState)
-            {
-                //Asteroid -> Comet
-                case PlayerManager.PlayerState.ASTEROID:
-                    playerData.playerState = PlayerManager.PlayerState.COMET;
-                    evolveCost = DENSEPLANET_EVOLVE_COST;
-                    break;
-                //Comet -> Dense planet
-                case PlayerManager.PlayerState.COMET:
-                    playerData.playerState = PlayerManager.PlayerState.DENSE_PLANET;
-                    evolveCost = STAR_EVOLVE_COST;
-                    break;
-                //Dense planet -> Star
-                case PlayerManager.PlayerState.DENSE_PLANET:
-                    playerData.playerState = PlayerManager.PlayerState.STAR;
-                    break;
-            }
+            gravityPoints -= EVOLVE_COST;
+            playerData.playerState = PlayerManager.PlayerState.COMET;
             SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
             SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
-            UpdateUIBasedOnPlayerState();
+            EnableUIBasedOnPlayerState();
             UpdateUI();
         }
         else

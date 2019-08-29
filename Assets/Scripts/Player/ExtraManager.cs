@@ -115,7 +115,7 @@ public class ExtraManager : MonoBehaviour
         HUDManager.GetInstance().ShowHighGravityPanel(false);
         playerManager.movementManager.DisableMovement();
 
-        CameraManager.GetInstance().SmoothInAndOutFOV(null, wormhole.viewDistortion, 0.3f, wormhole.duration - 0.6f);
+        CameraManager.GetInstance().SmoothInAndOutFOV(null, wormhole.viewDistortion, 0.2f, wormhole.duration - 0.4f);
         playerManager.movementManager.SpeedEffect(wormhole.duration, 5f);
         playerManager.timeDistortion = GameplayMath.GetInstance().GetSpeedTd(wormhole.speed);
         playerManager.scoreMultiplier = wormhole.scoreMultiplier;
