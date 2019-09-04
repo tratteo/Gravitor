@@ -1663,7 +1663,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8768927365799513320}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -2927,7 +2927,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8768927365799513320}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -4406,7 +4406,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8768927365799513320}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -6423,7 +6423,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3119795629055098713}
+  m_Father: {fileID: 8768927365799513320}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -6575,7 +6575,7 @@ MonoBehaviour:
   solarflareBtn: {fileID: 8860004520694636301}
   gammaRayBurstBtn: {fileID: 8860004521156526307}
   adButton: {fileID: 8860004521311727367}
-  showPanelsField: 0
+  showPanelsField: 1
   controlPanel: {fileID: 8860004521168791566}
   HUDPanel: {fileID: 3119795629055098712}
   timerPanel: {fileID: 3436082294046964469}
@@ -6587,6 +6587,7 @@ MonoBehaviour:
   highScorePanel: {fileID: 8860004520556574384}
   quantumTunnelPanel: {fileID: 8860004519814355167}
   highGravityFieldPanel: {fileID: 3119795628032070672}
+  statsPanel: {fileID: 3060681185855780723}
   showToastsField: 0
   inGameToast: {fileID: 6968338996237166777}
   achievementToast: {fileID: 1481151227}
@@ -6855,7 +6856,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: 
 --- !u!222 &3119795627626014610
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8373,7 +8374,7 @@ RectTransform:
   - {fileID: 8860004521168791567}
   - {fileID: 2267732753495176588}
   - {fileID: 8860004519814355152}
-  - {fileID: 1939952344375260136}
+  - {fileID: 8860004520427391019}
   - {fileID: 8768927365799513320}
   m_Father: {fileID: 3119795628017472846}
   m_RootOrder: 0
@@ -8909,7 +8910,6 @@ MonoBehaviour:
   movementManager: {fileID: 1446062192}
   skillManager: {fileID: 1446062193}
   extraManager: {fileID: 0}
-  achievementsManager: {fileID: 0}
   gameMode: {fileID: 393936534}
   resilience: 0
   playerState: 3
@@ -9926,10 +9926,10 @@ RectTransform:
   m_Children:
   - {fileID: 1671643242489024215}
   - {fileID: 8860004521317480901}
-  - {fileID: 8860004520427391019}
   - {fileID: 473669499}
   - {fileID: 1631106583}
   - {fileID: 957742570}
+  - {fileID: 1939952344375260136}
   m_Father: {fileID: 3119795629055098713}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10653,8 +10653,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8768927365799513320}
-  m_RootOrder: 2
+  m_Father: {fileID: 3119795629055098713}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}

@@ -36,14 +36,6 @@ public abstract class GameMode : MonoBehaviour
     private int currentHighscore;
 
     protected Spawner obstacleSpawner, extraSpawner;
-    //Events
-    private event Action OnHighScoreReached;
-    public void SubrscribeToHighScoreReachedEvent(Action funcToSub) { OnHighScoreReached += funcToSub; }
-    public void UnsubrscribeToHighScoreReachedEvent(Action funcToUnsub) { OnHighScoreReached -= funcToUnsub; }
-
-    private event Action OnAttempt;
-    public void SubscribeToOnAttemptEvent(Action funcToSub) { OnAttempt += funcToSub; }
-    public void UnsubscribeToOnAttemptEvent(Action funcToUnsub) { OnAttempt -= funcToUnsub; }
 
     #endregion
 
@@ -61,7 +53,6 @@ public abstract class GameMode : MonoBehaviour
     void OnDisable()
     {
         playerManager.UnsubscribeToPlayerDeathEvent(EndSession);
-        playerManager.UnsubscribeToOnLevelCompletedEvent(LevelCompleted);
         GoogleAdsManager.GetInstance().UnsubscribeToRewardClaimed(EarnReward);
     }
 
@@ -80,10 +71,11 @@ public abstract class GameMode : MonoBehaviour
 
         //Events subscriptions
         playerManager.SubscribeToPlayerDeathEvent(EndSession);
-        playerManager.SubscribeToOnLevelCompletedEvent(LevelCompleted);
         GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
 
-        HUDManager.GetInstance().SetHUDBasedOnLevel(currentLevel);
+        HUDManager.GetInstance().DisplayLevelInfoPanel(currentLevel);
+        HUDManager.GetInstance().SetStatsHUDBasedOnLevel(currentLevel);
+
         playerManager.movementManager.SpeedEffect(2f, playerManager.movementManager.maxSpeed / 2, false, false);
         CameraManager.GetInstance().SmoothInAndOutFOV(null, 175f, 0.25f, 1.5f);
     }
@@ -138,7 +130,7 @@ public abstract class GameMode : MonoBehaviour
         {
             highScoreReached = true;
             //FIRE EVENT
-            OnHighScoreReached();
+            HUDManager.GetInstance().DisplayHighscorePanel();
         }
     }
 
@@ -163,52 +155,54 @@ public abstract class GameMode : MonoBehaviour
             attemptUsed = true;
             obstacleSpawner.PauseSpawnTimer(false);
             extraSpawner.PauseSpawnTimer(false);
-            OnAttempt();
-            Executer.GetInstance().AddJob(() =>
-            {
-               ClearMap();
-            });
 
+            playerManager.Attempt();
+            HUDManager.GetInstance().Attempt();
+
+            Executer.GetInstance().AddJob(() => { ClearMap(); });
         }
     }
 
     public void EndSession()
     {
         Time.timeScale = 1f;
+        isGameOver = true;
 
         obstacleSpawner.PauseSpawnTimer(true);
         extraSpawner.PauseSpawnTimer(true);
 
         sessionGravityPoints = (int)(0.185f * (0.6f * sessionScore * (playerManager.properTime / 225f)));
-
         SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+
         if (currentLevel.category == Level.LevelCategory.ENDLESS)
         {
             LevelsData data = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>();
             data.UpdateLevelScore(LevelsData.ENDLESS_ID, (int)sessionScore);
             SaveManager.GetInstance().SavePersistentData<LevelsData>(data, SaveManager.LEVELSDATA_PATH);
         }
-        isGameOver = true;
-        HUDManager.GetInstance().DisplayGameOver();
-        HUDManager.GetInstance().ShowHighGravityPanel(false);
+
+        HUDManager.GetInstance().DisplayGameOverPanel();
+        HUDManager.GetInstance().EnableHighGravityFieldPanel(false);
     }
 
-    private void LevelCompleted()
+    public void LevelCompleted()
     {
+        Time.timeScale = 1f;
+        isGameOver = true;
+
         sessionGravityPoints = (int)(0.185f * (0.6f * sessionScore * (playerManager.properTime / 225f)));
         SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+
         LevelsData levelsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>();
         levelsData.UnlockLevel(currentLevel.id + 1);
         levelsData.UpdateLevelScore(currentLevel.id, (int)sessionScore);
         SaveManager.GetInstance().SavePersistentData<LevelsData>(levelsData, SaveManager.LEVELSDATA_PATH);
 
-        Time.timeScale = 1f;
-        isGameOver = true;
-        sessionGravityPoints = (int)(0.185f * (0.6f * sessionScore * (playerManager.properTime / 300f)));
         obstacleSpawner.PauseSpawnTimer(true);
         extraSpawner.PauseSpawnTimer(true);
-        HUDManager.GetInstance().ShowHighGravityPanel(false);
-        HUDManager.GetInstance().DisplayLevelCompleted();
+
+        HUDManager.GetInstance().EnableHighGravityFieldPanel(false);
+        HUDManager.GetInstance().DisplayLevelCompletedPanel();
     }
 
     public void NotifySpawnException(Vector3 centre, float width, float height, float depth, float duration)
@@ -229,6 +223,5 @@ public abstract class GameMode : MonoBehaviour
     public float GetSpawnRateFromTime(int seconds)
     {
         return (-alpha / ((seconds * beta) + gamma)) + delta;
-        //return (-865f / ((seconds * 0.0625f) + 45)) + 20.5f;
     }
 }

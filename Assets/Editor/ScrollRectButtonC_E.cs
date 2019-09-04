@@ -13,7 +13,6 @@ public class ScrollRectButtonC_E : Editor
     }
     public override void OnInspectorGUI()
     {
-        script.mainTrigger = (EventTrigger)EditorGUILayout.ObjectField("Trigger", script.mainTrigger, typeof(EventTrigger), true);
         script.colorPressEffect = EditorGUILayout.Toggle("Pressed color effect", script.colorPressEffect);
         if (script.colorPressEffect)
         {

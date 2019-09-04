@@ -224,7 +224,7 @@ public class SkillManager : MonoBehaviour
 
         if (playerManager.dangerZoneCount <= 0)
         {
-            hudManager.ShowHighGravityPanel(false);
+            hudManager.EnableHighGravityFieldPanel(false);
         }
     }
 
@@ -295,7 +295,7 @@ public class SkillManager : MonoBehaviour
         playerManager.gravityFieldCount = playerManager.gravityFieldCount > castedObstacles ? playerManager.gravityFieldCount -= (short)castedObstacles : playerManager.gravityFieldCount = 0;
         if (playerManager.dangerZoneCount <= 0)
         {
-            hudManager.ShowHighGravityPanel(false);
+            hudManager.EnableHighGravityFieldPanel(false);
         }
         //yield return new WaitForSeconds(raySystem.main.duration);
     }

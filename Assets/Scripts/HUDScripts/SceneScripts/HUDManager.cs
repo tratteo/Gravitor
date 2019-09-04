@@ -64,6 +64,7 @@ public class HUDManager : MonoBehaviour
     public GameObject highScorePanel = null;
     public GameObject quantumTunnelPanel = null;
     public GameObject highGravityFieldPanel = null;
+    public GameObject statsPanel = null;
 
     public bool showToastsField;
     public ToastScript inGameToast = null;
@@ -79,7 +80,6 @@ public class HUDManager : MonoBehaviour
     private PlayerData playerData;
     private SettingsData settingsData;
     private IEnumerator shieldHUDAnim_C = null;
-    private bool showFPS = false;
     private readonly int resumeTimerDuration = 3;
     private int resumeTimer;
     private IEnumerator checkAdC = null;
@@ -90,49 +90,38 @@ public class HUDManager : MonoBehaviour
 
     #endregion
 
-
-    void OnDisable()
-    {
-        playerManager.UnsubscribeToHealthChanged(UpdatePlayerHealth);
-        gameMode.UnsubrscribeToHighScoreReachedEvent(ShowHighScorePanel);
-        gameMode.UnsubscribeToOnAttemptEvent(Attempt);
-    }
-
     private void Start()
     {
         tutorial = GetComponent<Tutorial>();
         gameMode = FindObjectOfType<GameMode>();
+
         if (gameMode)
         {
             skillManager = gameMode.playerManager.skillManager;
             playerManager = gameMode.playerManager;
-            playerManager.SubscribeToHealthChanged(UpdatePlayerHealth);
-            //Events subscriptions
-            gameMode.SubrscribeToHighScoreReachedEvent(ShowHighScorePanel);
-            gameMode.SubscribeToOnAttemptEvent(Attempt);
         }
 
         playerData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
+
         settingsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SETTINGS_PATH).GetData<SettingsData>();
-        showFPS = settingsData.showFPS;
+        if (settingsData.showFPS)
+        {
+            StartCoroutine(FPSCoroutine());
+        }
+
         SetControls(settingsData.controlsLayout);
         EnableHUDBasedOnPlayerState();
-
 
         //Start tutorial
         if (SharedUtilities.GetInstance().IsFirstLaunch())
         {
-            tutorial.enabled = true;
-            scoreText.gameObject.SetActive(false);
-            timeRelativeText.gameObject.SetActive(false);
-            healthText.gameObject.SetActive(false);
-            tutorialPanel.SetActive(true);
+            statsPanel.SetActive(false);
+
             Time.timeScale = 0f;
             gameMode.isPaused = true;
-        }
-        if (showFPS)
-        {
-            StartCoroutine(FPSCoroutine());
+
+            tutorialPanel.SetActive(true);
+            tutorial.enabled = true;
         }
 
         float delay = 0.1f;
@@ -152,6 +141,7 @@ public class HUDManager : MonoBehaviour
                 delay = 0.1f;
                 break;
         }
+
         StartCoroutine(UpdateStats_C(delay));
 
         AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.LEVEL_SONG);
@@ -305,11 +295,11 @@ public class HUDManager : MonoBehaviour
     private IEnumerator PauseResumeCountdown()
     {
         pausePanel.SetActive(false);
+        yield return new WaitForSecondsRealtime(0.2f);
         resumeTimer = resumeTimerDuration;
         Text timerText = timerPanel.GetComponentInChildren<Text>();
         timerText.text = resumeTimer.ToString();
         timerPanel.gameObject.SetActive(true);
-        yield return new WaitForSecondsRealtime(0.25f);
         while (resumeTimer > 0)
         {
             yield return new WaitForSecondsRealtime(1);
@@ -334,14 +324,15 @@ public class HUDManager : MonoBehaviour
         {
             adButton.SetActive(false);
             loadingAdText.gameObject.SetActive(false);
-            timeRelativeText.gameObject.SetActive(true);
-            timeProperText.gameObject.SetActive(true);
-            scoreText.gameObject.SetActive(true);
-            distanceText.gameObject.SetActive(true);
+
+            EnableStatsPanel(true);
+
             gameOverPanel.SetActive(false);
+
             QuantumTunnelSelectionActive(false);
             gameMode.isPaused = true;
             HUDPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
             Time.timeScale = 0f;
             StartCoroutine(PauseResumeCountdown());
         });
@@ -459,10 +450,8 @@ public class HUDManager : MonoBehaviour
     }
 
 
-    //
-
     //SHOW PANELS
-    public void ShowHighGravityPanel(bool state)
+    public void EnableHighGravityFieldPanel(bool state)
     {
         highGravityFieldPanel.SetActive(state);
         if (!state)
@@ -471,33 +460,44 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    public void ShowHighScorePanel()
+    public void DisplayHighscorePanel()
     {
         highScorePanel.SetActive(true);
     }
 
-    public void DisplayGameOver()
+    public void DisplayGameOverPanel()
     {
-        float score = gameMode.sessionScore;
-        float gravityPoints = gameMode.sessionGravityPoints;
         QuantumTunnelSelectionActive(false);
         highScorePanel.SetActive(false);
         gameOverInfoText.text = "Difference between distorted time and normal time flow: " + SharedUtilities.GetInstance().GetTimeStringFromSeconds(playerManager.relativeExTime - playerManager.properTime);
         scoreText.gameObject.SetActive(false);
-        timeRelativeText.gameObject.SetActive(false);
-        timeProperText.gameObject.SetActive(false);
-        distanceText.gameObject.SetActive(false);
+
+        EnableStatsPanel(false);
+
         gameOverPanel.SetActive(true);
-        gameOverScoreText.text = score.ToString("0");
-        gameOverGravityPointsText.text = gravityPoints.ToString();
+        gameOverScoreText.text = gameMode.sessionScore.ToString("0");
+        gameOverGravityPointsText.text = gameMode.sessionGravityPoints.ToString();
     }
 
-    public void DisplayLevelCompleted()
+    public void DisplayLevelCompletedPanel()
     {
         StartCoroutine(DisplayLevelCompleted_C());
     }
 
-    public void SetHUDBasedOnLevel(Level level)
+    public void DisplayLevelInfoPanel(Level level)
+    {
+        levelObjectivePanel.SetActive(true);
+        levelObjectivePanel.GetComponentInChildren<Text>().text = level.levelObjective;
+    }
+
+    public void EnableStatsPanel(bool state)
+    {
+        statsPanel.SetActive(state);
+    }
+
+
+
+    public void SetStatsHUDBasedOnLevel(Level level)
     {
         switch(level.category)
         {
@@ -518,9 +518,6 @@ public class HUDManager : MonoBehaviour
                 speedText.gameObject.SetActive(false);
                 break;
         }
-
-        levelObjectivePanel.SetActive(true);
-        levelObjectivePanel.GetComponentInChildren<Text>().text = level.levelObjective;
     }
 
     private IEnumerator DisplayLevelCompleted_C()
@@ -530,9 +527,10 @@ public class HUDManager : MonoBehaviour
         float length = animator.runtimeAnimatorController.animationClips[0].length - 0.35f;
         levelCompletedPanel.SetActive(true);
         yield return new WaitForSecondsRealtime(length);
-        DisplayGameOver();
+        DisplayGameOverPanel();
     }
-    //
+
+
 
     public void UnloadLevelAndLoadScene(string scene)
     {
@@ -546,7 +544,7 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator FPSCoroutine()
     {
-        while (showFPS)
+        while (true)
         {
             fpsText.text = ("FPS: " + (1f / Time.unscaledDeltaTime).ToString("0.0"));
             yield return new WaitForSecondsRealtime(1f);
@@ -559,7 +557,7 @@ public class HUDManager : MonoBehaviour
         isAdLoading = false;
     }
 
-    private void UpdatePlayerHealth(float health, float initialHealth)
+    public void UpdatePlayerHealthUI(float health, float initialHealth)
     {
         Executer.GetInstance().AddJob(() =>
         {
@@ -602,7 +600,6 @@ public class HUDManager : MonoBehaviour
 
     public void CoolDownSkill(SkillManager.Skill skill, float duration)
     {
-        //StartCoroutine(CoolDown(skill, duration));
         Image cooldownOverlay = null, skillImage = null;
         switch (skill)
         {

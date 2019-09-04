@@ -43,7 +43,6 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public MovementManager movementManager;
     [HideInInspector] public SkillManager skillManager;
     [HideInInspector] public ExtraManager extraManager;
-    [HideInInspector] public AchievementsManager achievementsManager;
 
     //References
     [HideInInspector] public GameMode gameMode;
@@ -75,14 +74,6 @@ public class PlayerManager : MonoBehaviour
     public void SubscribeToPlayerDeathEvent(Action funcToSub) { OnPlayerDeath += funcToSub; }
     public void UnsubscribeToPlayerDeathEvent(Action funcToUnsub) { OnPlayerDeath -= funcToUnsub; }
 
-    private event Action OnLevelCompleted;
-    public void SubscribeToOnLevelCompletedEvent(Action funcToSub) { OnLevelCompleted += funcToSub; }
-    public void UnsubscribeToOnLevelCompletedEvent(Action funcToUnsub) { OnLevelCompleted -= funcToUnsub; }
-
-    private event Action<float, float> HealthChanged;
-    public void SubscribeToHealthChanged(Action<float, float> funcToSub) { HealthChanged += funcToSub; }
-    public void UnsubscribeToHealthChanged(Action<float, float> funcToUnsub) { HealthChanged -= funcToUnsub; }
-
     public struct SessionStats
     {
         public float maxSpeedReached;
@@ -103,7 +94,6 @@ public class PlayerManager : MonoBehaviour
         movementManager = GetComponent<MovementManager>();
         skillManager = GetComponent<SkillManager>();
         extraManager = GetComponent<ExtraManager>();
-        achievementsManager = GetComponent<AchievementsManager>();
 
         playerData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
         if (playerData != null)
@@ -111,11 +101,6 @@ public class PlayerManager : MonoBehaviour
             playerState = playerData.playerState;
             initialResilience = playerData.health;
         }
-    }
-
-    void OnDisable()
-    {
-        gameMode.UnsubscribeToOnAttemptEvent(Attempt);
     }
 
     private void Start()
@@ -138,9 +123,7 @@ public class PlayerManager : MonoBehaviour
 
         hudManagerInstance = HUDManager.GetInstance();
 
-        HealthChanged(resilience, initialResilience);
-
-        gameMode.SubscribeToOnAttemptEvent(Attempt);
+        hudManagerInstance.UpdatePlayerHealthUI(resilience, initialResilience);
     }
 
     void Update()
@@ -185,7 +168,7 @@ public class PlayerManager : MonoBehaviour
             gravityFieldCount--;
             if (dangerZoneCount == 0)
             {
-                hudManagerInstance.ShowHighGravityPanel(false);
+                hudManagerInstance.EnableHighGravityFieldPanel(false);
             }
 
             ObstacleGravity obstacleGravity = collision.gameObject.GetComponentInChildren<ObstacleGravity>();
@@ -246,7 +229,7 @@ public class PlayerManager : MonoBehaviour
         else if (other.gameObject.tag.Equals("DangerZone"))
         {
             dangerZoneCount++;
-            hudManagerInstance.ShowHighGravityPanel(true);
+            hudManagerInstance.EnableHighGravityFieldPanel(true);
         }
     }
 
@@ -283,7 +266,7 @@ public class PlayerManager : MonoBehaviour
             }
             if (dangerZoneCount == 0)
             {
-                hudManagerInstance.ShowHighGravityPanel(false);
+                hudManagerInstance.EnableHighGravityFieldPanel(false);
             }
         }
         if (other.gameObject.tag.Equals("Margins"))
@@ -420,7 +403,7 @@ public class PlayerManager : MonoBehaviour
 
         isDead = false;
         resilience = initialResilience / 2f;
-        HealthChanged?.Invoke(resilience, initialResilience);
+        hudManagerInstance.UpdatePlayerHealthUI(resilience, initialResilience);
         movementManager.EnableMovement();
     }
 
@@ -433,10 +416,9 @@ public class PlayerManager : MonoBehaviour
 
         resilience -= amount;
         resilience = resilience < 0 ? 0f : resilience;
-        if (HealthChanged != null)
-        {
-            HealthChanged(resilience, initialResilience);
-        }
+
+        hudManagerInstance.UpdatePlayerHealthUI(resilience, initialResilience);
+
         if (resilience <= 0)
         {
             Die();
@@ -498,7 +480,7 @@ public class PlayerManager : MonoBehaviour
         }
         dangerZoneCount = 0;
         gravityFieldCount = 0;
-        OnLevelCompleted();
+        gameMode.LevelCompleted();
     }
 
     private void BroadcastStats()

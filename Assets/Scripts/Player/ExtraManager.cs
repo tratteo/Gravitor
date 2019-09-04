@@ -117,7 +117,7 @@ public class ExtraManager : MonoBehaviour
 
         playerCollider.enabled = false;
         playerManager.dangerZoneCount = 0;
-        HUDManager.GetInstance().ShowHighGravityPanel(false);
+        HUDManager.GetInstance().EnableHighGravityFieldPanel(false);
         playerManager.movementManager.DisableMovement();
 
         CameraManager.GetInstance().SmoothInAndOutFOV(null, wormhole.viewDistortion, 0.2f, wormhole.duration - 0.4f);

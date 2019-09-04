@@ -38,7 +38,7 @@ public class Margin : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.tag.Equals("Player"))
+        if (other.tag.Equals("Player") && !playerManager.gameMode.isGameOver)
         {
             if (Time.timeSinceLevelLoad >= currentTime + dealTime)
             {
