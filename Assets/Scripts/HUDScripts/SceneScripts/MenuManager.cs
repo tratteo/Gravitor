@@ -18,9 +18,7 @@ public class MenuManager : MonoBehaviour
     [Header("Toast")]
     [SerializeField] private ToastScript toast = null;
 
-    private SceneLoader loader;
     private SettingsData settingsData;
-    private Sound menuSound;
 
     private int currentGP;
     private int adBonusGP;
@@ -34,12 +32,11 @@ public class MenuManager : MonoBehaviour
 
     private void Start()
     {
-        loader = GetComponent<SceneLoader>();
 
         InitializeData();
 
         AudioManager.GetInstance().NotifyAudioSettings(settingsData);
-        menuSound = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
+        AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
 
         GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
 
@@ -89,11 +86,6 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadGameLevel()
-    {
-        AudioManager.GetInstance().SmoothOutSound(menuSound, 0.05f, 1f);
-        loader.LoadSceneAsynchronously(SceneLoader.LINEAR_MAP_NAME);
-    }
 
     public void ShowRewardedAd()
     {
@@ -130,12 +122,12 @@ public class MenuManager : MonoBehaviour
                 adBonusGP = 15000;
                 break;
             case PlayerManager.PlayerState.COMET:
-                adBonusGP = 40000;
+                adBonusGP = 60000;
                 break;
             default:
                 playerData.playerState = PlayerManager.PlayerState.COMET;
                 SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
-                adBonusGP = 40000;
+                adBonusGP = 60000;
                 break;
         }
 
@@ -158,12 +150,6 @@ public class MenuManager : MonoBehaviour
             SaveManager.GetInstance().SavePersistentData(new PlayerAchievementsData(), SaveManager.ACHIEVMENTS_PATH);
         }
 
-        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.HIGHSCORE_PATH);
-        if (objectData == null)
-        {
-            objectData = SaveManager.GetInstance().SavePersistentData<int>(0, SaveManager.HIGHSCORE_PATH);
-        }
-        highScoreText.text = "Highscore\n" + objectData.GetData<int>().ToString();
 
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
         if (objectData == null)
@@ -172,5 +158,14 @@ public class MenuManager : MonoBehaviour
         }
         currentGP = objectData.GetData<int>();
         gravityPointsText.text = "Gravity points\n" + currentGP.ToString();
+
+
+        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH);
+        if(objectData == null)
+        {
+            objectData = SaveManager.GetInstance().SavePersistentData<LevelsData>(new LevelsData(), SaveManager.LEVELSDATA_PATH);
+        }
+        LevelsData data = objectData.GetData<LevelsData>();
+        highScoreText.text = data.GetLevelHighScore(LevelsData.ENDLESS_ID).ToString();
     }
 }

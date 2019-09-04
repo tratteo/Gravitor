@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Upgrade.unity
     guid: 188461e70a12ac5449d7caf91de96825
   - enabled: 1
-    path: Assets/Scenes/Maps/LinearMap.unity
+    path: Assets/Scenes/LinearMap.unity
     guid: 14c27f7b347997d4aaa0fa335adb7052
   - enabled: 1
     path: Assets/Scenes/Settings.unity
@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameDev.unity
     guid: 86d66e8e2601dca4c87a58a5fc9c03ad
+  - enabled: 1
+    path: Assets/Scenes/Levels.unity
+    guid: 57f4bed8f35357446a5f2d3f9a62e015
   m_configObjects: {}

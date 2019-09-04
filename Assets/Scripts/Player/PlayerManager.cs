@@ -67,11 +67,17 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public float relativeExTime = 0f;
     [HideInInspector] public float velocityRelativeTime = 0f;
 
+    [HideInInspector] public Level level;
+
     //Events
 
     private event Action OnPlayerDeath;
     public void SubscribeToPlayerDeathEvent(Action funcToSub) { OnPlayerDeath += funcToSub; }
     public void UnsubscribeToPlayerDeathEvent(Action funcToUnsub) { OnPlayerDeath -= funcToUnsub; }
+
+    private event Action OnLevelCompleted;
+    public void SubscribeToOnLevelCompletedEvent(Action funcToSub) { OnLevelCompleted += funcToSub; }
+    public void UnsubscribeToOnLevelCompletedEvent(Action funcToUnsub) { OnLevelCompleted -= funcToUnsub; }
 
     private event Action<float, float> HealthChanged;
     public void SubscribeToHealthChanged(Action<float, float> funcToSub) { HealthChanged += funcToSub; }
@@ -149,19 +155,31 @@ public class PlayerManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!gameMode.isGameOver)
+        if (!gameMode.isGameOver)
         {
             relativeExTime += Time.fixedDeltaTime * timeDistortion * movementManager.velocityTimeDistrotion;
             properTime += Time.fixedDeltaTime;
+            if (level.category == Level.LevelCategory.TIME && properTime >= level.targetTime)
+            {
+                LevelCompleted();
+            }
+            else if (level.category == Level.LevelCategory.TIME_DILATED && (relativeExTime - properTime) >= level.targetTimeDilated)
+            {
+                LevelCompleted();
+            }
         }
     }
 
     //Collision and triggers
     private void OnCollisionEnter(Collision collision)
     {
+        if (gameMode.isGameOver)
+        {
+            return;
+        }
+
         if (collision.collider.tag == "Obstacle")
         {
-            sessionObstaclesHit++;
             movementManager.ResetMovementSpeed();
             dangerZoneCount--;
             gravityFieldCount--;
@@ -176,9 +194,9 @@ public class PlayerManager : MonoBehaviour
             CameraShaker.Instance.ShakeOnce(shakeMagnitude, shakeRoughness, shakeFadeInTime, shakeFadeOutTime);
             Time.timeScale = 1 / collisionTimerMultiplier;
             GameObstacle obstacle = null;
+            obstacle = collision.gameObject.GetComponent<GameObstacle>();
             if (!extraManager.isShielded)
             {
-                obstacle = collision.gameObject.GetComponent<GameObstacle>();
                 float damage = 0;
                 switch (obstacle.type)
                 {
@@ -200,13 +218,19 @@ public class PlayerManager : MonoBehaviour
             else
             {
                 extraManager.DestroyShield();
+                gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacle.mass));
             }
-            gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacle.mass));
+            sessionObstaclesHit++;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (gameMode.isGameOver)
+        {
+            return;
+        }
+
         if (other.gameObject.tag.Equals("GravityField"))
         {
             ObstacleGravity gravityComponent = other.gameObject.GetComponent<ObstacleGravity>();
@@ -228,6 +252,11 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (gameMode.isGameOver)
+        {
+            return;
+        }
+
         if (other.gameObject.tag.Equals("GravityField"))
         {
             ObstacleGravity gravityComponent = other.gameObject.GetComponent<ObstacleGravity>();
@@ -265,6 +294,11 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        if (gameMode.isGameOver)
+        {
+            return;
+        }
+
         if (other.gameObject.tag.Equals("GravityField"))
         {
             float newTimeDistortion = GameplayMath.GetInstance().GetGravityTd(gameObject, other.transform.parent.gameObject);
@@ -280,7 +314,7 @@ public class PlayerManager : MonoBehaviour
                 scoreMultiplier = timeDistortion;
             }
         }
-        if(other.gameObject.tag.Equals("Margins") && !isDead)
+        if (other.gameObject.tag.Equals("Margins") && !isDead)
         {
             directionArrow.gameObject.SetActive(true);
             float x = transform.position.x;
@@ -356,13 +390,28 @@ public class PlayerManager : MonoBehaviour
         {
             ParticleSystem system = null;
             system = rightNebulaSpawner.GetComponentInChildren<ParticleSystem>();
-            if (system != null) Destroy(system.gameObject);
+            if (system != null)
+            {
+                Destroy(system.gameObject);
+            }
+
             system = leftNebulaSpawner.GetComponentInChildren<ParticleSystem>();
-            if (system != null) Destroy(system.gameObject);
+            if (system != null)
+            {
+                Destroy(system.gameObject);
+            }
+
             system = topNebulaSpawner.GetComponentInChildren<ParticleSystem>();
-            if (system != null) Destroy(system.gameObject);
+            if (system != null)
+            {
+                Destroy(system.gameObject);
+            }
+
             system = bottomNebulaSpawner.GetComponentInChildren<ParticleSystem>();
-            if (system != null) Destroy(system.gameObject);
+            if (system != null)
+            {
+                Destroy(system.gameObject);
+            }
 
             gameObject.GetComponent<SphereCollider>().enabled = true;
             gameObject.GetComponent<MeshRenderer>().enabled = true;
@@ -370,7 +419,7 @@ public class PlayerManager : MonoBehaviour
         });
 
         isDead = false;
-        resilience = initialResilience / 10f;
+        resilience = initialResilience / 2f;
         HealthChanged?.Invoke(resilience, initialResilience);
         movementManager.EnableMovement();
     }
@@ -394,7 +443,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Die()
+    private void Die()
     {
         timeDistortion = 1f;
         isDead = true;
@@ -405,6 +454,13 @@ public class PlayerManager : MonoBehaviour
         Instantiate(deathEffect, transform.position, transform.rotation);
         gameObject.GetComponent<SphereCollider>().enabled = false;
         gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+        if (level.category == Level.LevelCategory.ENDLESS)
+        {
+            LevelsData levelsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>();
+            levelsData.UpdateLevelScore(level.id, (int)gameMode.sessionScore);
+            SaveManager.GetInstance().SavePersistentData<LevelsData>(levelsData, SaveManager.LEVELSDATA_PATH);
+        }
 
         ParticleSystem[] effects = skillManager.skillSpawn.GetComponentsInChildren<ParticleSystem>();
         if (effects != null)
@@ -417,7 +473,36 @@ public class PlayerManager : MonoBehaviour
         }
         dangerZoneCount = 0;
         gravityFieldCount = 0;
+        if (level.category == Level.LevelCategory.ENDLESS)
+        {
+            BroadcastStats();
+        }
+    }
 
+    public void LevelCompleted()
+    {
+        movementManager.DisableMovement();
+
+        timeDistortion = 1f;
+        directionArrow.gameObject.SetActive(false);
+        //gameObject.GetComponent<SphereCollider>().enabled = false;
+        //gameObject.GetComponent<MeshRenderer>().enabled = false;
+        ParticleSystem[] effects = skillManager.skillSpawn.GetComponentsInChildren<ParticleSystem>();
+        if (effects != null)
+        {
+            int length = effects.Length;
+            for (int i = 0; i < length; i++)
+            {
+                Destroy(effects[i].gameObject);
+            }
+        }
+        dangerZoneCount = 0;
+        gravityFieldCount = 0;
+        OnLevelCompleted();
+    }
+
+    private void BroadcastStats()
+    {
         //Send broadcast stats
         SessionStats stats = new SessionStats();
         stats.maxSpeedReached = movementManager.GetMaxSpeedReached();

@@ -1157,9 +1157,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 2280, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1436,10 +1436,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &1543275633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,10 +2089,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!222 &7794608239275728622
 CanvasRenderer:
   m_ObjectHideFlags: 0

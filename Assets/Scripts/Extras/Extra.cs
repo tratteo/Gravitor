@@ -17,15 +17,15 @@ public abstract class Extra : MonoBehaviour
             playerManager.extraManager.ApplyPickUp(this);
             if(effect)
                 effect.Stop();
-            PoolManager.GetInstance().DeactivateObject(gameObject);
+            gameObject.SetActive(false);
         }
         else if (other.tag.Equals("KillVolume"))
         {
-            PoolManager.GetInstance().DeactivateObject(gameObject);
+            gameObject.SetActive(false);
         }
         else if (other.tag.Equals("Obstacle"))
         {
-            PoolManager.GetInstance().DeactivateObject(gameObject);
+            gameObject.SetActive(false);
         }
     } 
 }

@@ -10,7 +10,7 @@ public class Wormhole : Extra
     public float scoreMultiplier;
     [Range(0f, 1f)]
     [Tooltip("Speed in respect of the speed of light")]
-    public float speed;
+    public float relativeSpeed;
 
     protected new void OnTriggerEnter(Collider other)
     {

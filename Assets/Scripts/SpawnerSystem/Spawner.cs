@@ -33,7 +33,7 @@ public class Spawner
         }
     }
 
-    public SpawnTimer CreateSpawnTimer(int fixedSpawnRate, bool startNow)
+    public SpawnTimer CreateSpawnTimer(float fixedSpawnRate, bool startNow)
     {
         spawnTimer = new SpawnTimer(context, fixedSpawnRate, startNow);
         return spawnTimer;

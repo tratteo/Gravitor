@@ -17,7 +17,7 @@ public class SpawnTimer
     private event Action SpawnEvent;
     private Func<int, float> scaleFunc;
 
-    public SpawnTimer(MonoBehaviour context, int fixedSpawnRate, bool startNow)
+    public SpawnTimer(MonoBehaviour context, float fixedSpawnRate, bool startNow)
     {
         routineActive = false;
         this.context = context;

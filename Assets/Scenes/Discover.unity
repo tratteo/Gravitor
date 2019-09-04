@@ -341,9 +341,9 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 50
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -641,10 +641,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &142055466
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,8 +676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 607.5, y: -1927}
-  m_SizeDelta: {x: 1215, y: 610.6}
+  m_AnchoredPosition: {x: 651.0427, y: -1927}
+  m_SizeDelta: {x: 1302.0854, y: 610.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &171993695
 GameObject:
@@ -1017,7 +1013,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &314079718
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1601,10 +1597,10 @@ RectTransform:
   m_Father: {fileID: 1061335494}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 592.95, y: -306.35}
-  m_SizeDelta: {x: 1185.9, y: 612.7}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 692.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &445759080
 MonoBehaviour:
@@ -2279,7 +2275,10 @@ MonoBehaviour:
     near the shield icon. \nKeep in mind that it is possible to activate more than
     one shield in order to form a queue: when there are more shield enqueued, as
     soon as the current shield expires or gets destroyed, another shield is automatically
-    activated. The number of the shield enqueued is shown under the duration animation."
+    activated. The number of the shield enqueued is shown under the duration animation.\n<b>Keep
+    in mind</b> that colliding with a celestial body with a shield activated will
+    increase the score based on the body destruction bonus points algorithm (proportional
+    to mass)."
 --- !u!222 &830061713
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2398,10 +2397,10 @@ RectTransform:
   m_Father: {fileID: 1677561737}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -617.94, y: 15}
-  m_SizeDelta: {x: 1235.9, y: 1412.3}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 15}
+  m_SizeDelta: {x: 0, y: 1412.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &862438816
 GameObject:
@@ -2618,10 +2617,10 @@ RectTransform:
   m_Father: {fileID: 20671708}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1191, y: 601.1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 556.4, y: -300.55005}
+  m_SizeDelta: {x: 1112.8, y: 601.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &913036935
 GameObject:
@@ -2735,10 +2734,10 @@ RectTransform:
   m_Father: {fileID: 20671708}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1191, y: 793.2}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 556.4, y: -1047.7}
+  m_SizeDelta: {x: 1112.8, y: 793.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1061335493
 GameObject:
@@ -2797,9 +2796,9 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 50
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -2842,7 +2841,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.325, y: 0.175}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15.037598, y: -75}
+  m_AnchoredPosition: {x: -15.037598, y: -74.999985}
   m_SizeDelta: {x: -30.075134, y: -150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1094125311
@@ -2946,10 +2945,10 @@ RectTransform:
   m_Father: {fileID: 314079718}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -618, y: 15}
-  m_SizeDelta: {x: 1235.9, y: 3283}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 15}
+  m_SizeDelta: {x: 0, y: 3283}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1123133192
 GameObject:
@@ -2986,8 +2985,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 607.5, y: -738.35}
-  m_SizeDelta: {x: 1215, y: 527.1}
+  m_AnchoredPosition: {x: 651.0427, y: -738.35}
+  m_SizeDelta: {x: 1302.0854, y: 527.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1183196456
 GameObject:
@@ -3117,10 +3116,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &1231608131
 GameObject:
   m_ObjectHideFlags: 0
@@ -3172,9 +3167,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 2280, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3679,10 +3674,10 @@ RectTransform:
   m_Father: {fileID: 20671708}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1191, y: 1001.3}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 556.4, y: -2752.35}
+  m_SizeDelta: {x: 1112.8, y: 1001.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1456167129
 GameObject:
@@ -3898,9 +3893,9 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -4254,7 +4249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1677561737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4449,10 +4444,10 @@ RectTransform:
   m_Father: {fileID: 1061335494}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 592.95, y: -1012.5}
-  m_SizeDelta: {x: 1185.9, y: 699.6}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 699.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1729436698
 MonoBehaviour:
@@ -4752,10 +4747,10 @@ RectTransform:
   m_Father: {fileID: 1583284883}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -618, y: 15}
-  m_SizeDelta: {x: 1235.9, y: 2282.3}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 15}
+  m_SizeDelta: {x: 0, y: 2282.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1920140033
 GameObject:
@@ -4869,10 +4864,10 @@ RectTransform:
   m_Father: {fileID: 20671708}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1191, y: 707.4}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 556.4, y: -1848}
+  m_SizeDelta: {x: 1112.8, y: 707.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1924765950
 GameObject:
@@ -5002,10 +4997,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &2042468505
 GameObject:
   m_ObjectHideFlags: 0
@@ -5134,10 +5125,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &2043131102
 GameObject:
   m_ObjectHideFlags: 0
@@ -5254,8 +5241,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 607.5, y: -237.40002}
-  m_SizeDelta: {x: 1215, y: 474.8}
+  m_AnchoredPosition: {x: 651.0427, y: -237.4}
+  m_SizeDelta: {x: 1302.0854, y: 474.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2129224842
 GameObject:
@@ -5371,8 +5358,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 607.5, y: -1311.7999}
-  m_SizeDelta: {x: 1215, y: 619.8}
+  m_AnchoredPosition: {x: 651.0427, y: -1311.7999}
+  m_SizeDelta: {x: 1302.0854, y: 619.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &307482129132065201
 GameObject:
@@ -5455,8 +5442,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 307482130159894293}
   m_HandleRect: {fileID: 307482130159894292}
   m_Direction: 2
-  m_Value: 0.99999994
-  m_Size: 0.2719163
+  m_Value: 1
+  m_Size: 0.3597006
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

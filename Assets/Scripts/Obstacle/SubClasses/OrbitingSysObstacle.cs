@@ -29,7 +29,7 @@ public class OrbitingSysObstacle : MonoBehaviour, IPooledObject
         {
             planet1.Destroy(false);
             planet2.Destroy(false);
-            PoolManager.GetInstance().DeactivateObject(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

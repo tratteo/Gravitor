@@ -340,10 +340,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &125517470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,10 +537,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &186946136
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,10 +824,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &389610028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,10 +1296,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &800782369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,10 +1651,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &948268866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1800,10 +1780,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &967781725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2014,10 +1990,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &1108162736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2291,9 +2263,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 2280, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2947,10 +2919,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &1725657768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3237,10 +3205,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &2067265742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3653,10 +3617,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!222 &8112860519548259846
 CanvasRenderer:
   m_ObjectHideFlags: 0

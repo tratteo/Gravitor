@@ -61,7 +61,7 @@ MonoBehaviour:
   duration: 2
   viewDistortion: 178
   scoreMultiplier: 12
-  speed: 0.9999887
+  relativeSpeed: 0.999977
 --- !u!1001 &7515728236452483134
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -43,7 +43,7 @@ public class ExtraManager : MonoBehaviour
                 break;
             case "WarpDrive":
                 warpDrive = (Wormhole)pickup;
-                StartCoroutine(WarpDrive(warpDrive));
+                StartCoroutine(Wormhole_C(warpDrive));
                 break;
         }
     }
@@ -103,11 +103,16 @@ public class ExtraManager : MonoBehaviour
         currentShield.DestroyShield(transform.position);
     }
 
-    
-    private IEnumerator WarpDrive(Wormhole wormhole)
+    private IEnumerator Wormhole_C(Wormhole wormhole)
     {
+        playerManager.timeDistortion = 1f;
+        playerManager.ExitedDamageNebula(Margin.MarginLocation.BOTTOM);
+        playerManager.ExitedDamageNebula(Margin.MarginLocation.TOP);
+        playerManager.ExitedDamageNebula(Margin.MarginLocation.LEFT);
+        playerManager.ExitedDamageNebula(Margin.MarginLocation.RIGHT);
         playerManager.skillManager.isGravitable = false;
         playerManager.skillManager.canCastSkill = false;
+        float currentVTd = playerManager.movementManager.velocityTimeDistrotion;
         Collider playerCollider = GetComponent<Collider>();
 
         playerCollider.enabled = false;
@@ -116,13 +121,12 @@ public class ExtraManager : MonoBehaviour
         playerManager.movementManager.DisableMovement();
 
         CameraManager.GetInstance().SmoothInAndOutFOV(null, wormhole.viewDistortion, 0.2f, wormhole.duration - 0.4f);
-        playerManager.movementManager.SpeedEffect(wormhole.duration, 5f);
-        playerManager.timeDistortion = GameplayMath.GetInstance().GetSpeedTd(wormhole.speed);
+        playerManager.movementManager.SpeedEffect(wormhole.duration, wormhole.relativeSpeed, true, true);
         playerManager.scoreMultiplier = wormhole.scoreMultiplier;
 
         yield return new WaitForSeconds(wormhole.duration);
 
-        playerManager.timeDistortion = 1f;
+        playerManager.movementManager.velocityTimeDistrotion = currentVTd;
         playerCollider.enabled = true;
         playerManager.movementManager.EnableMovement();
         playerManager.skillManager.canCastSkill = true;

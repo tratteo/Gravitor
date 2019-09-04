@@ -15,7 +15,6 @@ TagManager:
   - BonusGP
   - ComposedObstacle
   - WarpDrive
-  - SpeedBoost
   - Margins
   - FilledOverlay
   layers:

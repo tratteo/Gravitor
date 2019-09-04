@@ -17,19 +17,13 @@ public class GameplayMath
     private const float RadToDegree = 57.3f;
     private const double Td_constant = 9E5f * (G/(c*c));
 
-    public float GetSpawnRateFromTime(int seconds)
-    {
-        return (-865f / ((seconds >> 4) + 45)) + 20.5f;
-        //return 0.062f * seconds + 2f;
-    }
-
     public float GetGravityTd(GameObject player, GameObject obstacle)
     {
         float intern = (float)(1f - ((Td_constant * obstacle.GetComponent<GameObstacle>().mass) / Vector3.Magnitude(player.transform.position - obstacle.transform.position)));
         float result;
         if (intern <= 0.05f)
         {
-            return 15f;
+            return 20f;
         }
         else
         {
@@ -128,6 +122,21 @@ public class GameplayMath
     public int GetCostFromInitCost(int points, int initCost)
     {
         return (int)(350 * Mathf.Pow(points, 2.5f) + initCost - 350);
+    }
+
+    public int GetGRBSpawnExceptionTime(int points)
+    {
+        switch(points)
+        {
+            case 1:
+                return 7;
+            case 2:
+                return 8;
+            case 3:
+                return 10;
+            default:
+                return -1;
+        }
     }
 
     public float arctan(float x, float y)

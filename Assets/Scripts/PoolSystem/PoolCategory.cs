@@ -9,7 +9,7 @@ public class PoolCategory
     public Dictionary<string, Queue<GameObject>> poolsDictionary;
 
 
-    public void InitializePools(Vector3 position)
+    public void InitializePools()
     {
         poolsDictionary = new Dictionary<string, Queue<GameObject>>();
         int length = pools.Length;
@@ -19,7 +19,7 @@ public class PoolCategory
             int poolDim = pools[i].poolSize;
             for (int j = 0; j < poolDim; j++)
             {
-                GameObject obj = GameObject.Instantiate(pools[i].prefab, position, Quaternion.identity);
+                GameObject obj = GameObject.Instantiate(pools[i].prefab, new Vector3(0f, 1000f, 0f), Quaternion.identity);
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }

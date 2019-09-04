@@ -23,10 +23,10 @@ public class SaveManager
     //
     public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
     public static readonly string GRAVITYPOINTS_PATH = Application.persistentDataPath + "/gravity_points.data";
-    public static readonly string HIGHSCORE_PATH = Application.persistentDataPath + "/highscore.data";
     public static readonly string SKILLSDATA_PATH = Application.persistentDataPath + "/skills.data";
     public static readonly string SETTINGS_PATH = Application.persistentDataPath + "/settings.data";
     public static readonly string ACHIEVMENTS_PATH = Application.persistentDataPath + "/achievments.data";
+    public static readonly string LEVELSDATA_PATH = Application.persistentDataPath + "/levels.data";
     //I.E 
     //public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
     //Calling the methods will look like:

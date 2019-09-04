@@ -2,32 +2,22 @@
 using UnityEngine;
 using System;
 
-public class PoolManager : MonoBehaviour
+[System.Serializable]
+public class PoolManager
 {
-    private static PoolManager instance = null;
-    public static PoolManager GetInstance() { return instance; }
+    //private static PoolManager instance = null;
+    //public static PoolManager GetInstance() { return instance; }
 
 
     public PoolCategory[] poolsCategory;
 
-    private void Awake()
+    public void Initialize()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         int length = poolsCategory.Length;
-        for(int i = 0; i < length; i++)
+        for (int i = 0; i < length; i++)
         {
-            poolsCategory[i].InitializePools(transform.position);
+            poolsCategory[i].InitializePools();
         }
-
     }
 
     /// <summary>

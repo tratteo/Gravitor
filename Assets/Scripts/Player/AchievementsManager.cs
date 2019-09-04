@@ -44,13 +44,13 @@ public class AchievementsManager : MonoBehaviour
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_60TD);
         }
-        if(stats.distortedTime > 5400)
+        if (stats.distortedTime > 5400)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_M_TD);
         }
 
         //SCORE
-        if(stats.score >= 300000)
+        if (stats.score >= 300000)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_H_300K);
         }
@@ -62,7 +62,7 @@ public class AchievementsManager : MonoBehaviour
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_H_1M);
         }
-        if(stats.score >= 1500000)
+        if (stats.score >= 1500000)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_H_1_5M);
         }
@@ -82,21 +82,21 @@ public class AchievementsManager : MonoBehaviour
         }
 
         //TP
-        if(stats.timePlayed >= 60)
+        if (stats.timePlayed >= 60)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_60TP);
         }
-        if(stats.timePlayed >= 150)
+        if (stats.timePlayed >= 150)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_150TP);
         }
-        if(stats.timePlayed >= 300)
+        if (stats.timePlayed >= 300)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_300TP);
         }
 
         //SPEED
-        if(stats.maxSpeedReached == playerManager.movementManager.maxSpeed)
+        if (stats.maxSpeedReached == playerManager.movementManager.maxSpeed)
         {
             NotifyAchievement(PlayerAchievementsData.SESSION_VMAX);
         }

@@ -331,10 +331,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &208036376
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +413,88 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208036376}
   m_CullTransparentMesh: 0
+--- !u!1 &248107083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 248107084}
+  - component: {fileID: 248107086}
+  - component: {fileID: 248107085}
+  m_Layer: 5
+  m_Name: ScoreInfotxt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &248107084
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248107083}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1944358298}
+  m_Father: {fileID: 1290834713}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -725, y: 93}
+  m_SizeDelta: {x: 650, y: 200}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &248107085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248107083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.4509804, g: 0.4509804, b: 0.4509804, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 94fe6f37e73598549ba58911e3145272, type: 3}
+    m_FontSize: 54
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 100
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1.2
+  m_Text: 'Highscore
+
+    (Endless mode)'
+--- !u!222 &248107086
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248107083}
+  m_CullTransparentMesh: 0
 --- !u!1 &309673760
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,10 +555,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &309673763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,10 +1248,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &802000257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1385,10 +1455,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &940995163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1591,7 +1657,7 @@ RectTransform:
   - {fileID: 1763914057}
   - {fileID: 124484308}
   - {fileID: 1445953058}
-  - {fileID: 1944358298}
+  - {fileID: 248107084}
   - {fileID: 208036377}
   - {fileID: 940995159}
   - {fileID: 309673761}
@@ -1734,10 +1800,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &1572378971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,10 +2046,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &1671987401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2233,10 +2291,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &1772840638
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,15 +2427,15 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 567465297}
-          m_MethodName: LoadGameLevel
-          m_Mode: 1
+        - m_Target: {fileID: 567465298}
+          m_MethodName: LoadScene
+          m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: LinearMap
+            m_StringArgument: Levels
             m_BoolArgument: 0
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
@@ -2444,10 +2498,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!1 &1932788651
 GameObject:
   m_ObjectHideFlags: 0
@@ -2556,13 +2606,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1290834713}
-  m_RootOrder: 7
+  m_Father: {fileID: 248107084}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -725, y: -20}
-  m_SizeDelta: {x: 600, y: 274.8}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 650, y: 100}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1944358299
 MonoBehaviour:
@@ -2597,9 +2647,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.5
-  m_Text: 'HighScore
-
-    100000'
+  m_Text: 1000000
 --- !u!222 &1944358300
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2652,7 +2700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appID: ca-app-pub-2239617021238574~2592756280
-  useTestAdsID: 0
+  useTestAdsID: 1
 --- !u!4 &2025963503
 Transform:
   m_ObjectHideFlags: 0
@@ -2695,6 +2743,13 @@ MonoBehaviour:
   - name: Whitesand
     clip: {fileID: 8300000, guid: 8842000c04e209644ac73211f9ea4bfd, type: 3}
     volume: 0.65
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  currentMusic:
+    name: 
+    clip: {fileID: 0}
+    volume: 0.9
     pitch: 1
     loop: 0
     source: {fileID: 0}
@@ -2768,10 +2823,6 @@ MonoBehaviour:
   pressedScaleMultiplier: {x: 0.95, y: 0.95}
   playSound: 1
   soundTag: ButtonClick
-  defaultColor:
-    serializedVersion: 2
-    rgba: 0
-  sprite: {fileID: 0}
 --- !u!114 &13167400401485585
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,6 +20,8 @@ public class HUDManagerC_E : Editor
         {
             script.scoreText = (Text)EditorGUILayout.ObjectField("Score text", script.scoreText, typeof(Text), true);
             script.timeRelativeText = (Text)EditorGUILayout.ObjectField("Time relative text", script.timeRelativeText, typeof(Text), true);
+            script.distanceText = (Text)EditorGUILayout.ObjectField("Distance text", script.distanceText, typeof(Text), true);
+            script.speedText = (Text)EditorGUILayout.ObjectField("Speed text", script.speedText, typeof(Text), true);
             script.timeProperText = (Text)EditorGUILayout.ObjectField("Time proper text", script.timeProperText, typeof(Text), true);
             script.fpsText = (Text)EditorGUILayout.ObjectField("FPS text", script.fpsText, typeof(Text), true);
             script.gameOverScoreText = (Text)EditorGUILayout.ObjectField("GameOverScore text", script.gameOverScoreText, typeof(Text), true);
@@ -46,6 +48,8 @@ public class HUDManagerC_E : Editor
             script.HUDPanel = (GameObject)EditorGUILayout.ObjectField("HUD", script.HUDPanel, typeof(GameObject), true);
             script.timerPanel = (GameObject)EditorGUILayout.ObjectField("Timer", script.timerPanel, typeof(GameObject), true);
             script.gameOverPanel = (GameObject)EditorGUILayout.ObjectField("GameOver", script.gameOverPanel, typeof(GameObject), true);
+            script.levelCompletedPanel = (GameObject)EditorGUILayout.ObjectField("LevelCompleted", script.levelCompletedPanel, typeof(GameObject), true);
+            script.levelObjectivePanel = (GameObject)EditorGUILayout.ObjectField("Level objective", script.levelObjectivePanel, typeof(GameObject), true);
             script.pausePanel = (GameObject)EditorGUILayout.ObjectField("Pause", script.pausePanel, typeof(GameObject), true);
             script.tutorialPanel = (GameObject)EditorGUILayout.ObjectField("Tutorial", script.tutorialPanel, typeof(GameObject), true);
             script.highScorePanel = (GameObject)EditorGUILayout.ObjectField("HighScore", script.highScorePanel, typeof(GameObject), true);

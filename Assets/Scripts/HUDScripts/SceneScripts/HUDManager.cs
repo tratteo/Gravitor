@@ -34,6 +34,8 @@ public class HUDManager : MonoBehaviour
     public Text scoreText;
     public Text timeRelativeText = null;
     public Text timeProperText = null;
+    public Text distanceText = null;
+    public Text speedText = null;
     public Text fpsText = null;
     public Text gameOverScoreText = null;
     public Text gameOverGravityPointsText = null;
@@ -55,6 +57,8 @@ public class HUDManager : MonoBehaviour
     public GameObject HUDPanel;
     public GameObject timerPanel = null;
     public GameObject gameOverPanel;
+    public GameObject levelCompletedPanel;
+    public GameObject levelObjectivePanel;
     public GameObject pausePanel;
     public GameObject tutorialPanel;
     public GameObject highScorePanel = null;
@@ -78,7 +82,6 @@ public class HUDManager : MonoBehaviour
     private bool showFPS = false;
     private readonly int resumeTimerDuration = 3;
     private int resumeTimer;
-    private Sound levelSound;
     private IEnumerator checkAdC = null;
     private Text enqueuedShieldsText = null;
     private bool isAdLoading = false;
@@ -151,7 +154,7 @@ public class HUDManager : MonoBehaviour
         }
         StartCoroutine(UpdateStats_C(delay));
 
-        levelSound = AudioManager.GetInstance().PlaySound(AudioManager.LEVEL_SONG);
+        AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.LEVEL_SONG);
 
         enqueuedShieldsText = shieldChargeIcon.GetComponentInChildren<Text>();
 
@@ -324,14 +327,17 @@ public class HUDManager : MonoBehaviour
     {
         if (checkAdC != null)
         {
-            StopCoroutine(checkAdC);
+            Executer.GetInstance().AddJob(() => { StopCoroutine(checkAdC); });
         }
 
         Executer.GetInstance().AddJob(() =>
         {
+            adButton.SetActive(false);
+            loadingAdText.gameObject.SetActive(false);
             timeRelativeText.gameObject.SetActive(true);
             timeProperText.gameObject.SetActive(true);
             scoreText.gameObject.SetActive(true);
+            distanceText.gameObject.SetActive(true);
             gameOverPanel.SetActive(false);
             QuantumTunnelSelectionActive(false);
             gameMode.isPaused = true;
@@ -345,7 +351,7 @@ public class HUDManager : MonoBehaviour
     {
         while (true)
         {
-            if (!gameMode.attemptUsed)
+            if (!gameMode.attemptUsed && gameMode.isGameOver)
             {
                 if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT))
                 {
@@ -368,7 +374,7 @@ public class HUDManager : MonoBehaviour
                 adButton.SetActive(false);
                 loadingAdText.gameObject.SetActive(false);
             }
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2f);
         }
     }
 
@@ -480,29 +486,62 @@ public class HUDManager : MonoBehaviour
         scoreText.gameObject.SetActive(false);
         timeRelativeText.gameObject.SetActive(false);
         timeProperText.gameObject.SetActive(false);
+        distanceText.gameObject.SetActive(false);
         gameOverPanel.SetActive(true);
         gameOverScoreText.text = score.ToString("0");
         gameOverGravityPointsText.text = gravityPoints.ToString();
+    }
 
-        if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT) && !gameMode.attemptUsed)
+    public void DisplayLevelCompleted()
+    {
+        StartCoroutine(DisplayLevelCompleted_C());
+    }
+
+    public void SetHUDBasedOnLevel(Level level)
+    {
+        switch(level.category)
         {
-            adButton.SetActive(true);
+            case Level.LevelCategory.DISTANCE:
+                distanceText.gameObject.SetActive(true);
+                speedText.gameObject.SetActive(false);
+                break;
+            case Level.LevelCategory.MAX_SPEED:
+                distanceText.gameObject.SetActive(false);
+                speedText.gameObject.SetActive(true);
+                break;
+            case Level.LevelCategory.ENDLESS:
+                distanceText.gameObject.SetActive(true);
+                speedText.gameObject.SetActive(false);
+                break;
+            default:
+                distanceText.gameObject.SetActive(false);
+                speedText.gameObject.SetActive(false);
+                break;
         }
-        else
-        {
-            adButton.SetActive(false);
-        }
+
+        levelObjectivePanel.SetActive(true);
+        levelObjectivePanel.GetComponentInChildren<Text>().text = level.levelObjective;
+    }
+
+    private IEnumerator DisplayLevelCompleted_C()
+    {
+        gameMode.attemptUsed = true;
+        Animator animator = levelCompletedPanel.GetComponent<Animator>();
+        float length = animator.runtimeAnimatorController.animationClips[0].length - 0.35f;
+        levelCompletedPanel.SetActive(true);
+        yield return new WaitForSecondsRealtime(length);
+        DisplayGameOver();
     }
     //
 
-    public void UnloadLevelAndLoadMenu()
+    public void UnloadLevelAndLoadScene(string scene)
     {
         AudioManager instance = AudioManager.GetInstance();
         if (instance != null)
         {
-            instance.SmoothOutSound(levelSound, 0.05f, 1f);
+            instance.SmoothOutSound(AudioManager.GetInstance().currentMusic, 0.05f, 1f);
         }
-        GetComponent<SceneLoader>().LoadScene("Menu");
+        GetComponent<SceneLoader>().LoadScene(scene);
     }
 
     private IEnumerator FPSCoroutine()
@@ -564,36 +603,35 @@ public class HUDManager : MonoBehaviour
     public void CoolDownSkill(SkillManager.Skill skill, float duration)
     {
         //StartCoroutine(CoolDown(skill, duration));
-        EventTrigger eventTrigger = null;
-        Image cooldownOverlay = null;
+        Image cooldownOverlay = null, skillImage = null;
         switch (skill)
         {
             case SkillManager.Skill.ANTI_GRAVITY:
-                eventTrigger = antigravityBtn.GetComponent<EventTrigger>();
+                skillImage = antigravityBtn.GetComponent<Image>();
                 cooldownOverlay = SharedUtilities.GetInstance().GetFirstChildrenWithComponent<Image>(antigravityBtn).GetComponent<Image>();
                 break;
 
             case SkillManager.Skill.QUANTUM_TUNNEL:
-                eventTrigger = quantumTunnelBtn.GetComponent<EventTrigger>();
+                skillImage = quantumTunnelBtn.GetComponent<Image>();
                 cooldownOverlay = SharedUtilities.GetInstance().GetFirstChildrenWithComponent<Image>(quantumTunnelBtn).GetComponent<Image>();
                 break;
 
             case SkillManager.Skill.SOLAR_FLARE:
-                eventTrigger = solarflareBtn.GetComponent<EventTrigger>();
+                skillImage = solarflareBtn.GetComponent<Image>();
                 cooldownOverlay = SharedUtilities.GetInstance().GetFirstChildrenWithComponent<Image>(solarflareBtn).GetComponent<Image>();
                 break;
 
             case SkillManager.Skill.GAMMARAY_BURST:
-                eventTrigger = gammaRayBurstBtn.GetComponent<EventTrigger>();
+                skillImage = gammaRayBurstBtn.GetComponent<Image>();
                 cooldownOverlay = SharedUtilities.GetInstance().GetFirstChildrenWithComponent<Image>(gammaRayBurstBtn).GetComponent<Image>();
                 break;
         }
-        eventTrigger.enabled = false;
-        SharedUtilities.GetInstance().UnfillImage<EventTrigger>(this, cooldownOverlay, duration, EnableEventTrigger, eventTrigger);
+        skillImage.raycastTarget = false;
+        SharedUtilities.GetInstance().UnfillImage<Image>(this, cooldownOverlay, duration, EnableRayCastTarget, skillImage);
     }
-    private void EnableEventTrigger(EventTrigger eventTrigger)
+    private void EnableRayCastTarget(Image skillImage)
     {
-        eventTrigger.enabled = true;
+        skillImage.raycastTarget = true;
     }
 
 
@@ -603,6 +641,8 @@ public class HUDManager : MonoBehaviour
         {
             timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
             timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+            distanceText.text = playerManager.movementManager.distance.ToString("0") + " Km";
+            speedText.text = playerManager.movementManager.relativeSpeed.ToString("0.0") + " c";
             yield return new WaitForSeconds(delay);
         }
     }

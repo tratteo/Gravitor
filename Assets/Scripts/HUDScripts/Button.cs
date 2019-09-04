@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonPress : MonoBehaviour
+public class Button : MonoBehaviour
 {
     public bool colorPressEffect;
     public Color32 pressedColor;
@@ -13,13 +11,18 @@ public class ButtonPress : MonoBehaviour
     public bool playSound = true;
     public string soundTag = "ButtonClick";
 
-    public Color32 defaultColor;
-    public Image sprite;
-    void Start()
+    protected Color32 defaultColor;
+    protected Image sprite;
+
+    protected void Start()
     {
         sprite = GetComponentInChildren<Image>();
         defaultColor = sprite.color;
-        EventTrigger trigger = gameObject.AddComponent<EventTrigger>();
+        EventTrigger trigger = GetComponent<EventTrigger>();
+        if(trigger == null)
+        {
+            trigger = gameObject.AddComponent<EventTrigger>();
+        }
 
         EventTrigger.Entry pointerDown = new EventTrigger.Entry();
         pointerDown.eventID = EventTriggerType.PointerDown;

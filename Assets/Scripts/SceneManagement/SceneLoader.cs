@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     public const string ASYNCLOADER_SCENE_NAME = "AsyncLoader";
-    public const string ORBITING_MAP_NAME = "OrbitingMap";
-    public const string LINEAR_MAP_NAME = "LinearMap";
+    public const string MAP_NAME = "LinearMap";
     public void LoadScene(string name)
     {
         int index = SceneUtility.GetBuildIndexByScenePath(name);

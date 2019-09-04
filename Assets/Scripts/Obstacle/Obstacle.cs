@@ -112,14 +112,14 @@ public class Obstacle : MonoBehaviour, IPooledObject
 
     public virtual void DeactivateObstacle()
     {
-        PoolManager.GetInstance().DeactivateObject(gameObject);
+        gameObject.SetActive(false);
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "KillVolume")
         {
-            PoolManager.GetInstance().DeactivateObject(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -129,7 +129,7 @@ public class Obstacle : MonoBehaviour, IPooledObject
         {
             if (transform.localScale.x < collision.transform.localScale.x)
             {
-                PoolManager.GetInstance().DeactivateObject(gameObject);
+                gameObject.SetActive(false);
             }
         }
     }

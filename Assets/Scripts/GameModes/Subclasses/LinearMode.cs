@@ -8,7 +8,7 @@ public class LinearMode : GameMode
     {
         Quaternion rot = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
         string poolTag = poolManager.GetRandomCategoryPoolTag(GAMEOBSTACLES_CAT_TAG);
-        if(poolTag.Equals("OrbNeutronStars"))
+        if(poolTag.Equals("OrbNeutronStar"))
         {
             HUDManager.GetInstance().Toast(HUDManager.ToastType.GAME_TOAST, "Orbital NeutronStars incoming", null, 1.5f, 0f, true);
         }
@@ -23,7 +23,7 @@ public class LinearMode : GameMode
 
     protected override void InstantiatePickUp()
     {
-        GameObject instantiatedPickUpRef = poolManager.Spawn(PICKUPS_CAT_TAG, pickupsSpawner.GetSpawnPosition(), Quaternion.identity);
+        GameObject instantiatedPickUpRef = poolManager.Spawn(PICKUPS_CAT_TAG, extraSpawner.GetSpawnPosition(), Quaternion.identity);
         LinearMovementComponent linearMovementComponent = instantiatedPickUpRef.GetComponent<LinearMovementComponent>();
         if (linearMovementComponent == null)
         {

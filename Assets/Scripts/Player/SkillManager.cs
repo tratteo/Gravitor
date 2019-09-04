@@ -32,6 +32,7 @@ public class SkillManager : MonoBehaviour
     [HideInInspector] public bool isAntiGravityActive = false;
     [HideInInspector] public bool isGravitable = true;
     [HideInInspector] public bool isQuantumTunnelSelectionActive = false;
+    [HideInInspector] public int sessionObstaclesDestroyed = 0;
 
     //References
     private PlayerManager playerManager = null;
@@ -126,8 +127,7 @@ public class SkillManager : MonoBehaviour
 
         Image cooldownOverlay = hudManager.antigravityBtn.GetComponentsInChildren<Image>()[1];
         cooldownOverlay.fillAmount = 1f;
-        EventTrigger eventTrigger = hudManager.antigravityBtn.GetComponent<EventTrigger>();
-        eventTrigger.enabled = false;
+        HUDManager.GetInstance().antigravityBtn.GetComponent<Image>().raycastTarget = false;
         yield return new WaitForSeconds(duration);
         Destroy(antigravityEffRef);
 
@@ -211,6 +211,13 @@ public class SkillManager : MonoBehaviour
                 playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass));
             }
         }
+        sessionObstaclesDestroyed += castedObstacles;
+
+        if (playerManager.level.category == Level.LevelCategory.OBSTACLES_DESTROY && sessionObstaclesDestroyed >= playerManager.level.targetObstaclesDestoryed)
+        {
+            playerManager.LevelCompleted();
+        }
+
         playerManager.timeDistortion = 1;
         playerManager.dangerZoneCount = playerManager.dangerZoneCount > castedObstacles ? playerManager.dangerZoneCount -= (short)castedObstacles : playerManager.dangerZoneCount = 0;
         playerManager.gravityFieldCount = playerManager.gravityFieldCount > castedObstacles ? playerManager.gravityFieldCount -= (short)castedObstacles : playerManager.gravityFieldCount = 0;
@@ -254,11 +261,12 @@ public class SkillManager : MonoBehaviour
             channelGammaRaySys.Stop();
         }
 
-        if (playerManager.gameMode.GetType().Name.Equals("LinearMode"))
-        {
-            Vector3 exceptionCentre = new Vector3(transform.position.x, transform.position.y, playerManager.gameMode.obstacleRandZSpawn.x);
-            playerManager.gameMode.NotifySpawnException(exceptionCentre, scaledGammaRayRadius, scaledGammaRayRadius, 1f, 8.5f);
-        }
+        Vector3 exceptionCentre = new Vector3(transform.position.x, transform.position.y, playerManager.gameMode.randZSpawn.x);
+        playerManager.gameMode.NotifySpawnException(exceptionCentre, scaledGammaRayRadius, scaledGammaRayRadius, 1f, GameplayMath.GetInstance().GetGRBSpawnExceptionTime(skillsData.gammaRayBurstPoints));
+        //if (playerManager.gameMode.GetType().Name.Equals("LinearMode"))
+        //{
+            
+        //}
 
         InstantiateEffect(gammaRayEffect);
         hudManager.CoolDownSkill(Skill.GAMMARAY_BURST, GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints));
@@ -277,6 +285,12 @@ public class SkillManager : MonoBehaviour
                 playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass));
             }
         }
+        sessionObstaclesDestroyed += castedObstacles;
+        if (playerManager.level.category == Level.LevelCategory.OBSTACLES_DESTROY && sessionObstaclesDestroyed >= playerManager.level.targetObstaclesDestoryed)
+        {
+            playerManager.LevelCompleted();
+        }
+
         playerManager.timeDistortion = 1;
         playerManager.dangerZoneCount = playerManager.dangerZoneCount > castedObstacles ? playerManager.dangerZoneCount -= (short)castedObstacles : playerManager.dangerZoneCount = 0;
         playerManager.gravityFieldCount = playerManager.gravityFieldCount > castedObstacles ? playerManager.gravityFieldCount -= (short)castedObstacles : playerManager.gravityFieldCount = 0;

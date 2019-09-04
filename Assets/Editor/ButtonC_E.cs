@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEngine.UI;
 
-[CustomEditor(typeof(ButtonPress))]
-public class ButtonPressC_E : Editor
+[CustomEditor(typeof(Button))]
+public class ButtonC_E : Editor
 {
-    ButtonPress script;
+    Button script;
     private void OnEnable()
     {
-        script = (ButtonPress)target;
+        script = (Button)target;
     }
     public override void OnInspectorGUI()
     {
