@@ -127,7 +127,7 @@ public class SkillManager : MonoBehaviour
 
         Image cooldownOverlay = hudManager.antigravityBtn.GetComponentsInChildren<Image>()[1];
         cooldownOverlay.fillAmount = 1f;
-        HUDManager.GetInstance().antigravityBtn.GetComponent<Image>().raycastTarget = false;
+        hudManager.antigravityBtn.GetComponent<Image>().raycastTarget = false;
         yield return new WaitForSeconds(duration);
         Destroy(antigravityEffRef);
 
@@ -242,8 +242,7 @@ public class SkillManager : MonoBehaviour
     {
         Image cooldownOverlay = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<Image>(hudManager.gammaRayBurstBtn, "FilledOverlay");
         cooldownOverlay.fillAmount = 1f;
-        EventTrigger eventTrigger = hudManager.gammaRayBurstBtn.GetComponent<EventTrigger>();
-        eventTrigger.enabled = false;
+        hudManager.gammaRayBurstBtn.GetComponent<Image>().raycastTarget = false;
         GameObject channelGammaRayRef = InstantiateEffect(channelGammaRayEffect);
 
         mask = LayerMask.GetMask("Obstacles");

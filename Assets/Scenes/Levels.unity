@@ -2582,8 +2582,8 @@ MonoBehaviour:
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
-  isSpawnRateConst: 0
-  constSpawnRate: 0
+  isSpawnRateConst: 1
+  constSpawnRate: 3.6
   a: 0
   b: 0
   g: 0
@@ -3198,7 +3198,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 844096571}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.34037858
+  m_Size: 0.36663336
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
