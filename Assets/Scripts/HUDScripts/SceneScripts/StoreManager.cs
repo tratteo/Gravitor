@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Purchasing;
 
 public class StoreManager : MonoBehaviour
 {
     [SerializeField] private GameObject disclaimerPanel = null;
-
-
-    private static IStoreController m_StoreController;          // The Unity Purchasing system.
-    private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
 
     public void ShowDisclaimerPanel(bool state)
     {
         disclaimerPanel.SetActive(state);
     }
 
-    public static string kProductIDConsumable = "consumable";
-    public static string kProductIDNonConsumable = "nonconsumable";
-    public static string kProductIDSubscription = "subscription";
+    //private static IStoreController m_StoreController;          // The Unity Purchasing system.
+    //private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
 
-    // Google Play Store-specific product identifier subscription product.
-    private static string kProductNameGooglePlaySubscription = "com.unity3d.subscription.original";
+
+    //public static string kProductIDConsumable = "consumable";
+    //public static string kProductIDNonConsumable = "nonconsumable";
+    //public static string kProductIDSubscription = "subscription";
+
+    //// Google Play Store-specific product identifier subscription product.
+    //private static string kProductNameGooglePlaySubscription = "com.unity3d.subscription.original";
 
     //void Start()
     //{
