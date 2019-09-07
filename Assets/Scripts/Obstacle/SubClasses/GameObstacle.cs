@@ -53,18 +53,16 @@ public class GameObstacle : Obstacle, IDestroyEffect
         Collider[] colliders = Physics.OverlapSphere(transform.position, targetScale / 2, layerMask);
         if(colliders.Length > 1)
         {
-            //Debug.Log("Deactivating: " + colliders.Length);
             base.DeactivateObstacle();
             return;
         }
 
         density = Random.Range(minDensity, maxDensity);
         mass = GameplayMath.GetInstance().GetObstacleMass(this);
-        gravityComponent.fieldID = (int)((mass * density) / 1E9);
 
         SphereCollider dangerZone = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<SphereCollider>(gameObject, "DangerZone");
         SphereCollider gravityField = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<SphereCollider>(gameObject, "GravityField");
-        gravityField.radius = (0.65E-2f * Mathf.Sqrt(mass)) / targetScale;
+        gravityField.radius = 0.3E-2f * Mathf.Sqrt(mass) / targetScale;
 
         if (gravityField.radius <= 0.8f)
         {
@@ -72,9 +70,9 @@ public class GameObstacle : Obstacle, IDestroyEffect
         }
 
         dangerZone.radius = gravityField.radius / 14f;
-        if (dangerZone.radius <= 0.55f)
+        if (dangerZone.radius <= 0.6f)
         {
-            dangerZone.radius = 0.6f;
+            dangerZone.radius = 0.62f;
         }
 
         base.SetupObstacle();

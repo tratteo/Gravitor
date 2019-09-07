@@ -5,9 +5,9 @@ using System;
 
 public class Level : MonoBehaviour
 {
-    private Color32 goldColor = new Color32(255, 190, 0, 255);
-    private Color32 silverColor = new Color32(150, 150, 150, 255);
-    private Color32 bronzeColor = new Color32(125, 75, 40, 255);
+    public static Color32 GOLD_COLOR = new Color32(255, 190, 0, 255);
+    public static Color32 SILVER_COLOR = new Color32(150, 150, 150, 255);
+    public static Color32 BRONZE_COLOR = new Color32(125, 75, 40, 255);
 
     public enum LevelCategory { TIME, TIME_DILATED, DISTANCE, MAX_SPEED, OBSTACLES_DESTROY, ENDLESS }
 
@@ -26,6 +26,9 @@ public class Level : MonoBehaviour
     public int bronzeScore;
     public int silverScore;
     public int goldScore;
+    public int bronzeGP;
+    public int silverGP;
+    public int goldGP;
     public PoolManager poolManager;
 
 
@@ -44,15 +47,15 @@ public class Level : MonoBehaviour
             int levelScore = data.GetLevelHighScore(id);
             if(levelScore > bronzeScore)
             {
-                grade.color = bronzeColor;
+                grade.color = BRONZE_COLOR;
             }
             if(levelScore > silverScore)
             {
-                grade.color = silverColor;
+                grade.color = SILVER_COLOR;
             }
             if(levelScore > goldScore)
             {
-                grade.color = goldColor;
+                grade.color = GOLD_COLOR;
             }
             mainImage.raycastTarget = true;
         }

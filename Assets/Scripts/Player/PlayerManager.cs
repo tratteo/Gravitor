@@ -1,6 +1,7 @@
 ﻿using EZCameraShake;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(MovementManager))]
@@ -51,16 +52,16 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public float resilience;
     private float initialResilience;
     private PlayerData playerData;
-    public Dictionary<int, float> gravityFieldsSet;
+    public List<GameObstacle> gravityFieldsGens;
     [HideInInspector] public PlayerState playerState;
-    [HideInInspector] public short dangerZoneCount = 0;
-    [HideInInspector] public short gravityFieldCount = 0;
+    [HideInInspector] public int dangerZoneCount = 0;
     [HideInInspector] public HUDManager hudManagerInstance;
     [HideInInspector] public bool isDead = false;
     private int sessionObstaclesHit = 0;
 
     [HideInInspector] public float scoreMultiplier = 1f;
     [HideInInspector] public float timeDistortion = 1f;
+    [HideInInspector] public bool isGravityTdActive = true;
 
     [HideInInspector] public float properTime = 0f;
     [HideInInspector] public float relativeExTime = 0f;
@@ -101,12 +102,14 @@ public class PlayerManager : MonoBehaviour
             playerState = playerData.playerState;
             initialResilience = playerData.health;
         }
+        dangerZoneCount = 0;
     }
 
     private void Start()
     {
+        gravityFieldsGens = new List<GameObstacle>();
+
         resilience = initialResilience;
-        gravityFieldsSet = new Dictionary<int, float>();
         MeshRenderer renderer = GetComponent<MeshRenderer>();
         switch (playerState)
         {
@@ -124,12 +127,12 @@ public class PlayerManager : MonoBehaviour
         hudManagerInstance = HUDManager.GetInstance();
 
         hudManagerInstance.UpdatePlayerHealthUI(resilience, initialResilience);
+
+        StartCoroutine(UpdateTimeDistortion());
     }
 
     void Update()
     {
-        timeDistortion = timeDistortion < 1f ? 1f : timeDistortion;
-        //Debug.Log("Td: " + timeDistortion + "Sm: " + scoreMultiplier);
         if (Time.timeScale < 1 && gameMode != null && !gameMode.isPaused)
         {
             Time.timeScale += (1 / collisionSlowMotionDuration) * Time.unscaledDeltaTime;
@@ -165,19 +168,17 @@ public class PlayerManager : MonoBehaviour
         {
             movementManager.ResetMovementSpeed();
             dangerZoneCount--;
-            gravityFieldCount--;
+            GameObstacle obstacle = collision.gameObject.GetComponent<GameObstacle>();
+            gravityFieldsGens.Remove(obstacle);
+
             if (dangerZoneCount == 0)
             {
                 hudManagerInstance.EnableHighGravityFieldPanel(false);
             }
 
-            ObstacleGravity obstacleGravity = collision.gameObject.GetComponentInChildren<ObstacleGravity>();
-            gravityFieldsSet.Remove(obstacleGravity.fieldID);
-            timeDistortion = 1f;
             CameraShaker.Instance.ShakeOnce(shakeMagnitude, shakeRoughness, shakeFadeInTime, shakeFadeOutTime);
             Time.timeScale = 1 / collisionTimerMultiplier;
-            GameObstacle obstacle = null;
-            obstacle = collision.gameObject.GetComponent<GameObstacle>();
+
             if (!extraManager.isShielded)
             {
                 float damage = 0;
@@ -209,23 +210,17 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (gameMode.isGameOver)
-        {
-            return;
-        }
+        if (gameMode.isGameOver) return;
 
         if (other.gameObject.tag.Equals("GravityField"))
         {
-            ObstacleGravity gravityComponent = other.gameObject.GetComponent<ObstacleGravity>();
-
-            float timeDistortion = GameplayMath.GetInstance().GetGravityTd(gameObject, other.transform.parent.gameObject);
-            if (!gravityFieldsSet.ContainsKey(gravityComponent.fieldID))
+            GameObstacle obstacleObj = SharedUtilities.GetInstance().GetFirstComponentInParentWithTag<GameObstacle>(other.gameObject, "Obstacle");
+            if(!gravityFieldsGens.Contains(obstacleObj))
             {
-                gravityFieldsSet.Add(gravityComponent.fieldID, timeDistortion);
-            }
-
-            gravityFieldCount++;
+                gravityFieldsGens.Add(obstacleObj);
+            }  
         }
+
         else if (other.gameObject.tag.Equals("DangerZone"))
         {
             dangerZoneCount++;
@@ -235,24 +230,12 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (gameMode.isGameOver)
-        {
-            return;
-        }
+        if (gameMode.isGameOver) return;
 
         if (other.gameObject.tag.Equals("GravityField"))
         {
-            ObstacleGravity gravityComponent = other.gameObject.GetComponent<ObstacleGravity>();
-            gravityFieldsSet.Remove(gravityComponent.fieldID);
-
-            if (gravityFieldCount > 0)
-            {
-                gravityFieldCount--;
-            }
-            if (gravityFieldCount == 0)
-            {
-                timeDistortion = 1f;
-            }
+            GameObstacle obstacleObj = SharedUtilities.GetInstance().GetFirstComponentInParentWithTag<GameObstacle>(other.gameObject, "Obstacle");
+            gravityFieldsGens.Remove(obstacleObj);
         }
         else if (other.gameObject.tag.Equals("DangerZone"))
         {
@@ -260,10 +243,8 @@ public class PlayerManager : MonoBehaviour
             {
                 movementManager.GravitySling();
             }
-            if (dangerZoneCount > 0)
-            {
-                dangerZoneCount--;
-            }
+            dangerZoneCount = dangerZoneCount > 0 ? dangerZoneCount - 1 : 0;
+
             if (dangerZoneCount == 0)
             {
                 hudManagerInstance.EnableHighGravityFieldPanel(false);
@@ -277,26 +258,8 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (gameMode.isGameOver)
-        {
-            return;
-        }
+        if (gameMode.isGameOver) return;
 
-        if (other.gameObject.tag.Equals("GravityField"))
-        {
-            float newTimeDistortion = GameplayMath.GetInstance().GetGravityTd(gameObject, other.transform.parent.gameObject);
-            ObstacleGravity gravityComponent = other.gameObject.GetComponent<ObstacleGravity>();
-            //Subtract current obstacle Td
-            if (gravityFieldsSet.ContainsKey(gravityComponent.fieldID))
-            {
-                timeDistortion -= gravityFieldsSet[gravityComponent.fieldID];
-                //Update current obstacle Td
-                gravityFieldsSet[gravityComponent.fieldID] = newTimeDistortion;
-                //Add back correct Td
-                timeDistortion += newTimeDistortion;
-                scoreMultiplier = timeDistortion;
-            }
-        }
         if (other.gameObject.tag.Equals("Margins") && !isDead)
         {
             directionArrow.gameObject.SetActive(true);
@@ -309,7 +272,6 @@ public class PlayerManager : MonoBehaviour
             directionArrow.transform.rotation = Quaternion.Euler(new Vector3(0, 0, degrees));
         }
     }
-    //
 
     public void EnteredDamageNebula(Margin.MarginLocation location)
     {
@@ -453,8 +415,10 @@ public class PlayerManager : MonoBehaviour
                 Destroy(effects[i].gameObject);
             }
         }
+
         dangerZoneCount = 0;
-        gravityFieldCount = 0;
+        gravityFieldsGens.Clear();
+
         if (level.category == Level.LevelCategory.ENDLESS)
         {
             BroadcastStats();
@@ -467,8 +431,6 @@ public class PlayerManager : MonoBehaviour
 
         timeDistortion = 1f;
         directionArrow.gameObject.SetActive(false);
-        //gameObject.GetComponent<SphereCollider>().enabled = false;
-        //gameObject.GetComponent<MeshRenderer>().enabled = false;
         ParticleSystem[] effects = skillManager.skillSpawn.GetComponentsInChildren<ParticleSystem>();
         if (effects != null)
         {
@@ -479,7 +441,8 @@ public class PlayerManager : MonoBehaviour
             }
         }
         dangerZoneCount = 0;
-        gravityFieldCount = 0;
+        gravityFieldsGens.Clear();
+
         gameMode.LevelCompleted();
     }
 
@@ -493,6 +456,47 @@ public class PlayerManager : MonoBehaviour
         stats.score = gameMode.sessionScore;
         stats.obstaclesHit = sessionObstaclesHit;
         FireSessionStats(stats);
+    }
+
+    private IEnumerator UpdateTimeDistortion()
+    {
+        float delay = 0.1f;
+        int quality = QualitySettings.GetQualityLevel();
+        switch (quality)
+        {
+            case SettingsManager.LOW:
+                delay = 0.5f;
+                break;
+            case SettingsManager.MEDIUM:
+                delay = 0.35f;
+                break;
+            case SettingsManager.HIGH:
+                delay = 0.2f;
+                break;
+            case SettingsManager.ULTRA:
+                delay = 0.1f;
+                break;
+        }
+
+        while (!gameMode.isGameOver)
+        {
+            if (isGravityTdActive)
+            {
+                float totTd = 1f;
+                int length = gravityFieldsGens.Count;
+                for (int i = 0; i < length; i++)
+                {
+                    totTd *= GameplayMath.GetInstance().GetGravityTd(gameObject, gravityFieldsGens[i]);
+                }
+                timeDistortion = totTd > 1 ? totTd : 1f;
+                scoreMultiplier = timeDistortion;
+            }
+            else
+            {
+                timeDistortion = 1f;
+            }
+            yield return new WaitForSeconds(delay);
+        }
     }
 }
 

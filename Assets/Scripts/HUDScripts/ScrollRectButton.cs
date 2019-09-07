@@ -15,6 +15,7 @@ public class ScrollRectButton : Button, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentScroll.OnBeginDrag(eventData);
+        sprite.raycastTarget = false;
     }
 
 
@@ -26,6 +27,7 @@ public class ScrollRectButton : Button, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         parentScroll.OnEndDrag(eventData);
+        sprite.raycastTarget = true;
     }
 
 

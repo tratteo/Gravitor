@@ -16,7 +16,7 @@ public class Button : MonoBehaviour
 
     protected void Start()
     {
-        sprite = GetComponentInChildren<Image>();
+        sprite = GetComponent<Image>();
         defaultColor = sprite.color;
         EventTrigger trigger = GetComponent<EventTrigger>();
         if(trigger == null)

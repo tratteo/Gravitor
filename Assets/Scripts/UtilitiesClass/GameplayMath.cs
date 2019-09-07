@@ -17,19 +17,18 @@ public class GameplayMath
     private const float RadToDegree = 57.3f;
     private const double Td_constant = 9E5f * (G/(c*c));
 
-    public float GetGravityTd(GameObject player, GameObject obstacle)
+    public float GetGravityTd(GameObject player, GameObstacle obstacle)
     {
-        float intern = (float)(1f - ((Td_constant * obstacle.GetComponent<GameObstacle>().mass) / Vector3.Magnitude(player.transform.position - obstacle.transform.position)));
+        float intern = (float)(1f - ((Td_constant * obstacle.mass) / Vector3.Magnitude(player.transform.position - obstacle.transform.position)));
         float result;
-        if (intern <= 0.05f)
+        if (intern <= 0.10f)
         {
-            return 20f;
+            return 10f;
         }
         else
         {
             result = (1f / Mathf.Sqrt(intern));
         }
-        //Debug.Log("Ob: " + gameObstacle.gameObject.name +", Intern: " + intern.ToString("0.000") + ", Td: " + result);
         return result;
     }
 
@@ -107,7 +106,7 @@ public class GameplayMath
             case 2:
                 return 30;
             case 3:
-                return 15;
+                return 18;
             default:
                 return -1;
         }
@@ -121,7 +120,7 @@ public class GameplayMath
 
     public int GetCostFromInitCost(int points, int initCost)
     {
-        return (int)(350 * Mathf.Pow(points, 2.5f) + initCost - 350);
+        return (int)(415 * Mathf.Pow(points, 2.45f) + initCost - 415);
     }
 
     public int GetGRBSpawnExceptionTime(int points)
@@ -129,11 +128,11 @@ public class GameplayMath
         switch(points)
         {
             case 1:
-                return 7;
+                return 4;
             case 2:
-                return 8;
+                return 5;
             case 3:
-                return 10;
+                return 6;
             default:
                 return -1;
         }

@@ -34,8 +34,7 @@ public class HUDManager : MonoBehaviour
     public Text scoreText;
     public Text timeRelativeText = null;
     public Text timeProperText = null;
-    public Text distanceText = null;
-    public Text speedText = null;
+    public Text objectiveText = null;
     public Text fpsText = null;
     public Text gameOverScoreText = null;
     public Text gameOverGravityPointsText = null;
@@ -44,6 +43,8 @@ public class HUDManager : MonoBehaviour
     public Text loadingAdText = null;
     public Image healthBar = null;
     public GameObject shieldBtn = null;
+    public Image gameOverGrade = null;
+    public Text gameOverGradeGP = null;
     public Image shieldChargeIcon = null;
     public Text shieldsText = null;
     public GameObject antigravityBtn = null;
@@ -86,15 +87,21 @@ public class HUDManager : MonoBehaviour
     private Text enqueuedShieldsText = null;
     private bool isAdLoading = false;
 
+    private Level level;
+
     //Events
 
     #endregion
+    private void OnEnable()
+    {
+        gameMode = FindObjectOfType<GameMode>();
+        level = gameMode.currentLevel;
+    }
 
     private void Start()
     {
         tutorial = GetComponent<Tutorial>();
-        gameMode = FindObjectOfType<GameMode>();
-
+        
         if (gameMode)
         {
             skillManager = gameMode.playerManager.skillManager;
@@ -477,6 +484,33 @@ public class HUDManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         gameOverScoreText.text = gameMode.sessionScore.ToString("0");
         gameOverGravityPointsText.text = gameMode.sessionGravityPoints.ToString();
+
+        gameOverGrade.gameObject.SetActive(false);
+        gameOverGradeGP.gameObject.SetActive(false);
+        if (level.category == Level.LevelCategory.ENDLESS)
+        {
+            if (gameMode.sessionScore >= level.goldScore)
+            {
+                gameOverGrade.gameObject.SetActive(true);
+                gameOverGradeGP.gameObject.SetActive(true);
+                gameOverGrade.color = Level.GOLD_COLOR;
+                gameOverGradeGP.text = level.goldGP.ToString("0");
+            }
+            else if (gameMode.sessionScore >= level.silverScore)
+            {
+                gameOverGrade.gameObject.SetActive(true);
+                gameOverGradeGP.gameObject.SetActive(true);
+                gameOverGrade.color = Level.SILVER_COLOR;
+                gameOverGradeGP.text = level.silverGP.ToString("0");
+            }
+            else if (gameMode.sessionScore >= level.bronzeScore)
+            {
+                gameOverGrade.gameObject.SetActive(true);
+                gameOverGradeGP.gameObject.SetActive(true);
+                gameOverGrade.color = Level.BRONZE_COLOR;
+                gameOverGradeGP.text = level.bronzeGP.ToString("0");
+            }
+        }
     }
 
     public void DisplayLevelCompletedPanel()
@@ -484,7 +518,7 @@ public class HUDManager : MonoBehaviour
         StartCoroutine(DisplayLevelCompleted_C());
     }
 
-    public void DisplayLevelInfoPanel(Level level)
+    public void DisplayLevelObjectivePanel()
     {
         levelObjectivePanel.SetActive(true);
         levelObjectivePanel.GetComponentInChildren<Text>().text = level.levelObjective;
@@ -495,41 +529,40 @@ public class HUDManager : MonoBehaviour
         statsPanel.SetActive(state);
     }
 
-
-
-    public void SetStatsHUDBasedOnLevel(Level level)
-    {
-        switch(level.category)
-        {
-            case Level.LevelCategory.DISTANCE:
-                distanceText.gameObject.SetActive(true);
-                speedText.gameObject.SetActive(false);
-                break;
-            case Level.LevelCategory.MAX_SPEED:
-                distanceText.gameObject.SetActive(false);
-                speedText.gameObject.SetActive(true);
-                break;
-            case Level.LevelCategory.ENDLESS:
-                distanceText.gameObject.SetActive(true);
-                speedText.gameObject.SetActive(false);
-                break;
-            default:
-                distanceText.gameObject.SetActive(false);
-                speedText.gameObject.SetActive(false);
-                break;
-        }
-    }
-
     private IEnumerator DisplayLevelCompleted_C()
     {
-        gameMode.attemptUsed = true;
         Animator animator = levelCompletedPanel.GetComponent<Animator>();
         float length = animator.runtimeAnimatorController.animationClips[0].length - 0.35f;
         levelCompletedPanel.SetActive(true);
+        
         yield return new WaitForSecondsRealtime(length);
+
+        gameOverGrade.gameObject.SetActive(false);
+        gameOverGradeGP.gameObject.SetActive(false);
+        if (gameMode.sessionScore >= level.goldScore)
+        {
+            gameOverGrade.gameObject.SetActive(true);
+            gameOverGradeGP.gameObject.SetActive(true);
+            gameOverGrade.color = Level.GOLD_COLOR;
+            gameOverGradeGP.text = level.goldGP.ToString("0");
+        }
+        else if (gameMode.sessionScore >= level.silverScore)
+        {
+            gameOverGrade.gameObject.SetActive(true);
+            gameOverGradeGP.gameObject.SetActive(true);
+            gameOverGrade.color = Level.SILVER_COLOR;
+            gameOverGradeGP.text = level.silverGP.ToString("0");
+        }
+        else if (gameMode.sessionScore >= level.bronzeScore)
+        {
+            gameOverGrade.gameObject.SetActive(true);
+            gameOverGradeGP.gameObject.SetActive(true);
+            gameOverGrade.color = Level.BRONZE_COLOR;
+            gameOverGradeGP.text = level.bronzeGP.ToString("0");
+        }
+
         DisplayGameOverPanel();
     }
-
 
 
     public void UnloadLevelAndLoadScene(string scene)
@@ -634,13 +667,91 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator UpdateStats_C(float delay)
     {
-        while (true)
+
+        switch (level.category)
         {
-            timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
-            timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
-            distanceText.text = playerManager.movementManager.distance.ToString("0") + " Km";
-            speedText.text = playerManager.movementManager.relativeSpeed.ToString("0.0") + " c";
-            yield return new WaitForSeconds(delay);
+            case Level.LevelCategory.TIME:
+                while (true)
+                {
+                    timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
+                    timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+                    objectiveText.text = playerManager.properTime.ToString("0.0") + " s";
+                    yield return new WaitForSeconds(delay);
+                }
+
+            case Level.LevelCategory.TIME_DILATED:
+                while (true)
+                {
+                    timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
+                    timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+                    objectiveText.text = (playerManager.relativeExTime - playerManager.properTime).ToString("0.0") + " s";
+                    yield return new WaitForSeconds(delay);
+                }
+
+            case Level.LevelCategory.DISTANCE:      
+                while (true)
+                {
+                    timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
+                    timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+                    objectiveText.text = playerManager.movementManager.distance.ToString("0") + " Km";
+                    yield return new WaitForSeconds(delay);
+                }
+
+            case Level.LevelCategory.MAX_SPEED:
+                while (true)
+                {
+                    timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
+                    timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+                    objectiveText.text = playerManager.movementManager.relativeSpeed.ToString("0.000") + " c";
+                    yield return new WaitForSeconds(delay);
+                }
+
+            case Level.LevelCategory.OBSTACLES_DESTROY:
+                while (true)
+                {
+                    timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
+                    timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+                    objectiveText.text = playerManager.skillManager.sessionObstaclesDestroyed.ToString("0") + " destroyed";
+                    yield return new WaitForSeconds(delay);
+                }
+
+            case Level.LevelCategory.ENDLESS:
+                while (true)
+                {
+                    timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
+                    timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+                    switch (settingsData.hudConf)
+                    {
+                        case SettingsData.EndlessModeHUD.DISTANCE:
+                            objectiveText.text = playerManager.movementManager.distance.ToString("0") + " Km";
+                            break;
+                        case SettingsData.EndlessModeHUD.OBSTACLES_DESTROYED:
+                            objectiveText.text = playerManager.skillManager.sessionObstaclesDestroyed.ToString("0") + " destroyed";
+                            break;
+                        case SettingsData.EndlessModeHUD.SPEED:
+                            objectiveText.text = playerManager.movementManager.relativeSpeed.ToString("0.000") + " c";
+                            break;
+                        case SettingsData.EndlessModeHUD.TIME:
+                            objectiveText.text = playerManager.properTime.ToString("0.0") + " s";
+                            break;
+                        case SettingsData.EndlessModeHUD.TIME_DILATED:
+                            objectiveText.text = (playerManager.relativeExTime - playerManager.properTime).ToString("0.0") + " s";
+                            break;
+                        default:
+                            objectiveText.text = playerManager.movementManager.distance.ToString("0") + " Km";
+                            break;
+                    }
+                    yield return new WaitForSeconds(delay);
+                }
+            
+            default:
+                while (true)
+                {
+                    timeRelativeText.text = "Tr = " + playerManager.relativeExTime.ToString("0.0");
+                    timeProperText.text = "Tp = " + playerManager.properTime.ToString("0.0");
+                    objectiveText.text = playerManager.movementManager.distance.ToString("0") + " Km";
+                    yield return new WaitForSeconds(delay);
+                }
         }
     }
 }

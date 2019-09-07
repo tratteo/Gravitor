@@ -58,10 +58,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d0cfda1b4f16549924255f3f048603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2
+  duration: 2.25
   viewDistortion: 178
   scoreMultiplier: 12
-  relativeSpeed: 0.999977
+  relativeSpeed: 0.999972
 --- !u!1001 &7515728236452483134
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -69,16 +69,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7568984893206684656}
     m_Modifications:
-    - target: {fileID: 4480655221496855593, guid: f6bccaf0b1ea51d4ba322d70601b7430,
-        type: 3}
-      propertyPath: m_Name
-      value: SpeedBoostEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 4480655221496855593, guid: f6bccaf0b1ea51d4ba322d70601b7430,
-        type: 3}
-      propertyPath: m_Layer
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 4480655221497143305, guid: f6bccaf0b1ea51d4ba322d70601b7430,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -143,6 +133,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4480655221496855593, guid: f6bccaf0b1ea51d4ba322d70601b7430,
+        type: 3}
+      propertyPath: m_Name
+      value: SpeedBoostEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4480655221496855593, guid: f6bccaf0b1ea51d4ba322d70601b7430,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6bccaf0b1ea51d4ba322d70601b7430, type: 3}

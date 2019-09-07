@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class ObstacleGravity : MonoBehaviour
 {
-    public int fieldID;
     private GameplayMath gameplayMathInstance;
     private Rigidbody otherRigidbody;
 

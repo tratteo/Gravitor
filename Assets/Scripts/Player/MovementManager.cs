@@ -12,15 +12,15 @@ public class MovementManager : MonoBehaviour
     public float maxSpeed = 1500f;
     public float maxRelativeSpeed = 0.9f;
 
-    /*[HideInInspector] */public float velocityTimeDistrotion = 1f;
+    [HideInInspector] public float velocityTimeDistrotion = 1f;
     [HideInInspector] public float currentSlingMultiplier;
     private new Rigidbody rigidbody;
     private readonly float zThreshHold = 10f;
     private float thrustForce = 120f;
     private float maxSpeedReached = 0f;
 
-    /*[HideInInspector]*/ public float movementSpeed;
-   /* [HideInInspector]*/ public float relativeSpeed;
+    [HideInInspector] public float movementSpeed;
+    [HideInInspector] public float relativeSpeed;
     private bool canMove = true;
     private float forceIntensity;
     private Vector3 zAdjust;

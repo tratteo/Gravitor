@@ -6,6 +6,9 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] private Text bronzeScore;
     [SerializeField] private Text silverScore;
     [SerializeField] private Text goldScore;
+    [SerializeField] private Text bronzeGP;
+    [SerializeField] private Text silverGP;
+    [SerializeField] private Text goldGP;
     [SerializeField] private Text info;
     [SerializeField] private Text highScore;
 
@@ -33,7 +36,10 @@ public class LevelsManager : MonoBehaviour
         bronzeScore.text = " > " + level.bronzeScore.ToString("0");
         silverScore.text = " > " + level.silverScore.ToString("0");
         goldScore.text = " > " + level.goldScore.ToString("0");
-        highScore.text = "Highscore\n" + SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>().GetLevelHighScore(level.id).ToString("0");
+        bronzeGP.text = level.bronzeGP.ToString("0");
+        silverGP.text = level.silverGP.ToString("0");
+        goldGP.text = level.goldGP.ToString("0");
+        highScore.text = "Highscore: " + SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>().GetLevelHighScore(level.id).ToString("0");
         info.text = level.levelInfo;
         selectedLevel = level;
     }

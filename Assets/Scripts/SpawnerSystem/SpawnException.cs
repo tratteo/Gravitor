@@ -20,7 +20,7 @@ public class SpawnException
         this.spawner = spawner;
         this.duration = duration;
 
-        CheckException(width, height, depth);
+        if (!CheckException(width, height, depth)) return;
         if (startNow)
             StartException();
     }
@@ -31,21 +31,26 @@ public class SpawnException
         this.centre = centre;
         this.spawner = spawner;
 
-        CheckException(width, height, depth);
+        if (!CheckException(width, height, depth)) return;
         isActive = true;
     }
 
-    private void CheckException(float width, float height, float depth)
+    private bool CheckException(float width, float height, float depth)
     {
         ExceptionType ex = InitializeSpawnException(width, height, depth);
         switch (ex)
         {
             case ExceptionType.ZERO_IN_A_DIRECTION:
-                throw new System.Exception("SpawnException has 0 in a direction");
+                isActive = false;
+                return false;
             case ExceptionType.OUT_OF_SAREA:
-                throw new System.Exception("SpawnException is completely out of the SpawnArea");
+                isActive = false;
+                return false;
             case ExceptionType.WHOLE_SAREA:
-                throw new System.Exception("SpawnException takes the whole SpawnArea");
+                isActive = false;
+                return false;
+            default:
+                return true;
         }
     }
 

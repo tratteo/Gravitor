@@ -41,6 +41,9 @@ public class Level_CE : Editor
         script.bronzeScore = EditorGUILayout.IntField("Bronze score", script.bronzeScore);
         script.silverScore = EditorGUILayout.IntField("Silver score", script.silverScore);
         script.goldScore = EditorGUILayout.IntField("Gold score", script.goldScore);
+        script.bronzeGP = EditorGUILayout.IntField("Bronze GP", script.bronzeGP);
+        script.silverGP = EditorGUILayout.IntField("Silver GP", script.silverGP);
+        script.goldGP = EditorGUILayout.IntField("Gold GP", script.goldGP);
         EditorGUILayout.LabelField("Extras", EditorStyles.helpBox);
         script.extrasSpawnRateRange = EditorGUILayout.Vector2Field("Extras spawn rate range", script.extrasSpawnRateRange);
         EditorGUILayout.Space(10);

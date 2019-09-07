@@ -20,8 +20,7 @@ public class HUDManagerC_E : Editor
         {
             script.scoreText = (Text)EditorGUILayout.ObjectField("Score text", script.scoreText, typeof(Text), true);
             script.timeRelativeText = (Text)EditorGUILayout.ObjectField("Time relative text", script.timeRelativeText, typeof(Text), true);
-            script.distanceText = (Text)EditorGUILayout.ObjectField("Distance text", script.distanceText, typeof(Text), true);
-            script.speedText = (Text)EditorGUILayout.ObjectField("Speed text", script.speedText, typeof(Text), true);
+            script.objectiveText = (Text)EditorGUILayout.ObjectField("Objective text", script.objectiveText, typeof(Text), true);
             script.timeProperText = (Text)EditorGUILayout.ObjectField("Time proper text", script.timeProperText, typeof(Text), true);
             script.fpsText = (Text)EditorGUILayout.ObjectField("FPS text", script.fpsText, typeof(Text), true);
             script.gameOverScoreText = (Text)EditorGUILayout.ObjectField("GameOverScore text", script.gameOverScoreText, typeof(Text), true);
@@ -31,6 +30,8 @@ public class HUDManagerC_E : Editor
             script.loadingAdText = (Text)EditorGUILayout.ObjectField("LoadingAd text", script.loadingAdText, typeof(Text), true);
             script.healthBar = (Image)EditorGUILayout.ObjectField("Health bar", script.healthBar, typeof(Image), true);
             script.shieldBtn = (GameObject)EditorGUILayout.ObjectField("Shield button", script.shieldBtn, typeof(GameObject), true);
+            script.gameOverGrade = (Image)EditorGUILayout.ObjectField("GameOver grade", script.gameOverGrade, typeof(Image), true);
+            script.gameOverGradeGP = (Text)EditorGUILayout.ObjectField("GameOver grade GP", script.gameOverGradeGP, typeof(Text), true);
             script.shieldChargeIcon = (Image)EditorGUILayout.ObjectField("Shield use bar", script.shieldChargeIcon, typeof(Image), true);
             script.shieldsText = (Text)EditorGUILayout.ObjectField("Shields text", script.shieldsText, typeof(Text), true);
             script.antigravityBtn = (GameObject)EditorGUILayout.ObjectField("Antigravity button", script.antigravityBtn, typeof(GameObject), true);

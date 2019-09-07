@@ -105,20 +105,23 @@ public class ExtraManager : MonoBehaviour
 
     private IEnumerator Wormhole_C(Wormhole wormhole)
     {
-        playerManager.timeDistortion = 1f;
         playerManager.ExitedDamageNebula(Margin.MarginLocation.BOTTOM);
         playerManager.ExitedDamageNebula(Margin.MarginLocation.TOP);
         playerManager.ExitedDamageNebula(Margin.MarginLocation.LEFT);
         playerManager.ExitedDamageNebula(Margin.MarginLocation.RIGHT);
+
         playerManager.skillManager.isGravitable = false;
         playerManager.skillManager.canCastSkill = false;
-        float currentVTd = playerManager.movementManager.velocityTimeDistrotion;
-        Collider playerCollider = GetComponent<Collider>();
+        playerManager.isGravityTdActive = false;
 
+        float currentVTd = playerManager.movementManager.velocityTimeDistrotion;
+
+        playerManager.movementManager.DisableMovement();
+        Collider playerCollider = GetComponent<Collider>();
         playerCollider.enabled = false;
+
         playerManager.dangerZoneCount = 0;
         HUDManager.GetInstance().EnableHighGravityFieldPanel(false);
-        playerManager.movementManager.DisableMovement();
 
         CameraManager.GetInstance().SmoothInAndOutFOV(null, wormhole.viewDistortion, 0.2f, wormhole.duration - 0.4f);
         playerManager.movementManager.SpeedEffect(wormhole.duration, wormhole.relativeSpeed, true, true);
@@ -127,9 +130,11 @@ public class ExtraManager : MonoBehaviour
         yield return new WaitForSeconds(wormhole.duration);
 
         playerManager.movementManager.velocityTimeDistrotion = currentVTd;
+
         playerCollider.enabled = true;
         playerManager.movementManager.EnableMovement();
         playerManager.skillManager.canCastSkill = true;
         playerManager.skillManager.isGravitable = true;
+        playerManager.isGravityTdActive = true;
     }
 }

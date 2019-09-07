@@ -18,13 +18,14 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Image mediumEnabledIcon = null;
     [SerializeField] private Image highEnabledIcon = null;
     [SerializeField] private Image ultraEnabledIcon = null;
-    [Header("Preferences")]
+    [Header("In Game Options")]
     [SerializeField] private GameObject soundBtn = null;
     [SerializeField] private GameObject fpsBtn = null;
     [SerializeField] private GameObject cameraLookAtBtn = null;
-    [Header("Controls settings")]
     [SerializeField] private GameObject rightJoystickBtn = null;
     [SerializeField] private GameObject leftJoystickBtn = null;
+    [SerializeField] private Dropdown dropdown = null;
+
 
     private SettingsData settingsData;
 
@@ -35,6 +36,27 @@ public class SettingsManager : MonoBehaviour
         UpdateButton(fpsBtn, settingsData.showFPS);
         UpdateButton(soundBtn, settingsData.audioActive);
         UpdateButton(cameraLookAtBtn, settingsData.cameraLookAt);
+
+        switch (settingsData.hudConf)
+        {
+            case SettingsData.EndlessModeHUD.DISTANCE:
+                dropdown.value = dropdown.options.FindIndex(option => option.text == "Distance");
+                break;
+            case SettingsData.EndlessModeHUD.TIME:
+                dropdown.value = dropdown.options.FindIndex(option => option.text == "Proper time");
+                break;
+            case SettingsData.EndlessModeHUD.TIME_DILATED:
+                dropdown.value = dropdown.options.FindIndex(option => option.text == "Dilated time");
+                break;
+            case SettingsData.EndlessModeHUD.SPEED:
+                dropdown.value = dropdown.options.FindIndex(option => option.text == "Speed");
+                break;
+            case SettingsData.EndlessModeHUD.OBSTACLES_DESTROYED:
+                dropdown.value = dropdown.options.FindIndex(option => option.text == "Celestial bodies destroyed");
+                break;
+            default:
+                break;
+        }
     }
 
     public void SetQualitySettings(string level)
@@ -193,5 +215,30 @@ public class SettingsManager : MonoBehaviour
             image.sprite = disabled;
             image.color = new Color32(200, 0, 0, 210);
         }
+    }
+
+    public void Dropdown_IndexChanged(int index)
+    {
+        switch(dropdown.options[index].text)
+        {
+            case "Distance":
+                settingsData.hudConf = SettingsData.EndlessModeHUD.DISTANCE;
+                break;
+            case "Proper time":
+                settingsData.hudConf = SettingsData.EndlessModeHUD.TIME;
+                break;
+            case "Dilated time":
+                settingsData.hudConf = SettingsData.EndlessModeHUD.TIME_DILATED;
+                break;
+            case "Speed":
+                settingsData.hudConf = SettingsData.EndlessModeHUD.SPEED;
+                break;
+            case "Celestial bodies destroyed":
+                settingsData.hudConf = SettingsData.EndlessModeHUD.OBSTACLES_DESTROYED;
+                break;
+            default:
+                break;
+        }
+        SaveManager.GetInstance().SavePersistentData(settingsData, SaveManager.SETTINGS_PATH);
     }
 }
