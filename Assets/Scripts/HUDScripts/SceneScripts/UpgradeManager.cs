@@ -13,14 +13,6 @@ public class UpgradeManager : MonoBehaviour
 
     public const int EVOLVE_COST = 85000;
 
-    public const short ANTIGRAVITY_MAX_POINTS = 20;
-    public const short QUANTUMTUNNEL_MAX_POINTS = 20;
-    public const short SOLARFLARE_MAX_POINTS = 20;
-
-    public const short GRB_MAX_POINTS = 3;
-    public const short RESILIENCE_MAX_POINTS = 15;
-    public const short THRUSTFORCE_MAX_POINTS = 30;
-
     #region Variables
     [Header("Preview")]
     [SerializeField] private GameObject previewStateSphere = null;
@@ -87,7 +79,7 @@ public class UpgradeManager : MonoBehaviour
 
         SaveObject objectData;
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
-        gravityPoints = objectData != null ? gravityPoints = objectData.GetData<int>() : 0;
+        gravityPoints = objectData != null ? gravityPoints = objectData.GetData<int>() + 10000000 : 0;
 
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
 
@@ -152,50 +144,6 @@ public class UpgradeManager : MonoBehaviour
                 unlockGammaRayBurstText.gameObject.SetActive(false);
                 gammaRayBurstEffect.SetActive(true);
                 break;
-
-            //case PlayerManager.PlayerState.DENSE_PLANET:
-            //    previewStateSphere.GetComponent<MeshRenderer>().material = densePlanet;
-            //    upgradeAntigravityBtn.gameObject.SetActive(true);
-            //    antigravityPointsText.gameObject.SetActive(true);
-            //    antigravityInfoText.gameObject.SetActive(true);
-
-            //    upgradeQuantumTunnelBtn.gameObject.SetActive(true);
-            //    quantumTunnelPointsText.gameObject.SetActive(true);
-            //    quantumTunnelInfoText.gameObject.SetActive(true);
-
-            //    upgradeSolarflareBtn.gameObject.SetActive(true);
-            //    solarflarePointsText.gameObject.SetActive(true);
-            //    solarflareInfoText.gameObject.SetActive(true);
-
-            //    evolveBtn.gameObject.SetActive(true);
-            //    evolveCostText.gameObject.SetActive(true);
-            //    unlockSkillText.gameObject.SetActive(false);
-
-            //    unlockGammaRayBurstText.gameObject.SetActive(true);
-            //    gammaRayBurstEffect.SetActive(false);
-            //    break;
-
-            //case PlayerManager.PlayerState.STAR:
-            //    previewStateSphere.GetComponent<MeshRenderer>().material = star;
-            //    upgradeAntigravityBtn.gameObject.SetActive(true);
-            //    antigravityPointsText.gameObject.SetActive(true);
-            //    antigravityInfoText.gameObject.SetActive(true);
-
-            //    upgradeQuantumTunnelBtn.gameObject.SetActive(true);
-            //    quantumTunnelPointsText.gameObject.SetActive(true);
-            //    quantumTunnelInfoText.gameObject.SetActive(true);
-
-            //    upgradeSolarflareBtn.gameObject.SetActive(true);
-            //    solarflarePointsText.gameObject.SetActive(true);
-            //    solarflareInfoText.gameObject.SetActive(true);
-
-            //    evolveBtn.gameObject.SetActive(false);
-            //    evolveCostText.gameObject.SetActive(false);
-            //    unlockSkillText.gameObject.SetActive(false);
-
-            //    unlockGammaRayBurstText.gameObject.SetActive(false);
-            //    gammaRayBurstEffect.SetActive(true);
-            //    break;
         }
     }
 
@@ -208,7 +156,7 @@ public class UpgradeManager : MonoBehaviour
             gravityPointsText.text = gravityPoints.ToString();
         }
 
-        if (playerData.thrustForcePoints < THRUSTFORCE_MAX_POINTS)
+        if (playerData.thrustForcePoints < PlayerData.THRUSTFORCE_MAX_POINTS)
         {
             thrustCostText.text = thrustForceUpgradeCost.ToString();
         }
@@ -217,7 +165,7 @@ public class UpgradeManager : MonoBehaviour
             thrustCostText.gameObject.SetActive(false);
         }
 
-        if (playerData.GetHealthPoints() < RESILIENCE_MAX_POINTS)
+        if (playerData.GetHealthPoints() < PlayerData.RESILIENCE_MAX_POINTS)
         {
             healthCostText.text = healthUpgradeCost.ToString();
         }
@@ -227,7 +175,7 @@ public class UpgradeManager : MonoBehaviour
         }
 
         //ANTIGRAVITY
-        if (skillsData.antigravityPoints < ANTIGRAVITY_MAX_POINTS)
+        if (skillsData.antigravityPoints < PlayerSkillsData.ANTIGRAVITY_MAX_POINTS)
         {
             antigravityCostText.text = antigravityUpgradeCost.ToString();
         }
@@ -236,7 +184,7 @@ public class UpgradeManager : MonoBehaviour
             antigravityCostText.gameObject.SetActive(false);
         }
         //QUANTUM TUNNEL
-        if (skillsData.quantumTunnelPoints < QUANTUMTUNNEL_MAX_POINTS)
+        if (skillsData.quantumTunnelPoints < PlayerSkillsData.QUANTUMTUNNEL_MAX_POINTS)
         {
             quantumTunnelCostText.text = quantumTunnelUpgradeCost.ToString();
         }
@@ -245,7 +193,7 @@ public class UpgradeManager : MonoBehaviour
             quantumTunnelCostText.gameObject.SetActive(false);
         }
         //SOLAR FLARE
-        if (skillsData.solarflarePoints < SOLARFLARE_MAX_POINTS)
+        if (skillsData.solarflarePoints < PlayerSkillsData.SOLARFLARE_MAX_POINTS)
         {
             solarflareCostText.text = solarflareUpgradeCost.ToString();
         }
@@ -254,7 +202,7 @@ public class UpgradeManager : MonoBehaviour
             solarflareCostText.gameObject.SetActive(false);
         }
         //GRB
-        if(skillsData.gammaRayBurstPoints < GRB_MAX_POINTS)
+        if(skillsData.gammaRayBurstPoints < PlayerSkillsData.GRB_MAX_POINTS)
         {
             GRBCostText.text = GRBUpgradeCost.ToString();
         }
@@ -280,7 +228,7 @@ public class UpgradeManager : MonoBehaviour
             quantumTunnelPointsText.text = skillsData.quantumTunnelPoints.ToString();
             solarflarePointsText.text = skillsData.solarflarePoints.ToString();
 
-            if (skillsData.antigravityPoints < ANTIGRAVITY_MAX_POINTS)
+            if (skillsData.antigravityPoints < PlayerSkillsData.ANTIGRAVITY_MAX_POINTS)
             {
                 antigravityInfoText.text = "Duration: <b>" + GameplayMath.GetInstance().GetAntigravityDuration(skillsData.antigravityPoints).ToString("0.0") + "s</b>"
                                            + ", cooldown: <b>" + GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints).ToString("0.0") + "s</b>"
@@ -294,7 +242,7 @@ public class UpgradeManager : MonoBehaviour
                                            + ", cooldown: <b>" + GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints).ToString("0.0") + "s</b>";
             }
 
-            if (skillsData.quantumTunnelPoints < QUANTUMTUNNEL_MAX_POINTS)
+            if (skillsData.quantumTunnelPoints < PlayerSkillsData.QUANTUMTUNNEL_MAX_POINTS)
             {
                 quantumTunnelInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints).ToString("0.0") + "s</b>"
                                           + "\n<color=cyan>Next Upgrade: </color>\n"
@@ -305,7 +253,7 @@ public class UpgradeManager : MonoBehaviour
                 quantumTunnelInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints).ToString("0.0") + "s</b>";
             }
 
-            if (skillsData.solarflarePoints < SOLARFLARE_MAX_POINTS)
+            if (skillsData.solarflarePoints < PlayerSkillsData.SOLARFLARE_MAX_POINTS)
             {
                 solarflareInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints).ToString("0.0") + "s</b>"
                                           + ", radius: <b>" + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints).ToString("0.0") + "</b>"
@@ -319,7 +267,7 @@ public class UpgradeManager : MonoBehaviour
                                           + ", radius: <b>" + GameplayMath.GetInstance().GetSolarflareRadius(skillsData.solarflarePoints).ToString("0.0") + "</b>";
             }
 
-            if(skillsData.gammaRayBurstPoints < GRB_MAX_POINTS)
+            if(skillsData.gammaRayBurstPoints < PlayerSkillsData.GRB_MAX_POINTS)
             {
                 GRBInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints).ToString("0.0") + "s</b>"
                                    + "\n<color=cyan>Next Upgrade: </color>\n"
@@ -336,7 +284,7 @@ public class UpgradeManager : MonoBehaviour
     //Skills
     public void UpgradeAntiGravity()
     {
-        if (skillsData.antigravityPoints >= ANTIGRAVITY_MAX_POINTS)
+        if (skillsData.antigravityPoints >= PlayerSkillsData.ANTIGRAVITY_MAX_POINTS)
         {
             toast.ShowToast("Already at max level", null, 2f);
             return;
@@ -362,7 +310,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeQuantumTunnel()
     {
-        if (skillsData.quantumTunnelPoints >= QUANTUMTUNNEL_MAX_POINTS)
+        if (skillsData.quantumTunnelPoints >= PlayerSkillsData.QUANTUMTUNNEL_MAX_POINTS)
         {
             toast.ShowToast("Already at max level", null, 2f);
             return;
@@ -388,7 +336,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeSolarFlare()
     {
-        if (skillsData.solarflarePoints >= SOLARFLARE_MAX_POINTS)
+        if (skillsData.solarflarePoints >= PlayerSkillsData.SOLARFLARE_MAX_POINTS)
         {
             toast.ShowToast("Already at max level", null, 2f);
             return;
@@ -415,7 +363,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeThrustForce()
     {
-        if (playerData.thrustForcePoints >= THRUSTFORCE_MAX_POINTS)
+        if (playerData.thrustForcePoints >= PlayerData.THRUSTFORCE_MAX_POINTS)
         {
             toast.ShowToast("Already at max level", null, 1.5f);
             return;
@@ -440,7 +388,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeResilience()
     {
-        if (playerData.GetHealthPoints() >= RESILIENCE_MAX_POINTS)
+        if (playerData.GetHealthPoints() >= PlayerData.RESILIENCE_MAX_POINTS)
         {
             toast.ShowToast("Already at max level", null, 1.5f);
             return;
@@ -466,7 +414,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeGRB()
     {
-        if (skillsData.gammaRayBurstPoints >= GRB_MAX_POINTS)
+        if (skillsData.gammaRayBurstPoints >= PlayerSkillsData.GRB_MAX_POINTS)
         {
             toast.ShowToast("Already at max level", null, 1.5f);
             return;

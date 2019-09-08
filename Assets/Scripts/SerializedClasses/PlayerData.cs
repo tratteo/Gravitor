@@ -2,6 +2,9 @@
 [System.Serializable]
 public class PlayerData
 {
+
+    public const short RESILIENCE_MAX_POINTS = 15;
+    public const short THRUSTFORCE_MAX_POINTS = 30;
     private const float HEALTH_INCREASE = 50f;
     public ushort thrustForcePoints;
     public float health;
