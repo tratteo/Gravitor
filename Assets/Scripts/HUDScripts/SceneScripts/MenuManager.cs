@@ -28,17 +28,18 @@ public class MenuManager : MonoBehaviour
     void OnDisable()
     {
         GoogleAdsManager.GetInstance().UnsubscribeToRewardClaimed(EarnReward);
+        GoogleIAPManager.GetInstance().UnSubscribeToProductBoughtEvent(ProductBought);
     }
 
     private void Start()
     {
-
         InitializeData();
 
         AudioManager.GetInstance().NotifyAudioSettings(settingsData);
         AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
 
         GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
+        GoogleIAPManager.GetInstance().SubscribeToProductBoughtEvent(ProductBought);
 
         StartCoroutine(CheckAd_C());
     }
@@ -151,6 +152,15 @@ public class MenuManager : MonoBehaviour
         }
 
 
+
+        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH);
+        if (objectData == null)
+        {
+            objectData = SaveManager.GetInstance().SavePersistentData<LevelsData>(new LevelsData(), SaveManager.LEVELSDATA_PATH);
+        }
+        LevelsData data = objectData.GetData<LevelsData>();
+        highScoreText.text = data.GetLevelHighScore(LevelsData.ENDLESS_ID).ToString();
+
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
         if (objectData == null)
         {
@@ -159,13 +169,20 @@ public class MenuManager : MonoBehaviour
         currentGP = objectData.GetData<int>();
         gravityPointsText.text = "Gravity points\n" + currentGP.ToString();
 
+    }
 
-        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH);
-        if(objectData == null)
+    private void ProductBought(string id)
+    {
+        switch (id)
         {
-            objectData = SaveManager.GetInstance().SavePersistentData<LevelsData>(new LevelsData(), SaveManager.LEVELSDATA_PATH);
+            case GoogleIAPManager.PRODUCT_GRBLVL3:
+
+                PlayerSkillsData skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
+                skillsData.gammaRayBurstPoints = PlayerSkillsData.GRB_MAX_POINTS;
+                SaveManager.GetInstance().SavePersistentData<PlayerSkillsData>(skillsData, SaveManager.SKILLSDATA_PATH);
+
+                toast.EnqueueToast("GRB level 3 purchased", null, 2.5f);
+                break;
         }
-        LevelsData data = objectData.GetData<LevelsData>();
-        highScoreText.text = data.GetLevelHighScore(LevelsData.ENDLESS_ID).ToString();
     }
 }

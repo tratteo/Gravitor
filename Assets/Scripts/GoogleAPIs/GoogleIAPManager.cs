@@ -8,17 +8,18 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
     private static GoogleIAPManager instance = null;
     public static GoogleIAPManager GetInstance() { return instance; }
 
-    private static IStoreController storeController;          // The Unity Purchasing system.
-    private static IExtensionProvider m_StoreExtensionProvider; // The store-specific Purchasing subsystems.
+    private static IStoreController storeController = null;          // The Unity Purchasing system.
+    private static IExtensionProvider storeExtension = null; // The store-specific Purchasing subsystems.
 
 
-    public const string PRODUCT_GRBLVL3 = "grb_lvl3";
+    public const string PRODUCT_GRBLVL3 = "grblvl3";
+    public const string PRODUCT_GP1_250M = "gp1_250m";
 
     private Action<string> ProductBought;
     public void SubscribeToProductBoughtEvent(Action<string> funcToSub) { ProductBought += funcToSub; }
     public void UnSubscribeToProductBoughtEvent(Action<string> funcToUnsub) { ProductBought -= funcToUnsub; }
 
-    private void Awake()
+    void OnEnable()
     {
         if(instance == null) 
         {
@@ -31,14 +32,17 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
         }
 
         DontDestroyOnLoad(gameObject);
-    }
 
-    void Start()
-    {
         if (storeController == null)
         {
             InitializePurchasing();
         }
+    }
+
+
+    public Product GetProductWithID(string id)
+    {
+        return storeController.products.WithID(id);
     }
 
     public void InitializePurchasing()
@@ -51,6 +55,7 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
         builder.AddProduct(PRODUCT_GRBLVL3, ProductType.NonConsumable);
+        builder.AddProduct(PRODUCT_GP1_250M, ProductType.Consumable);
 
         UnityPurchasing.Initialize(this, builder);
     }
@@ -59,7 +64,7 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
     private bool IsInitialized()
     {
         // Only say we are initialized if both the Purchasing references are set.
-        return storeController != null && m_StoreExtensionProvider != null;
+        return storeController != null && storeExtension != null;
     }
 
 
@@ -69,6 +74,9 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
         {
             case PRODUCT_GRBLVL3:
                 BuyProductID(PRODUCT_GRBLVL3);
+                break;
+            case PRODUCT_GP1_250M:
+                BuyProductID(PRODUCT_GP1_250M);
                 break;
             default:
                 Debug.Log("ERROR PRODUCT NOT FOUND");
@@ -117,8 +125,9 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
 
         // Overall Purchasing system, configured with products for this application.
         storeController = controller;
+
         // Store specific subsystem, for accessing device-specific store features.
-        m_StoreExtensionProvider = extensions;
+        storeExtension = extensions;
     }
 
 
@@ -131,31 +140,28 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        // A consumable product has been purchased by this user.
         if (String.Equals(args.purchasedProduct.definition.id, PRODUCT_GRBLVL3, StringComparison.Ordinal))
         {
-            Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
-            ProductBought(PRODUCT_GRBLVL3);
-            PlayerSkillsData skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
-            skillsData.gammaRayBurstPoints = PlayerSkillsData.GRB_MAX_POINTS;
-            SaveManager.GetInstance().SavePersistentData<PlayerSkillsData>(skillsData, SaveManager.SKILLSDATA_PATH);
+            Executer.GetInstance().AddJob(() => 
+            {
+                Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
+                ProductBought(PRODUCT_GRBLVL3);
+            });  
+        }
+        else if(String.Equals(args.purchasedProduct.definition.id, PRODUCT_GP1_250M, StringComparison.Ordinal))
+        {
+
         }
         else
         {
             Debug.Log(string.Format("ProcessPurchase: FAIL. Unrecognized product: '{0}'", args.purchasedProduct.definition.id));
         }
-
-        // Return a flag indicating whether this product has completely been received, or if the application needs 
-        // to be reminded of this purchase at next app launch. Use PurchaseProcessingResult.Pending when still 
-        // saving purchased products to the cloud, and when that save is delayed. 
         return PurchaseProcessingResult.Complete;
     }
 
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
     {
-        // A product purchase attempt did not succeed. Check failureReason for more detail. Consider sharing 
-        // this reason with the user to guide their troubleshooting actions.
         Debug.Log(string.Format("OnPurchaseFailed: FAIL. Product: '{0}', PurchaseFailureReason: {1}", product.definition.storeSpecificId, failureReason));
     }
 }

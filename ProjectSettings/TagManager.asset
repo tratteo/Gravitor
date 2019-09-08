@@ -17,6 +17,7 @@ TagManager:
   - WarpDrive
   - Margins
   - FilledOverlay
+  - Price
   layers:
   - Default
   - TransparentFX

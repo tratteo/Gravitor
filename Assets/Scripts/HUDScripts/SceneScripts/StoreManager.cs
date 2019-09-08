@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour
 {
-    private const string EMPTY_PRODUCT = "code_none";  
-    private string highlightedProduct = EMPTY_PRODUCT;
+    private ProductInfo highlightedProduct = null;
 
-    private Color32 PURCHASED_COLOR = new Color32(0, 255, 80, 100);
-
+    [SerializeField] private GameObject UICanvas = null;
     [SerializeField] private GameObject disclaimerPanel = null;
-    [SerializeField] private Image grbLVL3 = null;
     [SerializeField] private ToastScript toast = null;
 
     private PlayerData playerData;
     private PlayerSkillsData skillsData;
+
+    private ProductInfo[] products;
 
     private void OnDisable()
     {
@@ -25,39 +22,44 @@ public class StoreManager : MonoBehaviour
     private void Start()
     {
         GoogleIAPManager.GetInstance().SubscribeToProductBoughtEvent(ProductBought);
-        
+
+        products = UICanvas.GetComponentsInChildren<ProductInfo>();
+
         playerData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
-
-        if (playerData.playerState == PlayerManager.PlayerState.COMET && skillsData.gammaRayBurstPoints < PlayerSkillsData.GRB_MAX_POINTS)
+      
+        if (playerData.playerState != PlayerManager.PlayerState.COMET || 
+            Application.internetReachability == NetworkReachability.NotReachable)
         {
-            grbLVL3.raycastTarget = true;
+            GetProductByID(GoogleIAPManager.PRODUCT_GRBLVL3).SetProductState(ProductInfo.ProductState.INACTIVE);
+        }
+        else if( skillsData.gammaRayBurstPoints >= PlayerSkillsData.GRB_MAX_POINTS)
+        {
+            GetProductByID(GoogleIAPManager.PRODUCT_GRBLVL3).SetProductState(ProductInfo.ProductState.PURCHASED);
         }
         else
         {
-            grbLVL3.raycastTarget = false;
-            grbLVL3.color = PURCHASED_COLOR;
+            GetProductByID(GoogleIAPManager.PRODUCT_GRBLVL3).SetProductState(ProductInfo.ProductState.AVAILABLE);
         }
     }
 
-    public void ShowProductDisclaimerPanel(string productId)
+    public void ShowProductDisclaimerPanel(ProductInfo product)
     {
         disclaimerPanel.SetActive(true);
-        highlightedProduct = productId;
+        highlightedProduct = product;
     }
 
     public void HideProductDisclaimerPanel()
     {
         disclaimerPanel.SetActive(false);
-        highlightedProduct = EMPTY_PRODUCT;
+        highlightedProduct = null;
     }
 
     public void BuyHighlightedProduct()
     {
-        GoogleIAPManager.GetInstance().BuyProduct(highlightedProduct);
+        GoogleIAPManager.GetInstance().BuyProduct(highlightedProduct.id);
         disclaimerPanel.SetActive(false);
-        highlightedProduct = EMPTY_PRODUCT;
-
+        highlightedProduct = null;
     }
 
     private void ProductBought(string id)
@@ -65,11 +67,34 @@ public class StoreManager : MonoBehaviour
         switch (id)
         {
             case GoogleIAPManager.PRODUCT_GRBLVL3:
-                grbLVL3.raycastTarget = false;
-                grbLVL3.color = PURCHASED_COLOR;
-                toast.EnqueueToast("GRB level 3 purchased!", null, 2.5f);
+
+                PlayerSkillsData skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
+                skillsData.gammaRayBurstPoints = PlayerSkillsData.GRB_MAX_POINTS;
+                SaveManager.GetInstance().SavePersistentData<PlayerSkillsData>(skillsData, SaveManager.SKILLSDATA_PATH);
+
+                GetProductByID(GoogleIAPManager.PRODUCT_GRBLVL3).SetProductState(ProductInfo.ProductState.PURCHASED);
+
+                toast.EnqueueToast("GRB level 3 purchased", null, 2.5f);
+                break;
+
+            case GoogleIAPManager.PRODUCT_GP1_250M:
+
+                int gravityPoints = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH).GetData<int>();
+                gravityPoints += 1250000;
+                SaveManager.GetInstance().SavePersistentData<int>(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+
+                GetProductByID(GoogleIAPManager.PRODUCT_GRBLVL3).SetProductState(ProductInfo.ProductState.PURCHASED);
+
+                toast.EnqueueToast("1 250 000 Gravity Points purchased", null, 2.5f);
                 break;
         }
     }
 
+
+
+    private ProductInfo GetProductByID(string id)
+    {
+        ProductInfo product = Array.Find(products, prod => prod.id == id);
+        return product;
+    }
 }
