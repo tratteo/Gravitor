@@ -150,7 +150,11 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
         }
         else if(String.Equals(args.purchasedProduct.definition.id, PRODUCT_GP1_250M, StringComparison.Ordinal))
         {
-
+            Executer.GetInstance().AddJob(() =>
+            {
+                Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
+                ProductBought(PRODUCT_GP1_250M);
+            });
         }
         else
         {

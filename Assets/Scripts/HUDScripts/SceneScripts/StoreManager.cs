@@ -41,6 +41,8 @@ public class StoreManager : MonoBehaviour
         {
             GetProductByID(GoogleIAPManager.PRODUCT_GRBLVL3).SetProductState(ProductInfo.ProductState.AVAILABLE);
         }
+
+        GetProductByID(GoogleIAPManager.PRODUCT_GP1_250M).SetProductState(ProductInfo.ProductState.AVAILABLE);
     }
 
     public void ShowProductDisclaimerPanel(ProductInfo product)
@@ -89,8 +91,6 @@ public class StoreManager : MonoBehaviour
                 break;
         }
     }
-
-
 
     private ProductInfo GetProductByID(string id)
     {
