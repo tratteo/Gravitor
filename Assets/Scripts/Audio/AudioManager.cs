@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
 
     private bool audioActive = true;
 
-    public Sound currentMusic = null;
+    [HideInInspector] public Sound currentMusic = null;
 
     private void Awake()
     {

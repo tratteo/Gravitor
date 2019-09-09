@@ -16,12 +16,12 @@ public class StoreManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GoogleIAPManager.GetInstance().UnSubscribeToProductBoughtEvent(ProductBought);
+        GoogleIAPManager.GetInstance().UnSubscribeToProductPurchasedEvent(ProductBought);
     }
 
     private void Start()
     {
-        GoogleIAPManager.GetInstance().SubscribeToProductBoughtEvent(ProductBought);
+        GoogleIAPManager.GetInstance().SubscribeToProductPurchasedEvent(ProductBought);
 
         products = UICanvas.GetComponentsInChildren<ProductInfo>();
 

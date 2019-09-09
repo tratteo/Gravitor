@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class GoogleAdsManager : MonoBehaviour
 {
-    public enum RewardedAdType { EXTRA_ATTEMPT, BONUS_GP }
+    public enum RewardedAdType { EXTRA_ATTEMPT }
+    public const string ATTEMPT_ID = "Attempt";
+    public const string BONUSGP_ID = "GravityPoints";
+
 
     private static GoogleAdsManager instance = null;
     public static GoogleAdsManager GetInstance() { return instance; }
@@ -15,8 +18,6 @@ public class GoogleAdsManager : MonoBehaviour
 
     private RewardedAd extraAttempt = null;
     private string extraAttemptID;
-    private RewardedAd bonusGP = null;
-    private string bonusGPID;
 
     private Action<string> RewardClaimed;
     public void SubscribeToRewardClaimed(Action<string> funcToSub) { RewardClaimed += funcToSub; }
@@ -41,12 +42,10 @@ public class GoogleAdsManager : MonoBehaviour
         if (useTestAdsID)
         {
             extraAttemptID = "ca-app-pub-3940256099942544/5224354917";
-            bonusGPID = "ca-app-pub-3940256099942544/5224354917";
         }
         else
         {
             extraAttemptID = "ca-app-pub-2239617021238574/7600245152";
-            bonusGPID = "ca-app-pub-2239617021238574/6299605927";
         }
         //StartCoroutine(LoadAds_C());
     }
@@ -61,13 +60,6 @@ public class GoogleAdsManager : MonoBehaviour
                     return false;
                 }
                 return extraAttempt.IsLoaded();
-
-            case RewardedAdType.BONUS_GP:
-                if (bonusGP == null)
-                {
-                    return false;
-                }
-                return bonusGP.IsLoaded();
         }
         return false;
     }
@@ -87,18 +79,6 @@ public class GoogleAdsManager : MonoBehaviour
                     extraAttempt.Show();
                 }
                 break;
-
-            case RewardedAdType.BONUS_GP:
-                if (bonusGP == null)
-                {
-                    break;
-                }
-
-                if (bonusGP.IsLoaded())
-                {
-                    bonusGP.Show();
-                }
-                break;
         }
     }
 
@@ -112,13 +92,6 @@ public class GoogleAdsManager : MonoBehaviour
                 request = new AdRequest.Builder().Build();
                 extraAttempt.LoadAd(request);
                 extraAttempt.OnUserEarnedReward += HandleUserEarnedReward;
-                break;
-
-            case RewardedAdType.BONUS_GP:
-                bonusGP = new RewardedAd(bonusGPID);
-                request = new AdRequest.Builder().Build();
-                bonusGP.LoadAd(request);
-                bonusGP.OnUserEarnedReward += HandleUserEarnedReward;
                 break;
         }
     }

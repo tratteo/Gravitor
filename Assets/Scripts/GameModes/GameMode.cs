@@ -39,7 +39,6 @@ public abstract class GameMode : MonoBehaviour
 
     #endregion
 
-
     protected virtual void InstantiateObstacle() { }
 
     protected virtual void InstantiatePickUp() { }
@@ -82,10 +81,6 @@ public abstract class GameMode : MonoBehaviour
     private void InitializeLevelParameters()
     {
         poolManager = currentLevel.poolManager;
-        if(!(currentLevel.category == Level.LevelCategory.ENDLESS))
-        {
-            attemptUsed = true;
-        }
 
         poolManager.Initialize();
 

@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class AchievementsSceneManager : MonoBehaviour
 {
     [SerializeField] private GameObject content = null;
-    private PlayerAchievementsData achievements;
+    private PlayerAchievementsData achievementsData;
 
     void Start()
     {
-        achievements = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH).GetData<PlayerAchievementsData>();
+        achievementsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH).GetData<PlayerAchievementsData>();
         foreach(Transform current in content.transform)
         { 
-            EnableAchivementUI(current.gameObject, achievements.IsAchievementUnlocked(current.name));
+            EnableAchivementUI(current.gameObject, achievementsData.IsAchievementUnlocked(current.name));
         }
     }
 

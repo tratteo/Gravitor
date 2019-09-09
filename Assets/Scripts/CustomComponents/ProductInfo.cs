@@ -6,7 +6,6 @@ using UnityEngine.Purchasing;
 
 public class ProductInfo : MonoBehaviour
 {
-
     private Color32 PURCHASED_COLOR = new Color32(0, 255, 80, 100);
     private Color32 AVAILABLE_COLOR = new Color32(0, 220, 255, 120);
     private Color32 INACTIVE_COLOR = new Color32(80, 80, 80, 150);

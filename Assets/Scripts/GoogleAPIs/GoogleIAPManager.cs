@@ -15,9 +15,9 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
     public const string PRODUCT_GRBLVL3 = "grblvl3";
     public const string PRODUCT_GP1_250M = "gp1_250m";
 
-    private Action<string> ProductBought;
-    public void SubscribeToProductBoughtEvent(Action<string> funcToSub) { ProductBought += funcToSub; }
-    public void UnSubscribeToProductBoughtEvent(Action<string> funcToUnsub) { ProductBought -= funcToUnsub; }
+    private Action<string> ProductPurchased;
+    public void SubscribeToProductPurchasedEvent(Action<string> funcToSub) { ProductPurchased += funcToSub; }
+    public void UnSubscribeToProductPurchasedEvent(Action<string> funcToUnsub) { ProductPurchased -= funcToUnsub; }
 
     void OnEnable()
     {
@@ -145,7 +145,7 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
             Executer.GetInstance().AddJob(() => 
             {
                 Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
-                ProductBought(PRODUCT_GRBLVL3);
+                ProductPurchased(PRODUCT_GRBLVL3);
             });  
         }
         else if(String.Equals(args.purchasedProduct.definition.id, PRODUCT_GP1_250M, StringComparison.Ordinal))
@@ -153,7 +153,7 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
             Executer.GetInstance().AddJob(() =>
             {
                 Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
-                ProductBought(PRODUCT_GP1_250M);
+                ProductPurchased(PRODUCT_GP1_250M);
             });
         }
         else

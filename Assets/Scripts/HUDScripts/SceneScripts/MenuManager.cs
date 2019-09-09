@@ -12,9 +12,6 @@ public class MenuManager : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private Text highScoreText = null;
     [SerializeField] private Text gravityPointsText = null;
-    [Header("Ads")]
-    [SerializeField] private GameObject showAdButton = null;
-    [SerializeField] private GameObject loadingAdObj = null;
     [Header("Toast")]
     [SerializeField] private ToastScript toast = null;
 
@@ -27,8 +24,7 @@ public class MenuManager : MonoBehaviour
 
     void OnDisable()
     {
-        GoogleAdsManager.GetInstance().UnsubscribeToRewardClaimed(EarnReward);
-        GoogleIAPManager.GetInstance().UnSubscribeToProductBoughtEvent(ProductBought);
+        GoogleIAPManager.GetInstance().UnSubscribeToProductPurchasedEvent(ProductBought);
     }
 
     private void Start()
@@ -38,48 +34,8 @@ public class MenuManager : MonoBehaviour
         AudioManager.GetInstance().NotifyAudioSettings(settingsData);
         AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
 
-        GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
-        GoogleIAPManager.GetInstance().SubscribeToProductBoughtEvent(ProductBought);
+        GoogleIAPManager.GetInstance().SubscribeToProductPurchasedEvent(ProductBought);
 
-        StartCoroutine(CheckAd_C());
-    }
-
-    private IEnumerator CheckAd_C()
-    {
-        while(true)
-        {
-            if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.BONUS_GP))
-            {
-                loadingAdObj.SetActive(false);
-                showAdButton.SetActive(true);
-                showAdButton.GetComponentInChildren<Text>().text = adBonusGP.ToString();
-            }
-            else
-            {
-                showAdButton.SetActive(false);
-                loadingAdObj.SetActive(true);
-                if (!isAdLoading)
-                {
-                    GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.BONUS_GP);
-                    isAdLoading = true;
-                }
-            }
-            yield return new WaitForSeconds(2f);
-        }
-    }
-
-    private void EarnReward(string reward)
-    {
-        if (reward == "GravityPoints" || reward == "coins")
-        {
-            currentGP += adBonusGP;
-            SaveManager.GetInstance().SavePersistentData<int>(currentGP, SaveManager.GRAVITYPOINTS_PATH);
-            Executer.GetInstance().AddJob(() => 
-            {
-                gravityPointsText.text = "Gravity points\n" + currentGP.ToString();
-                toast.ShowToast("Bonus claimed", null, 1.5f);
-            });
-        }
     }
 
     public void QuitApp()
@@ -87,14 +43,6 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
-
-    public void ShowRewardedAd()
-    {
-        showAdButton.SetActive(false);
-        loadingAdObj.SetActive(true);
-        GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.BONUS_GP);
-        isAdLoading = false;
-    }
 
     private void InitializeData()
     {
