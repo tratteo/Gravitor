@@ -62,9 +62,7 @@ public class Tutorial : MonoBehaviour
                     elementsArray[index++].SetActive(false);
                     hudManagerInstance.Pause(false);
                     hudManagerInstance.tutorialPanel.SetActive(false);
-                    hudManagerInstance.scoreText.gameObject.SetActive(true);
-                    hudManagerInstance.timeRelativeText.gameObject.SetActive(true);
-                    hudManagerInstance.healthText.gameObject.SetActive(true);
+                    hudManagerInstance.EnableStatsPanel(true);
                     this.enabled = false;
                 }
             }

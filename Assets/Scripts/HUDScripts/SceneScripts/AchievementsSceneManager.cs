@@ -5,23 +5,28 @@ using UnityEngine.UI;
 
 public class AchievementsSceneManager : MonoBehaviour
 {
-    [SerializeField] private GameObject content = null;
+    [SerializeField] private GridLayoutGroup layout = null;
+    [SerializeField] private GameObject achievementPrefab = null;
     private PlayerAchievementsData achievementsData;
 
+    private List<AchievementInfo> achievements;
     void Start()
     {
         achievementsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH).GetData<PlayerAchievementsData>();
-        foreach(Transform current in content.transform)
-        { 
-            EnableAchivementUI(current.gameObject, achievementsData.IsAchievementUnlocked(current.name));
-        }
-    }
+        achievements = PersistentPlayerPrefs.GetInstance().GetAllAchievements();
 
-    private void EnableAchivementUI(GameObject icon, bool state)
-    {
-        if (state)
+        foreach(AchievementInfo achInfo in achievements)
         {
-            icon.GetComponent<Image>().color = Color.cyan;
+            GameObject instance = Instantiate(achievementPrefab);
+            instance.transform.SetParent(layout.transform);
+            Image image = instance.GetComponent<Image>();
+            image.sprite = achInfo.sprite;
+            instance.GetComponentInChildren<Text>().text = achInfo.description;
+            instance.transform.localScale = new Vector3(1, 1, 1);
+            if(achievementsData.IsAchievementUnlocked(achInfo.id))
+            {
+                image.color = Color.cyan;
+            }
         }
     }
 }

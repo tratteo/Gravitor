@@ -119,6 +119,7 @@ public class ExtraManager : MonoBehaviour
         playerManager.movementManager.DisableMovement();
         Collider playerCollider = GetComponent<Collider>();
         playerCollider.enabled = false;
+        playerManager.gravityFieldsGens.Clear();
 
         playerManager.dangerZoneCount = 0;
         HUDManager.GetInstance().EnableHighGravityFieldPanel(false);

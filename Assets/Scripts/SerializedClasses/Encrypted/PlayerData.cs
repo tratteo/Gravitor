@@ -1,6 +1,6 @@
 ﻿
 [System.Serializable]
-public class PlayerData
+public class PlayerData : EncryptedData
 {
 
     public const short RESILIENCE_MAX_POINTS = 15;

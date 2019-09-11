@@ -19,13 +19,21 @@ public class SaveManager
         return instance;
     }
 
+    public enum LoadState { SUBSTITUTED, CREATED, LOADED }
+
+    public struct SaveResult
+    {
+        public SaveObject saveObject;
+        public LoadState loadState;
+    }
+
     //Can write here the statics file names to use in the game
     //
     public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
     public static readonly string GRAVITYPOINTS_PATH = Application.persistentDataPath + "/gravity_points.data";
     public static readonly string SKILLSDATA_PATH = Application.persistentDataPath + "/skills.data";
     public static readonly string SETTINGS_PATH = Application.persistentDataPath + "/settings.data";
-    public static readonly string ACHIEVMENTS_PATH = Application.persistentDataPath + "/achievments.data";
+    public static readonly string ACHIEVMENTS_PATH = Application.persistentDataPath + "/achievments_v2.data";
     public static readonly string LEVELSDATA_PATH = Application.persistentDataPath + "/levels.data";
     //I.E 
     //public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
@@ -52,6 +60,7 @@ public class SaveManager
     /// </summary>
     public SaveObject LoadPersistentData(string path)
     {
+        SaveObject saveObject;
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -59,7 +68,17 @@ public class SaveManager
             if (stream.Length == 0)
                 return null;
             object data = formatter.Deserialize(stream);
-            SaveObject saveObject = new SaveObject(data);
+            if(data is EncryptedData)
+            {
+                EncryptedData enc = (EncryptedData)data;
+                if(enc.deviceId != SystemInfo.deviceUniqueIdentifier)
+                {
+                    Debug.Log("Unauthorized to open file, file not coming from this device, aborting");
+                    stream.Close();
+                    return null;
+                }
+            }
+            saveObject = new SaveObject(data);
             stream.Close();
             return saveObject;
         }

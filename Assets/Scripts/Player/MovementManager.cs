@@ -75,11 +75,10 @@ public class MovementManager : MonoBehaviour
         if (!playerManager.gameMode.isGameOver)
         {
             distance += relativeSpeed * 3E+5f * Time.fixedDeltaTime;
-        }
-
-        if(playerManager.level.category == Level.LevelCategory.DISTANCE && distance >= playerManager.level.targetDistance)
-        {
-            playerManager.LevelCompleted();
+            if (playerManager.level.category == Level.LevelCategory.DISTANCE && distance >= playerManager.level.targetDistance)
+            {
+                playerManager.LevelCompleted();
+            }
         }
     }
 

@@ -302,11 +302,11 @@ public class HUDManager : MonoBehaviour
     private IEnumerator PauseResumeCountdown()
     {
         pausePanel.SetActive(false);
+        timerPanel.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(0.2f);
         resumeTimer = resumeTimerDuration;
         Text timerText = timerPanel.GetComponentInChildren<Text>();
         timerText.text = resumeTimer.ToString();
-        timerPanel.gameObject.SetActive(true);
         while (resumeTimer > 0)
         {
             yield return new WaitForSecondsRealtime(1);
@@ -317,6 +317,7 @@ public class HUDManager : MonoBehaviour
         gameMode.isPaused = false;
         timerPanel.gameObject.SetActive(false);
         HUDPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        timerText.text = "";
     }
 
 
@@ -370,7 +371,7 @@ public class HUDManager : MonoBehaviour
             else
             {
                 adButton.SetActive(false);
-                loadingAdText.gameObject.SetActive(false);
+                //loadingAdText.gameObject.SetActive(false);
             }
             yield return new WaitForSeconds(2f);
         }
@@ -472,12 +473,11 @@ public class HUDManager : MonoBehaviour
         highScorePanel.SetActive(true);
     }
 
-    public void DisplayGameOverPanel()
+    public void DisplayGameOverPanel(bool showGradeButton)
     {
         QuantumTunnelSelectionActive(false);
         highScorePanel.SetActive(false);
         gameOverInfoText.text = "Difference between distorted time and normal time flow: " + SharedUtilities.GetInstance().GetTimeStringFromSeconds(playerManager.relativeExTime - playerManager.properTime);
-        scoreText.gameObject.SetActive(false);
 
         EnableStatsPanel(false);
 
@@ -485,32 +485,53 @@ public class HUDManager : MonoBehaviour
         gameOverScoreText.text = gameMode.sessionScore.ToString("0");
         gameOverGravityPointsText.text = gameMode.sessionGravityPoints.ToString();
 
+        int targetGP = 0;
         gameOverGrade.gameObject.SetActive(false);
         gameOverGradeGP.gameObject.SetActive(false);
-        if (level.category == Level.LevelCategory.ENDLESS)
+        if (showGradeButton)
         {
             if (gameMode.sessionScore >= level.goldScore)
             {
                 gameOverGrade.gameObject.SetActive(true);
                 gameOverGradeGP.gameObject.SetActive(true);
                 gameOverGrade.color = Level.GOLD_COLOR;
-                gameOverGradeGP.text = level.goldGP.ToString("0");
+                targetGP = level.goldGP;
+                //gameOverGradeGP.text = level.goldGP.ToString("0");
             }
             else if (gameMode.sessionScore >= level.silverScore)
             {
                 gameOverGrade.gameObject.SetActive(true);
                 gameOverGradeGP.gameObject.SetActive(true);
                 gameOverGrade.color = Level.SILVER_COLOR;
-                gameOverGradeGP.text = level.silverGP.ToString("0");
+                targetGP = level.silverGP;
+                //gameOverGradeGP.text = level.silverGP.ToString("0");
             }
             else if (gameMode.sessionScore >= level.bronzeScore)
             {
                 gameOverGrade.gameObject.SetActive(true);
                 gameOverGradeGP.gameObject.SetActive(true);
                 gameOverGrade.color = Level.BRONZE_COLOR;
-                gameOverGradeGP.text = level.bronzeGP.ToString("0");
+                targetGP = level.bronzeGP;
+                //gameOverGradeGP.text = level.bronzeGP.ToString("0");
             }
+            StartCoroutine(GradeGPAnim_C(targetGP));
         }
+    }
+
+    private IEnumerator GradeGPAnim_C(int targetPoints)
+    {
+        Animator animator = gameOverPanel.GetComponent<Animator>();
+        float length = animator.runtimeAnimatorController.animationClips[0].length;
+        yield return new WaitForSeconds(length);
+        int current = 0;
+        int stride = targetPoints / 65;
+        while(current + stride <= targetPoints)
+        {
+            gameOverGradeGP.text = current.ToString();
+            current += stride;
+            yield return new WaitForFixedUpdate();
+        }
+        gameOverGradeGP.text = targetPoints.ToString();
     }
 
     public void DisplayLevelCompletedPanel()
@@ -531,37 +552,37 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator DisplayLevelCompleted_C()
     {
-        Animator animator = levelCompletedPanel.GetComponent<Animator>();
-        float length = animator.runtimeAnimatorController.animationClips[0].length - 0.35f;
         levelCompletedPanel.SetActive(true);
+        loadingAdText.gameObject.SetActive(false);
+        Animator animator = levelCompletedPanel.GetComponent<Animator>();
+        float length = animator.runtimeAnimatorController.animationClips[0].length;
         
-        yield return new WaitForSecondsRealtime(length);
+        yield return new WaitForSeconds(length);
+        //gameOverGrade.gameObject.SetActive(false);
+        //gameOverGradeGP.gameObject.SetActive(false);
+        //if (gameMode.sessionScore >= level.goldScore)
+        //{
+        //    gameOverGrade.gameObject.SetActive(true);
+        //    gameOverGradeGP.gameObject.SetActive(true);
+        //    gameOverGrade.color = Level.GOLD_COLOR;
+        //    gameOverGradeGP.text = level.goldGP.ToString("0");
+        //}
+        //else if (gameMode.sessionScore >= level.silverScore)
+        //{
+        //    gameOverGrade.gameObject.SetActive(true);
+        //    gameOverGradeGP.gameObject.SetActive(true);
+        //    gameOverGrade.color = Level.SILVER_COLOR;
+        //    gameOverGradeGP.text = level.silverGP.ToString("0");
+        //}
+        //else if (gameMode.sessionScore >= level.bronzeScore)
+        //{
+        //    gameOverGrade.gameObject.SetActive(true);
+        //    gameOverGradeGP.gameObject.SetActive(true);
+        //    gameOverGrade.color = Level.BRONZE_COLOR;
+        //    gameOverGradeGP.text = level.bronzeGP.ToString("0");
+        //}
 
-        gameOverGrade.gameObject.SetActive(false);
-        gameOverGradeGP.gameObject.SetActive(false);
-        if (gameMode.sessionScore >= level.goldScore)
-        {
-            gameOverGrade.gameObject.SetActive(true);
-            gameOverGradeGP.gameObject.SetActive(true);
-            gameOverGrade.color = Level.GOLD_COLOR;
-            gameOverGradeGP.text = level.goldGP.ToString("0");
-        }
-        else if (gameMode.sessionScore >= level.silverScore)
-        {
-            gameOverGrade.gameObject.SetActive(true);
-            gameOverGradeGP.gameObject.SetActive(true);
-            gameOverGrade.color = Level.SILVER_COLOR;
-            gameOverGradeGP.text = level.silverGP.ToString("0");
-        }
-        else if (gameMode.sessionScore >= level.bronzeScore)
-        {
-            gameOverGrade.gameObject.SetActive(true);
-            gameOverGradeGP.gameObject.SetActive(true);
-            gameOverGrade.color = Level.BRONZE_COLOR;
-            gameOverGradeGP.text = level.bronzeGP.ToString("0");
-        }
-
-        DisplayGameOverPanel();
+        DisplayGameOverPanel(true);
     }
 
 
@@ -667,7 +688,6 @@ public class HUDManager : MonoBehaviour
 
     private IEnumerator UpdateStats_C(float delay)
     {
-
         switch (level.category)
         {
             case Level.LevelCategory.TIME:

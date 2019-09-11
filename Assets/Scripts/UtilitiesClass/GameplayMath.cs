@@ -51,12 +51,12 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return 4.5E-8f * mass;
+        return 4.2E-8f * mass;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)
     {
-        return (1.3f * ((points - 1) * Mathf.Log(8 * points + 100))) + 200f;
+        return (1.325f * ((points - 1) * Mathf.Log(8 * points + 100))) + 210f;
     }
 
     public float GetAntigravityDuration(int points)

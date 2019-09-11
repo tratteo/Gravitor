@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using System;
 
 
 /// <summary>
@@ -12,14 +10,10 @@ public class MenuManager : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private Text highScoreText = null;
     [SerializeField] private Text gravityPointsText = null;
-    [Header("Toast")]
-    [SerializeField] private ToastScript toast = null;
 
     private SettingsData settingsData;
 
     private int currentGP;
-    private int adBonusGP;
-    private bool isAdLoading = false;
     
 
     void OnDisable()
@@ -58,27 +52,29 @@ public class MenuManager : MonoBehaviour
             settingsData = objectData.GetData<SettingsData>();
         }
 
+
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA);
         if (objectData == null)
         {
             objectData = SaveManager.GetInstance().SavePersistentData(new PlayerData(), SaveManager.PLAYER_DATA);
         }
-        adBonusGP = 15000;
         PlayerData playerData = objectData.GetData<PlayerData>();
         switch (playerData.playerState)
         {
             case PlayerManager.PlayerState.ASTEROID:
-                adBonusGP = 15000;
                 break;
             case PlayerManager.PlayerState.COMET:
-                adBonusGP = 60000;
                 break;
             default:
                 playerData.playerState = PlayerManager.PlayerState.COMET;
-                SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
-                adBonusGP = 60000;
                 break;
         }
+        if (playerData.deviceId == null)
+        {
+            playerData.deviceId = SystemInfo.deviceUniqueIdentifier;
+        }
+        SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
+
 
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH);
         if (objectData == null)
@@ -89,8 +85,12 @@ public class MenuManager : MonoBehaviour
         if (skillData.gammaRayBurstPoints == 0)
         {
             skillData.gammaRayBurstPoints = 1;
-            SaveManager.GetInstance().SavePersistentData(skillData, SaveManager.SKILLSDATA_PATH);
         }
+        if(skillData.deviceId == null)
+        {
+            skillData.deviceId = SystemInfo.deviceUniqueIdentifier;
+        }
+        SaveManager.GetInstance().SavePersistentData(skillData, SaveManager.SKILLSDATA_PATH);
 
 
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH);
@@ -107,7 +107,13 @@ public class MenuManager : MonoBehaviour
             objectData = SaveManager.GetInstance().SavePersistentData<LevelsData>(new LevelsData(), SaveManager.LEVELSDATA_PATH);
         }
         LevelsData data = objectData.GetData<LevelsData>();
+        if (data.deviceId == null)
+        {
+            data.deviceId = SystemInfo.deviceUniqueIdentifier;
+        }
+        SaveManager.GetInstance().SavePersistentData(data, SaveManager.LEVELSDATA_PATH);
         highScoreText.text = data.GetLevelHighScore(LevelsData.ENDLESS_ID).ToString();
+
 
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
         if (objectData == null)
@@ -128,8 +134,6 @@ public class MenuManager : MonoBehaviour
                 PlayerSkillsData skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
                 skillsData.gammaRayBurstPoints = PlayerSkillsData.GRB_MAX_POINTS;
                 SaveManager.GetInstance().SavePersistentData<PlayerSkillsData>(skillsData, SaveManager.SKILLSDATA_PATH);
-
-                toast.EnqueueToast("GRB level 3 purchased", null, 2.5f);
                 break;
         }
     }

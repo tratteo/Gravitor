@@ -79,7 +79,7 @@ public class UpgradeManager : MonoBehaviour
 
         SaveObject objectData;
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
-        gravityPoints = objectData != null ? gravityPoints = objectData.GetData<int>() + 10000000 : 0;
+        gravityPoints = objectData != null ? gravityPoints = objectData.GetData<int>() : 0;
 
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
 

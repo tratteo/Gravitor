@@ -170,7 +170,7 @@ public abstract class GameMode : MonoBehaviour
         obstacleSpawner.PauseSpawnTimer(true);
         extraSpawner.PauseSpawnTimer(true);
 
-        sessionGravityPoints = (int)(0.185f * (0.6f * sessionScore * (playerManager.properTime / 225f)));
+        sessionGravityPoints = (int)(0.176f * (0.7f * sessionScore * (playerManager.properTime / 300f)));
 
         if (currentLevel.category == Level.LevelCategory.ENDLESS)
         {
@@ -198,7 +198,14 @@ public abstract class GameMode : MonoBehaviour
         }
         SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
 
-        HUDManager.GetInstance().DisplayGameOverPanel();
+        if (currentLevel.category == Level.LevelCategory.ENDLESS)
+        {
+            HUDManager.GetInstance().DisplayGameOverPanel(true);
+        }
+        else
+        {
+            HUDManager.GetInstance().DisplayGameOverPanel(false);
+        }
         HUDManager.GetInstance().EnableHighGravityFieldPanel(false);
     }
 
@@ -206,6 +213,7 @@ public abstract class GameMode : MonoBehaviour
     {
         Time.timeScale = 1f;
         isGameOver = true;
+        attemptUsed = true;
 
         LevelsData levelsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>();
         levelsData.UnlockLevel(currentLevel.id + 1);
@@ -226,7 +234,7 @@ public abstract class GameMode : MonoBehaviour
             levelGP = currentLevel.bronzeGP;
         }
 
-        sessionGravityPoints = (int)(0.185f * (0.6f * sessionScore * (playerManager.properTime / 225f)));
+        sessionGravityPoints = (int)(0.176f * (0.7f * sessionScore * (playerManager.properTime / 300f)));
         if (levelGP != 0)
         {
             sessionGravityPoints += levelGP;

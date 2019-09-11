@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 [System.Serializable]
-public class LevelsData
+public class LevelsData : EncryptedData
 {
     public const int ENDLESS_ID = 0;
 

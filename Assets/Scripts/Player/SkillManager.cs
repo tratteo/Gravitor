@@ -199,6 +199,7 @@ public class SkillManager : MonoBehaviour
         mask = LayerMask.GetMask("Obstacles");
         Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, solarflareRadius, mask);
         int castedObstacles = 0;
+        float bonusScore = 0;
         foreach (Collider collider in hitColliders)
         {
             GameObstacle obstacleToDestroy;
@@ -207,10 +208,11 @@ public class SkillManager : MonoBehaviour
             {
                 castedObstacles++;
                 obstacleToDestroy.Destroy(true);
-                playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass));
+                bonusScore += GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass);
                 playerManager.gravityFieldsGens.Remove(obstacleToDestroy);
             }
         }
+        playerManager.gameMode.BonusScore(bonusScore);
 
         sessionObstaclesDestroyed += castedObstacles;
 
@@ -268,6 +270,7 @@ public class SkillManager : MonoBehaviour
         RaycastHit[] hitColliders = Physics.SphereCastAll(transform.position, scaledGammaRayRadius, new Vector3(0f, 0f, 1f), gammaRayLength, mask);
 
         int castedObstacles = 0;
+        float bonusScore = 0;
         foreach (RaycastHit hit in hitColliders)
         {
             GameObstacle obstacleToDestroy;
@@ -276,10 +279,11 @@ public class SkillManager : MonoBehaviour
             {
                 castedObstacles++;
                 obstacleToDestroy.Destroy(true);
-                playerManager.gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass));
+                bonusScore += GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacleToDestroy.mass);
                 playerManager.gravityFieldsGens.Remove(obstacleToDestroy);
             }
         }
+        playerManager.gameMode.BonusScore(bonusScore);
         Debug.Log("GRB D: " + castedObstacles);
         sessionObstaclesDestroyed += castedObstacles;
         if (playerManager.level.category == Level.LevelCategory.OBSTACLES_DESTROY && sessionObstaclesDestroyed >= playerManager.level.targetObstaclesDestoryed)

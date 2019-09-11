@@ -124,7 +124,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 2.0.0a
+  bundleVersion: 2.0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -168,7 +168,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.NAG.Gravitor
   buildNumber: {}
-  AndroidBundleVersionCode: 17
+  AndroidBundleVersionCode: 20
   AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0

@@ -6,8 +6,8 @@ using System;
 public class Level : MonoBehaviour
 {
     public static Color32 GOLD_COLOR = new Color32(255, 190, 0, 255);
-    public static Color32 SILVER_COLOR = new Color32(150, 150, 150, 255);
-    public static Color32 BRONZE_COLOR = new Color32(125, 75, 40, 255);
+    public static Color32 SILVER_COLOR = new Color32(170, 170, 170, 255);
+    public static Color32 BRONZE_COLOR = new Color32(160, 70, 50, 255);
 
     public enum LevelCategory { TIME, TIME_DILATED, DISTANCE, MAX_SPEED, OBSTACLES_DESTROY, ENDLESS }
 

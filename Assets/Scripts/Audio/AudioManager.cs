@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
 
     private bool audioActive = true;
 
-    [HideInInspector] public Sound currentMusic = null;
+    public Sound currentMusic = null;
 
     private void Awake()
     {
@@ -49,29 +49,29 @@ public class AudioManager : MonoBehaviour
             if (sounds[i].source.isPlaying)
             {
                 sounds[i].source.Stop();
-}
+            }
         }
     }
 
     public void SmoothOutSound(Sound s, float stride, float duration)
     {
-        StartCoroutine(SmoothOutSound_C(s, stride, duration));
+        if (s != null && audioActive)
+        {
+            StartCoroutine(SmoothOutSound_C(s, stride, duration));
+        }
     }
     private IEnumerator SmoothOutSound_C(Sound s, float stride, float duration)
     {
-        if (s != null)
+        float currentVolume = s.volume;
+        while (currentVolume - stride > 0f)
         {
-            float currentVolume = s.volume;
-            while (currentVolume - stride > 0f)
-            {
-                currentVolume -= stride;
-                s.source.volume = currentVolume;
-                yield return new WaitForSecondsRealtime(duration * stride);
-            }
-            s.source.Stop();
-            s.source.volume = s.volume;
-            s = null;
+            currentVolume -= stride;
+            s.source.volume = currentVolume;
+            yield return new WaitForSecondsRealtime(duration * stride);
         }
+        s.source.Stop();
+        s.source.volume = s.volume;
+        s = null;
     }
 
     public Sound SmoothInSound(string name, float stride, float duration)
@@ -133,5 +133,6 @@ public class AudioManager : MonoBehaviour
         }
 
         audioActive = settingsData.audioActive;
+        currentMusic = null;
     }
 }

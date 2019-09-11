@@ -1,6 +1,6 @@
 ﻿
 [System.Serializable]
-public class PlayerSkillsData
+public class PlayerSkillsData : EncryptedData
 {
 
     public const short ANTIGRAVITY_MAX_POINTS = 20;

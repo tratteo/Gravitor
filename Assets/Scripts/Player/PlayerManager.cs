@@ -7,7 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(MovementManager))]
 [RequireComponent(typeof(SkillManager))]
 [RequireComponent(typeof(ExtraManager))]
-[RequireComponent(typeof(AchievementsManager))]
 public class PlayerManager : MonoBehaviour
 {
     #region Variables
@@ -52,7 +51,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public float resilience;
     private float initialResilience;
     private PlayerData playerData;
-    public List<GameObstacle> gravityFieldsGens;
+    [HideInInspector] public List<GameObstacle> gravityFieldsGens;
     [HideInInspector] public PlayerState playerState;
     [HideInInspector] public int dangerZoneCount = 0;
     [HideInInspector] public HUDManager hudManagerInstance;
@@ -78,14 +77,12 @@ public class PlayerManager : MonoBehaviour
     public struct SessionStats
     {
         public float maxSpeedReached;
+        public float maxSpeed;
         public float timePlayed;
         public float distortedTime;
         public float score;
         public int obstaclesHit;
     }
-    private event Action<SessionStats> FireSessionStats;
-    public void SubscribeToSessionStatsEvent(Action<SessionStats> funcToSub) { FireSessionStats += funcToSub; }
-    public void UnsubscribeToSessionStatsEvent(Action<SessionStats> funcToUnsub) { FireSessionStats += funcToUnsub; }
 
     #endregion
 
@@ -203,6 +200,7 @@ public class PlayerManager : MonoBehaviour
             {
                 extraManager.DestroyShield();
                 gameMode.BonusScore(GameplayMath.GetInstance().GetBonusPointsFromObstacleMass(obstacle.mass));
+                skillManager.sessionObstaclesDestroyed++;
             }
             sessionObstaclesHit++;
         }
@@ -451,11 +449,12 @@ public class PlayerManager : MonoBehaviour
         //Send broadcast stats
         SessionStats stats = new SessionStats();
         stats.maxSpeedReached = movementManager.GetMaxSpeedReached();
+        stats.maxSpeed = movementManager.maxSpeed;
         stats.timePlayed = properTime;
         stats.distortedTime = relativeExTime - properTime;
         stats.score = gameMode.sessionScore;
         stats.obstaclesHit = sessionObstaclesHit;
-        FireSessionStats(stats);
+        PersistentPlayerPrefs.GetInstance().CheckAchievements(stats);
     }
 
     private IEnumerator UpdateTimeDistortion()

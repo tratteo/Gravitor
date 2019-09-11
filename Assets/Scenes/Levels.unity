@@ -179,7 +179,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7a5dd5701f9f4584e9cbfe629fdd3768, type: 3}
-    m_FontSize: 32
+    m_FontSize: 34
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -388,14 +388,14 @@ MonoBehaviour:
   targetTimeDilated: 1.84
   targetDistance: 7500000
   targetObstaclesDestoryed: 0
-  levelObjective: Travel for a total of 7500000 Km
-  levelInfo: Travel for a total of 7500000 Km
-  bronzeScore: 150000
+  levelObjective: Travel for a total of 7 500 000 Km
+  levelInfo: Travel for a total of 7 500 000 Km
+  bronzeScore: 160000
   silverScore: 200000
   goldScore: 450000
-  bronzeGP: 4000
-  silverGP: 7000
-  goldGP: 10000
+  bronzeGP: 3250
+  silverGP: 4750
+  goldGP: 6500
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1199,12 +1199,12 @@ MonoBehaviour:
   targetObstaclesDestoryed: 0
   levelObjective: Endure for 50 seconds
   levelInfo: Endure for a total of 50 seconds
-  bronzeScore: 75000
-  silverScore: 100000
-  goldScore: 180000
-  bronzeGP: 3000
-  silverGP: 6000
-  goldGP: 9000
+  bronzeScore: 85000
+  silverScore: 135000
+  goldScore: 220000
+  bronzeGP: 2500
+  silverGP: 4500
+  goldGP: 6500
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
   isSpawnRateConst: 1
-  constSpawnRate: 2.8
+  constSpawnRate: 3.1
   a: 0
   b: 0
   g: 0
@@ -1586,12 +1586,12 @@ MonoBehaviour:
   levelInfo: 'Reach the max allowed speed of 0.9c.
 
     Tip: use Gravitational slingshot'
-  bronzeScore: 180000
-  silverScore: 250000
-  goldScore: 500000
-  bronzeGP: 8000
-  silverGP: 10000
-  goldGP: 18000
+  bronzeScore: 150000
+  silverScore: 265000
+  goldScore: 750000
+  bronzeGP: 7000
+  silverGP: 9500
+  goldGP: 14750
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1881,7 +1881,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7a5dd5701f9f4584e9cbfe629fdd3768, type: 3}
-    m_FontSize: 32
+    m_FontSize: 34
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -2612,7 +2612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 5
-  extrasSpawnRateRange: {x: 0.1, y: 0.2}
+  extrasSpawnRateRange: {x: 0.15, y: 0.25}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
@@ -2622,7 +2622,7 @@ MonoBehaviour:
   a: 900
   b: 0.0625
   g: 50
-  d: 21.5
+  d: 21.25
   category: 1
   targetTime: 0
   targetTimeDilated: 3600
@@ -2633,12 +2633,12 @@ MonoBehaviour:
 
     Tip: Use high gravity fields
     and wormholes'
-  bronzeScore: 550000
-  silverScore: 800000
-  goldScore: 1500000
-  bronzeGP: 10000
-  silverGP: 14000
-  goldGP: 18000
+  bronzeScore: 900000
+  silverScore: 1200000
+  goldScore: 2200000
+  bronzeGP: 11250
+  silverGP: 14500
+  goldGP: 18750
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -2669,12 +2669,12 @@ MonoBehaviour:
         prefab: {fileID: 7568984893206684663, guid: df9714f4ec9b598429704ac952be7087,
           type: 3}
         poolSize: 50
-        spawnProbability: 0.5
+        spawnProbability: 0.65
       - tag: MagneticShield
         prefab: {fileID: 1942656736390226775, guid: 34c9bfb76a74c464f841097594527e3d,
           type: 3}
         poolSize: 50
-        spawnProbability: 0.5
+        spawnProbability: 0.35
 --- !u!114 &741440341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2975,13 +2975,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 8
-  extrasSpawnRateRange: {x: 0.08, y: 0.12}
+  extrasSpawnRateRange: {x: 1, y: 1.75}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
   isSpawnRateConst: 1
-  constSpawnRate: 4.75
+  constSpawnRate: 8.25
   a: 0
   b: 0
   g: 0
@@ -2990,17 +2990,18 @@ MonoBehaviour:
   targetTime: 0
   targetTimeDilated: 0
   targetDistance: 0
-  targetObstaclesDestoryed: 200
-  levelObjective: Destroy 200 celestial body
-  levelInfo: 'Destroy 200 celestial body.
+  targetObstaclesDestoryed: 100
+  levelObjective: Destroy 100 celestial bodies
+  levelInfo: 'Destroy 100 celestial bodies.
 
-    Tip: Use GRB and Solar Flare'
+    Tip: Use GRB, Solar Flare and Magnetic
+    Shields'
   bronzeScore: 800000
   silverScore: 1000000
   goldScore: 1600000
   bronzeGP: 12000
-  silverGP: 20000
-  goldGP: 30000
+  silverGP: 21500
+  goldGP: 31250
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -3009,12 +3010,12 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
           type: 3}
         poolSize: 200
-        spawnProbability: 0.6
+        spawnProbability: 0.5
       - tag: Star
         prefab: {fileID: 3010830646087042782, guid: 7e26b872983bbf644852b255444256ec,
           type: 3}
         poolSize: 150
-        spawnProbability: 0.25
+        spawnProbability: 0.2
       - tag: WhiteDwarf
         prefab: {fileID: 3010830646087042782, guid: f739e7623a479554cb9070449135aa53,
           type: 3}
@@ -3032,16 +3033,11 @@ MonoBehaviour:
         spawnProbability: 0.01
     - name: Extras
       pools:
-      - tag: Wormhole
-        prefab: {fileID: 7568984893206684663, guid: df9714f4ec9b598429704ac952be7087,
-          type: 3}
-        poolSize: 40
-        spawnProbability: 0.15
       - tag: MagneticShield
         prefab: {fileID: 1942656736390226775, guid: 34c9bfb76a74c464f841097594527e3d,
           type: 3}
-        poolSize: 40
-        spawnProbability: 0.85
+        poolSize: 50
+        spawnProbability: 1
 --- !u!114 &773140341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3196,7 +3192,7 @@ MonoBehaviour:
   a: 1100
   b: 0.0625
   g: 90
-  d: 15
+  d: 16.5
   category: 1
   targetTime: 0
   targetTimeDilated: 3000
@@ -3207,12 +3203,12 @@ MonoBehaviour:
 
     Tip: High level Anti Gravity
     recommended'
-  bronzeScore: 850000
-  silverScore: 1200000
-  goldScore: 2000000
-  bronzeGP: 12500
-  silverGP: 25000
-  goldGP: 40000
+  bronzeScore: 900000
+  silverScore: 1400000
+  goldScore: 2250000
+  bronzeGP: 20500
+  silverGP: 32750
+  goldGP: 40250
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -3503,7 +3499,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7a5dd5701f9f4584e9cbfe629fdd3768, type: 3}
-    m_FontSize: 32
+    m_FontSize: 34
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -3993,14 +3989,14 @@ MonoBehaviour:
   targetTimeDilated: 0
   targetDistance: 16000000
   targetObstaclesDestoryed: 0
-  levelObjective: Travel 16000000 Km
-  levelInfo: Travel for a total of 16000000 Km
-  bronzeScore: 150000
-  silverScore: 350000
-  goldScore: 600000
-  bronzeGP: 8000
-  silverGP: 10000
-  goldGP: 14000
+  levelObjective: Travel 16 000 000 Km
+  levelInfo: Travel for a total of 16 000 000 Km
+  bronzeScore: 600000
+  silverScore: 900000
+  goldScore: 2000000
+  bronzeGP: 14000
+  silverGP: 16500
+  goldGP: 20250
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -4658,7 +4654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0}
+  m_Color: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4947,7 +4943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+  m_Color: {r: 0.6666667, g: 0.6666667, b: 0.6666667, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5076,20 +5072,20 @@ MonoBehaviour:
   a: 900
   b: 0.0625
   g: 50
-  d: 22
+  d: 22.75
   category: 0
-  targetTime: 210
+  targetTime: 180
   targetTimeDilated: 0
   targetDistance: 0
   targetObstaclesDestoryed: 0
-  levelObjective: Endure for 210 seconds
-  levelInfo: Endure for a total of 210 seconds
-  bronzeScore: 350000
-  silverScore: 700000
-  goldScore: 1500000
-  bronzeGP: 7500
-  silverGP: 12000
-  goldGP: 22000
+  levelObjective: Endure for 180 seconds
+  levelInfo: Endure for a total of 180 seconds
+  bronzeScore: 900000
+  silverScore: 1500000
+  goldScore: 3500000
+  bronzeGP: 15500
+  silverGP: 20000
+  goldGP: 26250
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -5098,7 +5094,7 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
           type: 3}
         poolSize: 200
-        spawnProbability: 0.45
+        spawnProbability: 0.5
       - tag: Star
         prefab: {fileID: 3010830646087042782, guid: 7e26b872983bbf644852b255444256ec,
           type: 3}
@@ -5108,17 +5104,17 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: f739e7623a479554cb9070449135aa53,
           type: 3}
         poolSize: 80
-        spawnProbability: 0.1
+        spawnProbability: 0.08
       - tag: NeutronStar
         prefab: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
           type: 3}
         poolSize: 60
-        spawnProbability: 0.05
+        spawnProbability: 0.035
       - tag: OrbNeutronStar
         prefab: {fileID: 8324389532378526095, guid: 3327f8b37123819438a376f9ed82a3ea,
           type: 3}
         poolSize: 45
-        spawnProbability: 0.015
+        spawnProbability: 0.01
     - name: Extras
       pools:
       - tag: MagneticShield
@@ -5363,12 +5359,12 @@ MonoBehaviour:
   targetObstaclesDestoryed: 0
   levelObjective: 30 minutes time distortion
   levelInfo: Warp time for a total of 30 minutes
-  bronzeScore: 130000
-  silverScore: 160000
-  goldScore: 450000
-  bronzeGP: 5000
-  silverGP: 8500
-  goldGP: 12000
+  bronzeScore: 200000
+  silverScore: 350000
+  goldScore: 600000
+  bronzeGP: 4250
+  silverGP: 8250
+  goldGP: 12500
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -5925,7 +5921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  extrasSpawnRateRange: {x: 0.2, y: 0.85}
+  extrasSpawnRateRange: {x: 0.2, y: 0.8}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
@@ -5934,8 +5930,8 @@ MonoBehaviour:
   constSpawnRate: 0
   a: 865
   b: 0.0625
-  g: 45
-  d: 20.5
+  g: 36
+  d: 26.75
   category: 5
   targetTime: 0
   targetTimeDilated: 0
@@ -5943,12 +5939,12 @@ MonoBehaviour:
   targetObstaclesDestoryed: 0
   levelObjective: Endless
   levelInfo: Endless mode
-  bronzeScore: 10000
-  silverScore: 50000
-  goldScore: 3000000
-  bronzeGP: 1000
-  silverGP: 2000
-  goldGP: 3000
+  bronzeScore: 2750000
+  silverScore: 3500000
+  goldScore: 6500000
+  bronzeGP: 35000
+  silverGP: 55000
+  goldGP: 85750
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -5967,17 +5963,17 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: f739e7623a479554cb9070449135aa53,
           type: 3}
         poolSize: 80
-        spawnProbability: 0.08
+        spawnProbability: 0.06
       - tag: NeutronStar
         prefab: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
           type: 3}
         poolSize: 60
-        spawnProbability: 0.05
+        spawnProbability: 0.04
       - tag: OrbNeutronStar
         prefab: {fileID: 8324389532378526095, guid: 3327f8b37123819438a376f9ed82a3ea,
           type: 3}
         poolSize: 30
-        spawnProbability: 0.02
+        spawnProbability: 0.015
     - name: Extras
       pools:
       - tag: Wormhole
@@ -6319,7 +6315,7 @@ MonoBehaviour:
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
   isSpawnRateConst: 1
-  constSpawnRate: 45
+  constSpawnRate: 48
   a: 0
   b: 0
   g: 0
@@ -6331,12 +6327,12 @@ MonoBehaviour:
   targetObstaclesDestoryed: 0
   levelObjective: Endure for 1 minute
   levelInfo: Endure for a total of 1 minute
-  bronzeScore: 180000
+  bronzeScore: 190000
   silverScore: 250000
-  goldScore: 350000
-  bronzeGP: 16000
-  silverGP: 25000
-  goldGP: 35000
+  goldScore: 375000
+  bronzeGP: 21750
+  silverGP: 36500
+  goldGP: 55750
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -7072,7 +7068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49019608, g: 0.29411766, b: 0.15686275, a: 1}
+  m_Color: {r: 0.627451, g: 0.27450982, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
