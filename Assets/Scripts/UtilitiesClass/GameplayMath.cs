@@ -51,7 +51,7 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return 4.825E-8f * mass;
+        return 4.85E-8f * mass;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)
@@ -114,13 +114,13 @@ public class GameplayMath
 
     public float GetDamageWithDistance(float distance)
     {
-        float x = (distance / 375f) + 0.6f;
+        float x = (distance / 370f) + 0.6f;
         return x * x * x;
     }
 
     public int GetCostFromInitCost(int points, int initCost)
     {
-        return (int)(565 * Mathf.Pow(points, 2.46f) + initCost - 565);
+        return (int)(572 * Mathf.Pow(points, 2.46f) + initCost - 572);
     }
 
     public int GetGRBSpawnExceptionTime(int points)
@@ -140,23 +140,23 @@ public class GameplayMath
 
     public int GetGravityPointsFromSession(float score, float properTime, Level level)
     {
-        int gravityPoints = (int)(0.28f * (0.5f * score * (properTime / 370f)));
+        int gravityPoints = (int)(0.35f * (0.42f * score * (properTime / 325f)));
         return gravityPoints;
     }
 
     public int GetExp(int gravityPoints, GameMode.GradeObtained obt)
     { 
-        int exp = gravityPoints / 15;
+        int exp = gravityPoints / 10;
         switch (obt)
         {
             case GameMode.GradeObtained.BRONZE:
-                exp = (int)(exp * 2f);
+                exp = (int)(exp * 1.7f);
                 break;
             case GameMode.GradeObtained.SILVER:
-                exp = (int)(exp * 3f);
+                exp = (int)(exp * 2.5f);
                 break;
             case GameMode.GradeObtained.GOLD:
-                exp = (int)(exp * 4.25f);
+                exp = (int)(exp * 3.25f);
                 break;
             default:
                 break;

@@ -52,10 +52,11 @@ public class PlayerData : EncryptedData
 
     public int GetLevelExpNeeded()
     {
-        return (int)(INITIAL_EXPERIENCE * playerLevel);
-        //float x = Mathf.Pow(1.15f, playerLevel - 1) * INITIAL_EXPERIENCE;
-        //int ratio = (int)x / 100;
-        //return (ratio * 100);
+        if (playerLevel == 1) return INITIAL_EXPERIENCE;
+        else
+        {
+            return (int)(INITIAL_EXPERIENCE * (playerLevel - 1) * 3f);
+        }
     }
 
     public void InitializeMissingData()

@@ -5,11 +5,11 @@ using UnityEngine.UI;
 /// </summary>
 public class UpgradeManager : MonoBehaviour
 {
-    public const int INIT_HEALTH_COST = 8500;
+    public const int INIT_HEALTH_COST = 9000;
     public const int INIT_THRUST_COST = 3500;
     public const int INIT_ANTIGRAVITY_COST = 7500;
-    public const int INIT_QUANTUMTUNNEL_COST = 5700;
-    public const int INIT_SOLARFLARE_COST = 4750;
+    public const int INIT_QUANTUMTUNNEL_COST = 6000;
+    public const int INIT_SOLARFLARE_COST = 5200;
 
     public const int EVOLVE_COST = 90000;
 

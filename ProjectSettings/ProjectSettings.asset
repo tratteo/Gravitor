@@ -166,7 +166,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.NAG.Gravitor
   buildNumber: {}
-  AndroidBundleVersionCode: 27
+  AndroidBundleVersionCode: 28
   AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0

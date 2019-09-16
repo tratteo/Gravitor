@@ -2612,7 +2612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 5
-  extrasSpawnRateRange: {x: 0.15, y: 0.25}
+  extrasSpawnRateRange: {x: 0.1, y: 0.2}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
@@ -2669,12 +2669,12 @@ MonoBehaviour:
         prefab: {fileID: 7568984893206684663, guid: df9714f4ec9b598429704ac952be7087,
           type: 3}
         poolSize: 50
-        spawnProbability: 0.65
+        spawnProbability: 0.6
       - tag: MagneticShield
         prefab: {fileID: 1942656736390226775, guid: 34c9bfb76a74c464f841097594527e3d,
           type: 3}
         poolSize: 50
-        spawnProbability: 0.35
+        spawnProbability: 0.4
 --- !u!114 &741440341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2999,8 +2999,8 @@ MonoBehaviour:
   bronzeScore: 800000
   silverScore: 2500000
   goldScore: 8000000
-  bronzeGP: 55000
-  silverGP: 67750
+  bronzeGP: 60000
+  silverGP: 85000
   goldGP: 100500
   poolManager:
     poolsCategory:
@@ -3195,21 +3195,21 @@ MonoBehaviour:
   d: 20.5
   category: 1
   targetTime: 0
-  targetTimeDilated: 64800
+  targetTimeDilated: 86400
   targetDistance: 0
   targetObstaclesDestoryed: 0
-  levelObjective: 18 hours time distortion
-  levelInfo: 'Warp time for a total of 18 hours (64 800 seconds)
+  levelObjective: 24 hours time distortion
+  levelInfo: 'Warp time for a total of 24 hours (86 400 seconds)
 
     Tip: High level
     Anti Gravity recommended. Use Anti Gravity to pass close to orbital neutron stars
     clusters in order to achieve massive time dilation'
-  bronzeScore: 6500000
-  silverScore: 9000000
-  goldScore: 12000000
-  bronzeGP: 285000
-  silverGP: 315000
-  goldGP: 380000
+  bronzeScore: 8000000
+  silverScore: 12000000
+  goldScore: 16000000
+  bronzeGP: 170000
+  silverGP: 200000
+  goldGP: 250000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -3228,12 +3228,12 @@ MonoBehaviour:
         prefab: {fileID: 8324389532378526095, guid: 3327f8b37123819438a376f9ed82a3ea,
           type: 3}
         poolSize: 150
-        spawnProbability: 0.26
+        spawnProbability: 0.225
       - tag: Planet
         prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
           type: 3}
         poolSize: 200
-        spawnProbability: 0.42
+        spawnProbability: 0.45
     - name: Extras
       pools:
       - tag: MagneticShield
@@ -3602,7 +3602,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 844096571}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.36663336
+  m_Size: 0.34037858
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5945,9 +5945,9 @@ MonoBehaviour:
   bronzeScore: 2500000
   silverScore: 3500000
   goldScore: 6500000
-  bronzeGP: 150000
+  bronzeGP: 125000
   silverGP: 250000
-  goldGP: 350000
+  goldGP: 320000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -6312,7 +6312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 9
-  extrasSpawnRateRange: {x: 0.1, y: 0.12}
+  extrasSpawnRateRange: {x: 0.075, y: 0.1}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
@@ -6322,7 +6322,7 @@ MonoBehaviour:
   a: 900
   b: 0.0625
   g: 48
-  d: 22.75
+  d: 23.4
   category: 2
   targetTime: 60
   targetTimeDilated: 0
@@ -6333,9 +6333,9 @@ MonoBehaviour:
   bronzeScore: 2000000
   silverScore: 3500000
   goldScore: 7500000
-  bronzeGP: 250000
-  silverGP: 300000
-  goldGP: 355000
+  bronzeGP: 155000
+  silverGP: 185000
+  goldGP: 225000
   poolManager:
     poolsCategory:
     - name: Obstacles

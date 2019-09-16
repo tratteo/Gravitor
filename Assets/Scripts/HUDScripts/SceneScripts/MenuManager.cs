@@ -74,7 +74,6 @@ public class MenuManager : MonoBehaviour
         }
         PlayerData playerData = objectData.GetData<PlayerData>();
         playerData.InitializeMissingData();
-        //playerData.currentExp = 0;
         levelText.text = playerData.playerLevel.ToString("0");
         currentExpText.text = playerData.currentExp.ToString("0");
         int expNeeded = playerData.GetLevelExpNeeded();
