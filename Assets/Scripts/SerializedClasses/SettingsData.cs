@@ -9,6 +9,7 @@ public class SettingsData
     public bool showFPS;
     public bool cameraLookAt;
     public EndlessModeHUD hudConf;
+    public int qualityLevel = 2;
 
     public SettingsData()
     {
@@ -17,5 +18,6 @@ public class SettingsData
         controlsLayout = ControlsLayout.JOYSTICK_RIGHT;
         cameraLookAt = false;
         hudConf = EndlessModeHUD.DISTANCE;
+        qualityLevel = 2;
     }
 }

@@ -25,4 +25,9 @@ public class PlayerSkins : EncryptedData
     {
         return unlockedSkinsId.Contains(achievement);
     }
+
+    public void InitializeMissingData()
+    {
+        base.InitializeDeviceId();
+    }
 }

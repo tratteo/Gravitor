@@ -10,7 +10,7 @@ public class LinearMode : GameMode
         string poolTag = poolManager.GetRandomCategoryPoolTag(GAMEOBSTACLES_CAT_TAG);
         if(poolTag.Equals("OrbNeutronStar"))
         {
-            HUDManager.GetInstance().Toast(HUDManager.ToastType.GAME_TOAST, "Orbital NeutronStars incoming", null, 1.5f, 0f, true);
+            HUDManager.GetInstance().Toast(HUDManager.ToastType.GAME_TOAST, "Orbital NeutronStars incoming", null, 1.5f, 0f, false);
         }
         GameObject instantiatedObstacleRef = poolManager.Spawn(GAMEOBSTACLES_CAT_TAG, poolTag, obstacleSpawner.GetSpawnPosition(), rot);
 

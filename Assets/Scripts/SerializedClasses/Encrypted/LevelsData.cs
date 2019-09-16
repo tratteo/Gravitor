@@ -40,4 +40,9 @@ public class LevelsData : EncryptedData
     {
         return levelsData[id];
     }
+
+    public void InitializeMissingData()
+    {
+        base.InitializeDeviceId();
+    }
 }

@@ -393,9 +393,9 @@ MonoBehaviour:
   bronzeScore: 160000
   silverScore: 200000
   goldScore: 450000
-  bronzeGP: 3250
-  silverGP: 4750
-  goldGP: 6500
+  bronzeGP: 4500
+  silverGP: 6500
+  goldGP: 9000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1028,7 +1028,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10
+  m_Text: 9
 --- !u!222 &328552847
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1202,9 +1202,9 @@ MonoBehaviour:
   bronzeScore: 85000
   silverScore: 135000
   goldScore: 220000
-  bronzeGP: 2500
-  silverGP: 4500
-  goldGP: 6500
+  bronzeGP: 4000
+  silverGP: 6000
+  goldGP: 8000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
   isSpawnRateConst: 1
-  constSpawnRate: 3.1
+  constSpawnRate: 3.45
   a: 0
   b: 0
   g: 0
@@ -1586,12 +1586,12 @@ MonoBehaviour:
   levelInfo: 'Reach the max allowed speed of 0.9c.
 
     Tip: use Gravitational slingshot'
-  bronzeScore: 150000
-  silverScore: 265000
-  goldScore: 750000
-  bronzeGP: 7000
-  silverGP: 9500
-  goldGP: 14750
+  bronzeScore: 320000
+  silverScore: 450000
+  goldScore: 800000
+  bronzeGP: 12750
+  silverGP: 20500
+  goldGP: 37500
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1781,7 +1781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -250}
+  m_AnchoredPosition: {x: 150, y: -220}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &543221086
@@ -2622,7 +2622,7 @@ MonoBehaviour:
   a: 900
   b: 0.0625
   g: 50
-  d: 21.25
+  d: 21.75
   category: 1
   targetTime: 0
   targetTimeDilated: 3600
@@ -2633,12 +2633,12 @@ MonoBehaviour:
 
     Tip: Use high gravity fields
     and wormholes'
-  bronzeScore: 900000
-  silverScore: 1200000
-  goldScore: 2200000
-  bronzeGP: 11250
-  silverGP: 14500
-  goldGP: 18750
+  bronzeScore: 750000
+  silverScore: 1000000
+  goldScore: 2000000
+  bronzeGP: 50000
+  silverGP: 67000
+  goldGP: 85000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -2762,8 +2762,8 @@ RectTransform:
   - {fileID: 1005383699}
   - {fileID: 1430775119}
   - {fileID: 773140337}
-  - {fileID: 785818383}
   - {fileID: 1725854675}
+  - {fileID: 785818383}
   - {fileID: 1618265222}
   m_Father: {fileID: 1915861389}
   m_RootOrder: 0
@@ -2980,12 +2980,12 @@ MonoBehaviour:
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
-  isSpawnRateConst: 1
+  isSpawnRateConst: 0
   constSpawnRate: 8.25
-  a: 0
-  b: 0
-  g: 0
-  d: 0
+  a: 900
+  b: 0.0625
+  g: 45
+  d: 23.75
   category: 4
   targetTime: 0
   targetTimeDilated: 0
@@ -2997,11 +2997,11 @@ MonoBehaviour:
     Tip: Use GRB, Solar Flare and Magnetic
     Shields'
   bronzeScore: 800000
-  silverScore: 1000000
-  goldScore: 1600000
-  bronzeGP: 12000
-  silverGP: 21500
-  goldGP: 31250
+  silverScore: 2500000
+  goldScore: 8000000
+  bronzeGP: 55000
+  silverGP: 67750
+  goldGP: 100500
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -3103,7 +3103,7 @@ GameObject:
   - component: {fileID: 785818388}
   - component: {fileID: 785818386}
   m_Layer: 5
-  m_Name: Lvl9
+  m_Name: Lvl10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3124,7 +3124,7 @@ RectTransform:
   - {fileID: 1595649899}
   - {fileID: 1789500774}
   m_Father: {fileID: 751389999}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3181,8 +3181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd77021b100a5c0489d8e2b76439cdcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 9
-  extrasSpawnRateRange: {x: 0.08, y: 0.1}
+  id: 10
+  extrasSpawnRateRange: {x: 0.1, y: 0.15}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
@@ -3191,24 +3191,25 @@ MonoBehaviour:
   constSpawnRate: 4
   a: 1100
   b: 0.0625
-  g: 90
-  d: 16.5
+  g: 60
+  d: 20.5
   category: 1
   targetTime: 0
-  targetTimeDilated: 3000
+  targetTimeDilated: 64800
   targetDistance: 0
   targetObstaclesDestoryed: 0
-  levelObjective: 50 minutes time distortion
-  levelInfo: 'Warp time for a total of 50 minutes
+  levelObjective: 18 hours time distortion
+  levelInfo: 'Warp time for a total of 18 hours (64 800 seconds)
 
-    Tip: High level Anti Gravity
-    recommended'
-  bronzeScore: 900000
-  silverScore: 1400000
-  goldScore: 2250000
-  bronzeGP: 20500
-  silverGP: 32750
-  goldGP: 40250
+    Tip: High level
+    Anti Gravity recommended. Use Anti Gravity to pass close to orbital neutron stars
+    clusters in order to achieve massive time dilation'
+  bronzeScore: 6500000
+  silverScore: 9000000
+  goldScore: 12000000
+  bronzeGP: 285000
+  silverGP: 315000
+  goldGP: 380000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -3222,17 +3223,17 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
           type: 3}
         poolSize: 150
-        spawnProbability: 0.32
+        spawnProbability: 0.2
       - tag: OrbNeutronStar
         prefab: {fileID: 8324389532378526095, guid: 3327f8b37123819438a376f9ed82a3ea,
           type: 3}
         poolSize: 150
-        spawnProbability: 0.4
+        spawnProbability: 0.26
       - tag: Planet
         prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
           type: 3}
         poolSize: 200
-        spawnProbability: 0.35
+        spawnProbability: 0.42
     - name: Extras
       pools:
       - tag: MagneticShield
@@ -3555,8 +3556,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 12}
+  m_AnchoredPosition: {x: 20, y: 2}
+  m_SizeDelta: {x: -40, y: 12}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &867177113
 MonoBehaviour:
@@ -3678,10 +3679,10 @@ RectTransform:
   m_Father: {fileID: 539314277}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -140}
-  m_SizeDelta: {x: 0, y: 70}
+  m_AnchorMin: {x: 0, y: 0.35}
+  m_AnchorMax: {x: 1, y: 0.425}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887866167
 MonoBehaviour:
@@ -3978,12 +3979,12 @@ MonoBehaviour:
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
-  isSpawnRateConst: 1
+  isSpawnRateConst: 0
   constSpawnRate: 5
-  a: 0
-  b: 0
-  g: 0
-  d: 0
+  a: 800
+  b: 0.0625
+  g: 40
+  d: 23.5
   category: 2
   targetTime: 0
   targetTimeDilated: 0
@@ -3994,9 +3995,9 @@ MonoBehaviour:
   bronzeScore: 600000
   silverScore: 900000
   goldScore: 2000000
-  bronzeGP: 14000
-  silverGP: 16500
-  goldGP: 20250
+  bronzeGP: 42500
+  silverGP: 55000
+  goldGP: 90000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -4143,8 +4144,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 163a5c1d5b30f75499f230455ae8a8c6, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4927,7 +4928,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -250}
+  m_AnchoredPosition: {x: 0, y: -220}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1379981733
@@ -5083,9 +5084,9 @@ MonoBehaviour:
   bronzeScore: 900000
   silverScore: 1500000
   goldScore: 3500000
-  bronzeGP: 15500
-  silverGP: 20000
-  goldGP: 26250
+  bronzeGP: 50000
+  silverGP: 67500
+  goldGP: 75750
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -5347,7 +5348,7 @@ MonoBehaviour:
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
   isSpawnRateConst: 1
-  constSpawnRate: 4.2
+  constSpawnRate: 4.35
   a: 0
   b: 0
   g: 0
@@ -5358,13 +5359,15 @@ MonoBehaviour:
   targetDistance: 0
   targetObstaclesDestoryed: 0
   levelObjective: 30 minutes time distortion
-  levelInfo: Warp time for a total of 30 minutes
+  levelInfo: 'Warp time for a total of 30 minutes
+
+    Tip: Use Wormholes'
   bronzeScore: 200000
   silverScore: 350000
   goldScore: 600000
-  bronzeGP: 4250
-  silverGP: 8250
-  goldGP: 12500
+  bronzeGP: 8000
+  silverGP: 12500
+  goldGP: 18750
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -5939,12 +5942,12 @@ MonoBehaviour:
   targetObstaclesDestoryed: 0
   levelObjective: Endless
   levelInfo: Endless mode
-  bronzeScore: 2750000
+  bronzeScore: 2500000
   silverScore: 3500000
   goldScore: 6500000
-  bronzeGP: 35000
-  silverGP: 55000
-  goldGP: 85750
+  bronzeGP: 150000
+  silverGP: 250000
+  goldGP: 350000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -6230,7 +6233,7 @@ GameObject:
   - component: {fileID: 1725854680}
   - component: {fileID: 1725854678}
   m_Layer: 5
-  m_Name: Lvl10
+  m_Name: Lvl9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6251,7 +6254,7 @@ RectTransform:
   - {fileID: 1763824563}
   - {fileID: 1870352180}
   m_Father: {fileID: 751389999}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6308,31 +6311,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd77021b100a5c0489d8e2b76439cdcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 10
-  extrasSpawnRateRange: {x: 0.08, y: 0.12}
+  id: 9
+  extrasSpawnRateRange: {x: 0.1, y: 0.12}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
   randZSpawn: {x: 0, y: 0}
-  isSpawnRateConst: 1
+  isSpawnRateConst: 0
   constSpawnRate: 48
-  a: 0
-  b: 0
-  g: 0
-  d: 0
-  category: 0
+  a: 900
+  b: 0.0625
+  g: 48
+  d: 22.75
+  category: 2
   targetTime: 60
   targetTimeDilated: 0
-  targetDistance: 0
+  targetDistance: 30000000
   targetObstaclesDestoryed: 0
-  levelObjective: Endure for 1 minute
-  levelInfo: Endure for a total of 1 minute
-  bronzeScore: 190000
-  silverScore: 250000
-  goldScore: 375000
-  bronzeGP: 21750
-  silverGP: 36500
-  goldGP: 55750
+  levelObjective: Travel for 30 000 000 Km
+  levelInfo: Travel for a total of 30 000 000 Km
+  bronzeScore: 2000000
+  silverScore: 3500000
+  goldScore: 7500000
+  bronzeGP: 250000
+  silverGP: 300000
+  goldGP: 355000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -6340,13 +6343,28 @@ MonoBehaviour:
       - tag: Planet
         prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
           type: 3}
-        poolSize: 2000
-        spawnProbability: 0.9
+        poolSize: 250
+        spawnProbability: 0.5
+      - tag: Star
+        prefab: {fileID: 3010830646087042782, guid: 7e26b872983bbf644852b255444256ec,
+          type: 3}
+        poolSize: 180
+        spawnProbability: 0.3
+      - tag: WhiteDwarf
+        prefab: {fileID: 3010830646087042782, guid: f739e7623a479554cb9070449135aa53,
+          type: 3}
+        poolSize: 120
+        spawnProbability: 0.1
       - tag: NeutronStar
         prefab: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
           type: 3}
-        poolSize: 2000
-        spawnProbability: 0.1
+        poolSize: 100
+        spawnProbability: 0.08
+      - tag: OrbNeutronStar
+        prefab: {fileID: 8324389532378526095, guid: 3327f8b37123819438a376f9ed82a3ea,
+          type: 3}
+        poolSize: 60
+        spawnProbability: 0.02
     - name: Extras
       pools:
       - tag: Wormhole
@@ -6474,7 +6492,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 9
+  m_Text: 10
 --- !u!222 &1754241038
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7052,7 +7070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -150, y: -250}
+  m_AnchoredPosition: {x: -150, y: -220}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1913679102
@@ -7312,10 +7330,10 @@ RectTransform:
   m_Father: {fileID: 539314277}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -245}
-  m_SizeDelta: {x: 0, y: 140}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.36}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2036655033
 MonoBehaviour:
@@ -7344,13 +7362,17 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Play for a total of 300s
+    m_LineSpacing: 1.2
+  m_Text: 'Warp time for a total of 18 hours (64 800 seconds)
+
+    Tip: High level
+    Anti Gravity recommended. Use Anti Gravity to pass close to clusters of orbital
+    neutron stars in order to achieve massive time dilation'
 --- !u!222 &2036655034
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -5,11 +5,13 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 public class SettingsManager : MonoBehaviour
 {
+
     public const int LOW = 0;
     public const int MEDIUM = 1;
     public const int HIGH = 2;
     public const int ULTRA = 3;
-    private string qualitySettings = "";
+
+    private int qualitySettings;
     [SerializeField] private ToastScript toast = null;
     [SerializeField] private Sprite enabled = null;
     [SerializeField] private Sprite disabled = null;
@@ -57,60 +59,58 @@ public class SettingsManager : MonoBehaviour
             default:
                 break;
         }
+        qualitySettings = QualitySettings.GetQualityLevel();
     }
 
-    public void SetQualitySettings(string level)
-    {
-        if (qualitySettings.Equals(level)) return;
 
-        switch(level)
+    public void SetQualitySettings(int level)
+    {
+        if (level == qualitySettings) return;
+        SharedUtilities.GetInstance().SetQualitySettings(level);
+        switch (level)
         {
-            case "Low":
-                QualitySettings.SetQualityLevel(LOW);
-                QualitySettings.masterTextureLimit = 2;
+            case 0:
                 toast.EnqueueToast("Quality set to low", null, 1f);
-                qualitySettings = "Low";
+                qualitySettings = 0;
                 lowEnabledIcon.gameObject.SetActive(true);
                 mediumEnabledIcon.gameObject.SetActive(false);
                 highEnabledIcon.gameObject.SetActive(false);
                 ultraEnabledIcon.gameObject.SetActive(false);
+                settingsData.qualityLevel = 0;
                 break;
 
-            case "Medium":
-                QualitySettings.SetQualityLevel(MEDIUM);
-                QualitySettings.masterTextureLimit = 1;
+            case 1:
                 toast.EnqueueToast("Quality set to medium", null, 1f);
-                qualitySettings = "Medium";
+                qualitySettings = 1;
                 lowEnabledIcon.gameObject.SetActive(false);
                 mediumEnabledIcon.gameObject.SetActive(true);
                 highEnabledIcon.gameObject.SetActive(false);
                 ultraEnabledIcon.gameObject.SetActive(false);
+                settingsData.qualityLevel = 1;
                 break;
 
-            case "High":
-                QualitySettings.SetQualityLevel(HIGH);
-                QualitySettings.masterTextureLimit = 0;
+            case 2:
                 toast.EnqueueToast("Quality set to high", null, 1f);
-                qualitySettings = "High";
+                qualitySettings = 2;
                 lowEnabledIcon.gameObject.SetActive(false);
                 mediumEnabledIcon.gameObject.SetActive(false);
                 highEnabledIcon.gameObject.SetActive(true);
                 ultraEnabledIcon.gameObject.SetActive(false);
+                settingsData.qualityLevel = 2;
                 break;
 
-            case "Ultra":
-                QualitySettings.SetQualityLevel(ULTRA);
-                QualitySettings.masterTextureLimit = 0;
+            case 3:
                 toast.EnqueueToast("Quality set to ultra", null, 1f);
-                qualitySettings = "Ultra";
+                qualitySettings = 3;
                 lowEnabledIcon.gameObject.SetActive(false);
                 mediumEnabledIcon.gameObject.SetActive(false);
                 highEnabledIcon.gameObject.SetActive(false);
                 ultraEnabledIcon.gameObject.SetActive(true);
+                settingsData.qualityLevel = 3;
                 break;
         }
+        SaveManager.GetInstance().SavePersistentData(settingsData, SaveManager.SETTINGS_PATH);
     }
-
 
     private void UpdateControlsLayoutUI(SettingsData.ControlsLayout layout)
     {

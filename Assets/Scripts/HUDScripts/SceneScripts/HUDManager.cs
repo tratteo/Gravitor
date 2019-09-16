@@ -41,6 +41,7 @@ public class HUDManager : MonoBehaviour
     public Text gameOverInfoText = null;
     public Text healthText = null;
     public Text loadingAdText = null;
+    public Text levelText = null;
     public Image healthBar = null;
     public GameObject shieldBtn = null;
     public Image gameOverGrade = null;
@@ -332,6 +333,7 @@ public class HUDManager : MonoBehaviour
         {
             adButton.SetActive(false);
             loadingAdText.gameObject.SetActive(false);
+            levelText.transform.parent.gameObject.SetActive(false);
 
             EnableStatsPanel(true);
 
@@ -350,17 +352,23 @@ public class HUDManager : MonoBehaviour
     {
         while (true)
         {
-            if (!gameMode.attemptUsed && gameMode.isGameOver)
+            if (!gameMode.attemptUsed)
             {
                 if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT))
                 {
-                    adButton.SetActive(true);
-                    loadingAdText.gameObject.SetActive(false);
+                    if (gameMode.isGameOver)
+                    {
+                        adButton.SetActive(true);
+                        loadingAdText.gameObject.SetActive(false);
+                    }
                 }
                 else
                 {
-                    adButton.SetActive(false);
-                    loadingAdText.gameObject.SetActive(true);
+                    if (gameMode.isGameOver)
+                    {
+                        adButton.SetActive(false);
+                        loadingAdText.gameObject.SetActive(true);
+                    }
                     if (!isAdLoading)
                     {
                         GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT);
@@ -371,9 +379,9 @@ public class HUDManager : MonoBehaviour
             else
             {
                 adButton.SetActive(false);
-                //loadingAdText.gameObject.SetActive(false);
+                loadingAdText.gameObject.SetActive(false);
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
         }
     }
 
@@ -556,35 +564,15 @@ public class HUDManager : MonoBehaviour
         loadingAdText.gameObject.SetActive(false);
         Animator animator = levelCompletedPanel.GetComponent<Animator>();
         float length = animator.runtimeAnimatorController.animationClips[0].length;
-        
         yield return new WaitForSeconds(length);
-        //gameOverGrade.gameObject.SetActive(false);
-        //gameOverGradeGP.gameObject.SetActive(false);
-        //if (gameMode.sessionScore >= level.goldScore)
-        //{
-        //    gameOverGrade.gameObject.SetActive(true);
-        //    gameOverGradeGP.gameObject.SetActive(true);
-        //    gameOverGrade.color = Level.GOLD_COLOR;
-        //    gameOverGradeGP.text = level.goldGP.ToString("0");
-        //}
-        //else if (gameMode.sessionScore >= level.silverScore)
-        //{
-        //    gameOverGrade.gameObject.SetActive(true);
-        //    gameOverGradeGP.gameObject.SetActive(true);
-        //    gameOverGrade.color = Level.SILVER_COLOR;
-        //    gameOverGradeGP.text = level.silverGP.ToString("0");
-        //}
-        //else if (gameMode.sessionScore >= level.bronzeScore)
-        //{
-        //    gameOverGrade.gameObject.SetActive(true);
-        //    gameOverGradeGP.gameObject.SetActive(true);
-        //    gameOverGrade.color = Level.BRONZE_COLOR;
-        //    gameOverGradeGP.text = level.bronzeGP.ToString("0");
-        //}
-
         DisplayGameOverPanel(true);
     }
-
+    
+    public void DisplayPlayerLevelUp(int level)
+    {
+        levelText.transform.parent.gameObject.SetActive(true);
+        levelText.text = level.ToString("0");
+    }
 
     public void UnloadLevelAndLoadScene(string scene)
     {

@@ -24,4 +24,13 @@ public class PlayerSkillsData : EncryptedData
         quantumTunnelPoints = 1;
         gammaRayBurstPoints = 1;
     }
+
+    public void InitializeMissingData()
+    {
+        base.InitializeDeviceId();
+        antigravityPoints = antigravityPoints == 0 ? 1 : antigravityPoints;
+        solarflarePoints = solarflarePoints == 0 ? 1 : solarflarePoints;
+        quantumTunnelPoints = quantumTunnelPoints == 0 ? 1 : quantumTunnelPoints;
+        gammaRayBurstPoints = gammaRayBurstPoints == 0 ? 1 : gammaRayBurstPoints;
+    }
 }

@@ -155,4 +155,35 @@ public class SharedUtilities
         seconds = _seconds;
         return hours.ToString() + "h " + minutes.ToString() + "m " + seconds.ToString("0.0") + "s";
     }
+
+
+    public void SetQualitySettings(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                QualitySettings.SetQualityLevel(0);
+                QualitySettings.vSyncCount = 0;
+                Application.targetFrameRate = 30;
+                break;
+
+            case 1:
+                QualitySettings.SetQualityLevel(1);
+                QualitySettings.vSyncCount = 0;
+                Application.targetFrameRate = 40;
+                break;
+
+            case 2:
+                QualitySettings.SetQualityLevel(2);
+                QualitySettings.vSyncCount = 0;
+                Application.targetFrameRate = 50;
+                break;
+
+            case 3:
+                QualitySettings.SetQualityLevel(3);
+                QualitySettings.vSyncCount = 0;
+                Application.targetFrameRate = 500;
+                break;
+        }
+    }
 }

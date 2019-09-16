@@ -23,7 +23,6 @@ public class PersistentPlayerPrefs : MonoBehaviour
     }
     #endregion
 
-
     [HideInInspector] public PlayerAchievementsData playerAchievements;
     public List<AchievementInfo> achievements;
 

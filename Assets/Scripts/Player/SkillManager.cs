@@ -63,7 +63,7 @@ public class SkillManager : MonoBehaviour
 
     private void UpdateGRBColor()
     {
-        ParticleSystemRenderer[] systems = channelGammaRayEffect.GetComponentsInChildren<ParticleSystemRenderer>();
+        ParticleSystem[] systems = channelGammaRayEffect.GetComponentsInChildren<ParticleSystem>();
         Color colorToSet = new Color(255, 255, 255, 255);
         switch (skillsData.gammaRayBurstPoints)
         {
@@ -77,14 +77,16 @@ public class SkillManager : MonoBehaviour
                 colorToSet = GRB3;
                 break;
         }
-        foreach (ParticleSystemRenderer system in systems)
+        foreach (ParticleSystem system in systems)
         {
-            system.sharedMaterial.SetColor("_TintColor", colorToSet);
+            ParticleSystem.MainModule main = system.main;
+            main.startColor = colorToSet;
         }
-        systems = gammaRayEffect.GetComponentsInChildren<ParticleSystemRenderer>();
-        foreach (ParticleSystemRenderer system in systems)
+        systems = gammaRayEffect.GetComponentsInChildren<ParticleSystem>();
+        foreach (ParticleSystem system in systems)
         {
-            system.sharedMaterial.SetColor("_TintColor", colorToSet);
+            ParticleSystem.MainModule main = system.main;
+            main.startColor = colorToSet;
         }
     }
 

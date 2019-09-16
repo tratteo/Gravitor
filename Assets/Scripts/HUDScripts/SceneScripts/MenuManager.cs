@@ -7,14 +7,27 @@ using UnityEngine.UI;
 /// </summary>
 public class MenuManager : MonoBehaviour
 {
+    [System.Serializable]
+    private struct LevelEffect
+    {
+        public string name;
+        public GameObject effectPrefab;
+        public int startLevel;
+        public int endLevel;
+    }
+
     [Header("Texts")]
     [SerializeField] private Text highScoreText = null;
     [SerializeField] private Text gravityPointsText = null;
+    [SerializeField] private Text levelText = null;
+    [SerializeField] private Text currentExpText = null;
+    [SerializeField] private Text expNeededText = null;
+    [SerializeField] private Image levelBar = null;
+    [SerializeField] private Transform playerLevelTransform = null;
+
+    [SerializeField] private LevelEffect[] levelsEffect;
 
     private SettingsData settingsData;
-
-    private int currentGP;
-    
 
     void OnDisable()
     {
@@ -24,12 +37,10 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         InitializeData();
-
         AudioManager.GetInstance().NotifyAudioSettings(settingsData);
         AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
 
         GoogleIAPManager.GetInstance().SubscribeToProductPurchasedEvent(ProductBought);
-
     }
 
     public void QuitApp()
@@ -42,6 +53,7 @@ public class MenuManager : MonoBehaviour
     {
         SaveObject objectData;
 
+        //SETTINGS DATA
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SETTINGS_PATH);
         if (objectData == null)
         {
@@ -51,48 +63,45 @@ public class MenuManager : MonoBehaviour
         {
             settingsData = objectData.GetData<SettingsData>();
         }
+        SharedUtilities.GetInstance().SetQualitySettings(settingsData.qualityLevel);
 
 
+        //PLAYER DATA
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA);
         if (objectData == null)
         {
             objectData = SaveManager.GetInstance().SavePersistentData(new PlayerData(), SaveManager.PLAYER_DATA);
         }
         PlayerData playerData = objectData.GetData<PlayerData>();
-        switch (playerData.playerState)
+        playerData.InitializeMissingData();
+        //playerData.currentExp = 0;
+        levelText.text = playerData.playerLevel.ToString("0");
+        currentExpText.text = playerData.currentExp.ToString("0");
+        int expNeeded = playerData.GetLevelExpNeeded();
+        expNeededText.text = expNeeded.ToString("0");
+        levelBar.fillAmount = playerData.currentExp / (float)expNeeded;
+        GameObject eff = GetLevelEffect(playerData.playerLevel);
+        if (eff != null)
         {
-            case PlayerManager.PlayerState.ASTEROID:
-                break;
-            case PlayerManager.PlayerState.COMET:
-                break;
-            default:
-                playerData.playerState = PlayerManager.PlayerState.COMET;
-                break;
-        }
-        if (playerData.deviceId == null)
-        {
-            playerData.deviceId = SystemInfo.deviceUniqueIdentifier;
+            GameObject obj = Instantiate(eff, playerLevelTransform);
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localPosition = new Vector3(0, 40, 0);
         }
         SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
 
 
+        //SKILLS DATA
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH);
         if (objectData == null)
         {
             objectData = SaveManager.GetInstance().SavePersistentData(new PlayerSkillsData(), SaveManager.SKILLSDATA_PATH);
         }
         PlayerSkillsData skillData = objectData.GetData<PlayerSkillsData>();
-        if (skillData.gammaRayBurstPoints == 0)
-        {
-            skillData.gammaRayBurstPoints = 1;
-        }
-        if(skillData.deviceId == null)
-        {
-            skillData.deviceId = SystemInfo.deviceUniqueIdentifier;
-        }
+        skillData.InitializeMissingData();
         SaveManager.GetInstance().SavePersistentData(skillData, SaveManager.SKILLSDATA_PATH);
+      
 
-
+        //ACHIEVEMENTS
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH);
         if(objectData == null)
         {
@@ -100,28 +109,25 @@ public class MenuManager : MonoBehaviour
         }
 
 
-
+        //LEVELS DATA
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH);
         if (objectData == null)
         {
             objectData = SaveManager.GetInstance().SavePersistentData<LevelsData>(new LevelsData(), SaveManager.LEVELSDATA_PATH);
         }
         LevelsData data = objectData.GetData<LevelsData>();
-        if (data.deviceId == null)
-        {
-            data.deviceId = SystemInfo.deviceUniqueIdentifier;
-        }
+        data.InitializeMissingData();
         SaveManager.GetInstance().SavePersistentData(data, SaveManager.LEVELSDATA_PATH);
         highScoreText.text = data.GetLevelHighScore(LevelsData.ENDLESS_ID).ToString();
 
 
+        //GRAVITY POINTS
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
         if (objectData == null)
         {
             objectData = SaveManager.GetInstance().SavePersistentData<int>(0, SaveManager.GRAVITYPOINTS_PATH);
         }
-        currentGP = objectData.GetData<int>();
-        gravityPointsText.text = "Gravity points\n" + currentGP.ToString();
+        gravityPointsText.text = objectData.GetData<int>().ToString();
 
     }
 
@@ -136,5 +142,17 @@ public class MenuManager : MonoBehaviour
                 SaveManager.GetInstance().SavePersistentData<PlayerSkillsData>(skillsData, SaveManager.SKILLSDATA_PATH);
                 break;
         }
+    }
+
+    private GameObject GetLevelEffect(int level)
+    {
+        foreach(LevelEffect eff in levelsEffect)
+        {
+            if(level >= eff.startLevel)
+            {
+                if(eff.endLevel == -1 || level <= eff.endLevel) return eff.effectPrefab;
+            }
+        }
+        return null;
     }
 }

@@ -30,10 +30,6 @@ public class MovementManager : MonoBehaviour
 
     private Vector3 horizontal = new Vector3(1f, 0f, 0f), vertical = new Vector3(0f, 1f, 0f);
 
-    void OnDisable()
-    {
-        playerManager.UnsubscribeToPlayerDeathEvent(DisableMovement);
-    }
 
     private void Awake()
     {
@@ -46,7 +42,6 @@ public class MovementManager : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         playerManager = GetComponent<PlayerManager>();
-        playerManager.SubscribeToPlayerDeathEvent(DisableMovement);
 
         PlayerData playerData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
         if (playerData != null)

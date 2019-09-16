@@ -58,9 +58,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d0cfda1b4f16549924255f3f048603, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 2.25
+  duration: 2.5
   viewDistortion: 178
-  scoreMultiplier: 12
+  scoreMultiplier: 110
   relativeSpeed: 0.99998
 --- !u!1001 &7515728236452483134
 PrefabInstance:

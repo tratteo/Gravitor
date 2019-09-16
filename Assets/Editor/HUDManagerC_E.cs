@@ -28,6 +28,7 @@ public class HUDManagerC_E : Editor
             script.gameOverInfoText = (Text)EditorGUILayout.ObjectField("GameOverInfo text", script.gameOverInfoText, typeof(Text), true);
             script.healthText = (Text)EditorGUILayout.ObjectField("Health text", script.healthText, typeof(Text), true);
             script.loadingAdText = (Text)EditorGUILayout.ObjectField("LoadingAd text", script.loadingAdText, typeof(Text), true);
+            script.levelText = (Text)EditorGUILayout.ObjectField("Level text", script.levelText, typeof(Text), true);
             script.healthBar = (Image)EditorGUILayout.ObjectField("Health bar", script.healthBar, typeof(Image), true);
             script.shieldBtn = (GameObject)EditorGUILayout.ObjectField("Shield button", script.shieldBtn, typeof(GameObject), true);
             script.gameOverGrade = (Image)EditorGUILayout.ObjectField("GameOver grade", script.gameOverGrade, typeof(Image), true);

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class GameMode : MonoBehaviour
 {
+    public enum GradeObtained { UNRANKED, BRONZE, SILVER, GOLD }
+
     protected const string GAMEOBSTACLES_CAT_TAG = "Obstacles";
     protected const string PICKUPS_CAT_TAG = "Extras";
 
@@ -51,7 +53,6 @@ public abstract class GameMode : MonoBehaviour
 
     void OnDisable()
     {
-        playerManager.UnsubscribeToPlayerDeathEvent(EndSession);
         GoogleAdsManager.GetInstance().UnsubscribeToRewardClaimed(EarnReward);
     }
 
@@ -69,7 +70,6 @@ public abstract class GameMode : MonoBehaviour
         currentHighscore = data.GetLevelHighScore(currentLevel.id);
 
         //Events subscriptions
-        playerManager.SubscribeToPlayerDeathEvent(EndSession);
         GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
 
         HUDManager.GetInstance().DisplayLevelObjectivePanel();
@@ -123,12 +123,11 @@ public abstract class GameMode : MonoBehaviour
     {
         if (Time.timeSinceLevelLoad > 1f && !isGameOver)
         {
-            sessionScore += Time.fixedDeltaTime * (260f * playerManager.movementManager.currentSlingMultiplier + 750f * (playerManager.scoreMultiplier - 0.975f));
+            sessionScore += 1.25f * Time.fixedDeltaTime * (600f * playerManager.movementManager.currentSlingMultiplier + 100f * (playerManager.scoreMultiplier - 1f));
         }
         if (currentLevel.category == Level.LevelCategory.ENDLESS && !highScoreReached && sessionScore > currentHighscore)
         {
             highScoreReached = true;
-            //FIRE EVENT
             HUDManager.GetInstance().DisplayHighscorePanel();
         }
     }
@@ -164,13 +163,14 @@ public abstract class GameMode : MonoBehaviour
 
     public void EndSession()
     {
+        GradeObtained obt = GradeObtained.UNRANKED;
         Time.timeScale = 1f;
         isGameOver = true;
 
         obstacleSpawner.PauseSpawnTimer(true);
         extraSpawner.PauseSpawnTimer(true);
 
-        sessionGravityPoints = (int)(0.176f * (0.7f * sessionScore * (playerManager.properTime / 300f)));
+        sessionGravityPoints = GameplayMath.GetInstance().GetGravityPointsFromSession(sessionScore, playerManager.properTime, currentLevel);
 
         if (currentLevel.category == Level.LevelCategory.ENDLESS)
         {
@@ -178,25 +178,11 @@ public abstract class GameMode : MonoBehaviour
             data.UpdateLevelScore(LevelsData.ENDLESS_ID, (int)sessionScore);
             SaveManager.GetInstance().SavePersistentData<LevelsData>(data, SaveManager.LEVELSDATA_PATH);
 
-            int levelGP = 0;
-            if (sessionScore >= currentLevel.goldScore)
-            {
-                levelGP = currentLevel.goldGP;
-            }
-            else if (sessionScore >= currentLevel.silverScore)
-            {
-                levelGP = currentLevel.silverGP;
-            }
-            else if (sessionScore >= currentLevel.bronzeScore)
-            {
-                levelGP = currentLevel.bronzeGP;
-            }
-            if (levelGP != 0)
-            {
-                sessionGravityPoints += levelGP;
-            }
+            obt = CheckForGradeBonusGP();
         }
         SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+
+        CheckForPlayerLevelUp(obt);
 
         if (currentLevel.category == Level.LevelCategory.ENDLESS)
         {
@@ -215,35 +201,20 @@ public abstract class GameMode : MonoBehaviour
         isGameOver = true;
         attemptUsed = true;
 
+        obstacleSpawner.PauseSpawnTimer(true);
+        extraSpawner.PauseSpawnTimer(true);
+
         LevelsData levelsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>();
         levelsData.UnlockLevel(currentLevel.id + 1);
         levelsData.UpdateLevelScore(currentLevel.id, (int)sessionScore);
         SaveManager.GetInstance().SavePersistentData<LevelsData>(levelsData, SaveManager.LEVELSDATA_PATH);
 
-        int levelGP = 0;
-        if(sessionScore >= currentLevel.goldScore)
-        {
-            levelGP = currentLevel.goldGP;
-        }
-        else if(sessionScore >= currentLevel.silverScore)
-        {
-            levelGP = currentLevel.silverGP;
-        }
-        else if (sessionScore >= currentLevel.bronzeScore)
-        {
-            levelGP = currentLevel.bronzeGP;
-        }
-
-        sessionGravityPoints = (int)(0.176f * (0.7f * sessionScore * (playerManager.properTime / 300f)));
-        if (levelGP != 0)
-        {
-            sessionGravityPoints += levelGP;
-        }
+        sessionGravityPoints = GameplayMath.GetInstance().GetGravityPointsFromSession(sessionScore, playerManager.properTime, currentLevel);
+        
+        GradeObtained obt = CheckForGradeBonusGP();
         SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
 
-
-        obstacleSpawner.PauseSpawnTimer(true);
-        extraSpawner.PauseSpawnTimer(true);
+        CheckForPlayerLevelUp(obt);
 
         HUDManager.GetInstance().EnableHighGravityFieldPanel(false);
         HUDManager.GetInstance().DisplayLevelCompletedPanel();
@@ -267,5 +238,40 @@ public abstract class GameMode : MonoBehaviour
     public float GetSpawnRateFromTime(int seconds)
     {
         return (-alpha / ((seconds * beta) + gamma)) + delta;
+    }
+
+    private void CheckForPlayerLevelUp(GradeObtained obt)
+    {
+        int newLevel = playerManager.CalculateLevel(sessionGravityPoints, obt);
+        if(newLevel != 0)
+        {
+            HUDManager.GetInstance().DisplayPlayerLevelUp(newLevel);
+        }
+    }
+
+    private GradeObtained CheckForGradeBonusGP()
+    {
+        GradeObtained obtained = GradeObtained.UNRANKED;
+        int levelGP = 0;
+        if (sessionScore >= currentLevel.goldScore)
+        {
+            levelGP = currentLevel.goldGP;
+            obtained = GradeObtained.GOLD;
+        }
+        else if (sessionScore >= currentLevel.silverScore)
+        {
+            levelGP = currentLevel.silverGP;
+            obtained = GradeObtained.SILVER;
+        }
+        else if (sessionScore >= currentLevel.bronzeScore)
+        {
+            levelGP = currentLevel.bronzeGP;
+            obtained = GradeObtained.BRONZE;
+        }
+        if (levelGP != 0)
+        {
+            sessionGravityPoints += levelGP;
+        }
+        return obtained;
     }
 }

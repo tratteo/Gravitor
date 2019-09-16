@@ -23,7 +23,7 @@ public class GameplayMath
         float result;
         if (intern <= 0.10f)
         {
-            return 10f;
+            return 4f;
         }
         else
         {
@@ -51,12 +51,12 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return 4.2E-8f * mass;
+        return 4.825E-8f * mass;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)
     {
-        return (1.325f * ((points - 1) * Mathf.Log(8 * points + 100))) + 210f;
+        return (2f * ((points - 1) * Mathf.Log(8 * points + 100))) + 250f;
     }
 
     public float GetAntigravityDuration(int points)
@@ -89,9 +89,9 @@ public class GameplayMath
         switch(points)
         {
             case 1:
-                return 1200000;
+                return 1000000;
             case 2:
-                return 2500000;
+                return 2000000;
             default:
                 return -1;
         }
@@ -120,7 +120,7 @@ public class GameplayMath
 
     public int GetCostFromInitCost(int points, int initCost)
     {
-        return (int)(415 * Mathf.Pow(points, 2.45f) + initCost - 415);
+        return (int)(565 * Mathf.Pow(points, 2.46f) + initCost - 565);
     }
 
     public int GetGRBSpawnExceptionTime(int points)
@@ -128,14 +128,40 @@ public class GameplayMath
         switch(points)
         {
             case 1:
-                return 4;
+                return 3;
             case 2:
-                return 5;
+                return 4;
             case 3:
-                return 6;
+                return 5;
             default:
                 return -1;
         }
+    }
+
+    public int GetGravityPointsFromSession(float score, float properTime, Level level)
+    {
+        int gravityPoints = (int)(0.28f * (0.5f * score * (properTime / 370f)));
+        return gravityPoints;
+    }
+
+    public int GetExp(int gravityPoints, GameMode.GradeObtained obt)
+    { 
+        int exp = gravityPoints / 15;
+        switch (obt)
+        {
+            case GameMode.GradeObtained.BRONZE:
+                exp = (int)(exp * 2f);
+                break;
+            case GameMode.GradeObtained.SILVER:
+                exp = (int)(exp * 3f);
+                break;
+            case GameMode.GradeObtained.GOLD:
+                exp = (int)(exp * 4.25f);
+                break;
+            default:
+                break;
+        }
+        return exp;
     }
 
     public float arctan(float x, float y)

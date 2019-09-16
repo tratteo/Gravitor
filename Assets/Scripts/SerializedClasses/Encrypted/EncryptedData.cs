@@ -6,4 +6,9 @@ using UnityEngine;
 public class EncryptedData
 {
     public string deviceId;
+
+    protected void InitializeDeviceId()
+    {
+        deviceId = deviceId == null ? SystemInfo.deviceUniqueIdentifier : deviceId;
+    }
 }

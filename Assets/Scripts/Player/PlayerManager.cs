@@ -51,15 +51,15 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public float resilience;
     private float initialResilience;
     private PlayerData playerData;
-    [HideInInspector] public List<GameObstacle> gravityFieldsGens;
+    /*[HideInInspector] */public List<GameObstacle> gravityFieldsGens;
     [HideInInspector] public PlayerState playerState;
     [HideInInspector] public int dangerZoneCount = 0;
     [HideInInspector] public HUDManager hudManagerInstance;
     [HideInInspector] public bool isDead = false;
     private int sessionObstaclesHit = 0;
 
-    [HideInInspector] public float scoreMultiplier = 1f;
-    [HideInInspector] public float timeDistortion = 1f;
+    /*[HideInInspector]*/ public float scoreMultiplier = 1f;
+    /*[HideInInspector] */public float timeDistortion = 1f;
     [HideInInspector] public bool isGravityTdActive = true;
 
     [HideInInspector] public float properTime = 0f;
@@ -68,11 +68,6 @@ public class PlayerManager : MonoBehaviour
 
     [HideInInspector] public Level level;
 
-    //Events
-
-    private event Action OnPlayerDeath;
-    public void SubscribeToPlayerDeathEvent(Action funcToSub) { OnPlayerDeath += funcToSub; }
-    public void UnsubscribeToPlayerDeathEvent(Action funcToUnsub) { OnPlayerDeath -= funcToUnsub; }
 
     public struct SessionStats
     {
@@ -360,7 +355,7 @@ public class PlayerManager : MonoBehaviour
             gameObject.GetComponent<MeshRenderer>().enabled = true;
             transform.position = new Vector3(0f, 0f, 0f);
         });
-
+        StartCoroutine(UpdateTimeDistortion());
         isDead = false;
         resilience = initialResilience / 2f;
         hudManagerInstance.UpdatePlayerHealthUI(resilience, initialResilience);
@@ -388,10 +383,11 @@ public class PlayerManager : MonoBehaviour
     private void Die()
     {
         timeDistortion = 1f;
+        scoreMultiplier = 1f;
         isDead = true;
         directionArrow.gameObject.SetActive(false);
-        //FIRE EVENT
-        OnPlayerDeath();
+
+        movementManager.DisableMovement();
 
         Instantiate(deathEffect, transform.position, transform.rotation);
         gameObject.GetComponent<SphereCollider>().enabled = false;
@@ -421,6 +417,8 @@ public class PlayerManager : MonoBehaviour
         {
             BroadcastStats();
         }
+
+        gameMode.EndSession();
     }
 
     public void LevelCompleted()
@@ -444,6 +442,16 @@ public class PlayerManager : MonoBehaviour
         gameMode.LevelCompleted();
     }
 
+    public int CalculateLevel(int gravityPoints, GameMode.GradeObtained obt)
+    {
+        PlayerData data = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
+        int exp = GameplayMath.GetInstance().GetExp(gravityPoints, obt);
+        Debug.Log(exp);
+        int res = data.CalculateLevel(exp);
+        SaveManager.GetInstance().SavePersistentData<PlayerData>(data, SaveManager.PLAYER_DATA);
+        return res;
+    }
+
     private void BroadcastStats()
     {
         //Send broadcast stats
@@ -459,24 +467,6 @@ public class PlayerManager : MonoBehaviour
 
     private IEnumerator UpdateTimeDistortion()
     {
-        float delay = 0.1f;
-        int quality = QualitySettings.GetQualityLevel();
-        switch (quality)
-        {
-            case SettingsManager.LOW:
-                delay = 0.5f;
-                break;
-            case SettingsManager.MEDIUM:
-                delay = 0.35f;
-                break;
-            case SettingsManager.HIGH:
-                delay = 0.2f;
-                break;
-            case SettingsManager.ULTRA:
-                delay = 0.1f;
-                break;
-        }
-
         while (!gameMode.isGameOver)
         {
             if (isGravityTdActive)
@@ -494,7 +484,7 @@ public class PlayerManager : MonoBehaviour
             {
                 timeDistortion = 1f;
             }
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
