@@ -20,13 +20,23 @@ public class SkillManager : MonoBehaviour
     [Header("Solar Flare")]
     [SerializeField] private GameObject solarflareEffect = null;
     [Header("Gamma Ray Burst")]
-    [SerializeField] private GameObject gammaRayEffect = null;
-    [SerializeField] private GameObject channelGammaRayEffect = null;
+    [Header("Channels")]
+    [SerializeField] private GameObject channel1 = null;
+    [SerializeField] private GameObject channel2 = null;
+    [SerializeField] private GameObject channel3 = null;
+    [SerializeField] private GameObject channel4 = null;
+    [Header("Effects")]
+    [SerializeField] private GameObject GRB1 = null;
+    [SerializeField] private GameObject GRB2 = null;
+    [SerializeField] private GameObject GRB3 = null;
+    [SerializeField] private GameObject GRB4 = null;
+
+
+    private GameObject GRBEffect = null;
+    private GameObject GRBChannelEffect = null;
+
     [SerializeField] private float gammaRayLength = 800f;
-    [SerializeField] private float unscaledGammaRayRadius = 15f;
-    [SerializeField] private Color GRB1;
-    [SerializeField] private Color GRB2;
-    [SerializeField] private Color GRB3;
+    [SerializeField] private float unscaledGammaRayRadius = 70f;
     private float scaledGammaRayRadius;
     //Bools
     [HideInInspector] public bool isAntiGravityActive = false;
@@ -52,7 +62,9 @@ public class SkillManager : MonoBehaviour
     {
         playerManager = gameObject.GetComponent<PlayerManager>();
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
-        UpdateGRBColor();
+
+        unscaledGammaRayRadius = GameplayMath.GetInstance().GetGRBUnscaledRadius(skillsData.gammaRayBurstPoints);
+        UpdateGRBEffect();
         antigravityCooldown = GameplayMath.GetInstance().GetAntigravityCooldown(skillsData.antigravityPoints);
         quantumtunnelCooldown = GameplayMath.GetInstance().GetQuantumTunnelCooldown(skillsData.quantumTunnelPoints);
         solarflareCooldown = GameplayMath.GetInstance().GetSolarflareCooldown(skillsData.solarflarePoints);
@@ -61,33 +73,28 @@ public class SkillManager : MonoBehaviour
         hudManager = HUDManager.GetInstance();
     }
 
-    private void UpdateGRBColor()
+    private void UpdateGRBEffect()
     {
-        ParticleSystem[] systems = channelGammaRayEffect.GetComponentsInChildren<ParticleSystem>();
-        Color colorToSet = new Color(255, 255, 255, 255);
         switch (skillsData.gammaRayBurstPoints)
         {
             case 1:
-                colorToSet = GRB1;
+                GRBEffect = GRB1;
+                GRBChannelEffect = channel1;
                 break;
             case 2:
-                colorToSet = GRB2;
+                GRBEffect = GRB2;
+                GRBChannelEffect = channel2;
                 break;
             case 3:
-                colorToSet = GRB3;
+                GRBEffect = GRB3;
+                GRBChannelEffect = channel3;
+                break;
+            case 4:
+                GRBEffect = GRB4;
+                GRBChannelEffect = channel4;
                 break;
         }
-        foreach (ParticleSystem system in systems)
-        {
-            ParticleSystem.MainModule main = system.main;
-            main.startColor = colorToSet;
-        }
-        systems = gammaRayEffect.GetComponentsInChildren<ParticleSystem>();
-        foreach (ParticleSystem system in systems)
-        {
-            ParticleSystem.MainModule main = system.main;
-            main.startColor = colorToSet;
-        }
+
     }
 
     private void Update()
@@ -246,7 +253,7 @@ public class SkillManager : MonoBehaviour
         Image cooldownOverlay = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<Image>(hudManager.gammaRayBurstBtn, "FilledOverlay");
         cooldownOverlay.fillAmount = 1f;
         hudManager.gammaRayBurstBtn.GetComponent<Image>().raycastTarget = false;
-        GameObject channelGammaRayRef = InstantiateEffect(channelGammaRayEffect);
+        GameObject channelGammaRayRef = InstantiateEffect(GRBChannelEffect);
 
         mask = LayerMask.GetMask("Obstacles");
         channelGammaRaySys = channelGammaRayRef.GetComponentInChildren<ParticleSystem>();
@@ -266,7 +273,7 @@ public class SkillManager : MonoBehaviour
         Vector3 exceptionCentre = new Vector3(transform.position.x, transform.position.y, playerManager.gameMode.randZSpawn.x);
         playerManager.gameMode.NotifySpawnException(exceptionCentre, scaledGammaRayRadius, scaledGammaRayRadius, 1f, GameplayMath.GetInstance().GetGRBSpawnExceptionTime(skillsData.gammaRayBurstPoints));
 
-        InstantiateEffect(gammaRayEffect);
+        InstantiateEffect(GRBEffect);
         hudManager.CoolDownSkill(Skill.GAMMARAY_BURST, GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints));
 
         RaycastHit[] hitColliders = Physics.SphereCastAll(transform.position, scaledGammaRayRadius, new Vector3(0f, 0f, 1f), gammaRayLength, mask);

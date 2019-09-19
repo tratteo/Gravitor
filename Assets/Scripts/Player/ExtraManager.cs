@@ -6,7 +6,9 @@ using System;
 [RequireComponent(typeof(PlayerManager))]
 public class ExtraManager : MonoBehaviour
 {
-    [SerializeField] private int maxCollectableShields = 4;
+    private int maxCollectableShields = 3;
+    [HideInInspector] public int shieldDuration = 7;
+
     [HideInInspector] public bool isShielded = false;
     private GameObject shieldEffectRef = null;
     private PlayerManager playerManager = null;
@@ -14,7 +16,6 @@ public class ExtraManager : MonoBehaviour
     private Queue<Shield> shields;
     private IEnumerator shield_c;
     private Shield currentShield;
-    public Shield GetCurrentShield() { return currentShield; }
 
     private int shieldCount = 0;
     private Wormhole warpDrive;
@@ -25,6 +26,17 @@ public class ExtraManager : MonoBehaviour
         shields = new Queue<Shield>();
         shieldCount = 0;
         playerManager = GetComponent<PlayerManager>();
+        PlayerSkillsData skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
+        if(skillsData.magneticShieldBundleUnlocked)
+        {
+            maxCollectableShields = 5;
+            shieldDuration = 14;
+        }
+        else
+        {
+            maxCollectableShields = 3;
+            shieldDuration = 8;
+        }
     }
 
     //PICKUPS
@@ -81,12 +93,13 @@ public class ExtraManager : MonoBehaviour
         isShielded = true;
         shieldEffectRef = playerManager.skillManager.InstantiateEffect(currentShield.shieldEffect);
         ParticleSystem shieldSys = shieldEffectRef.GetComponent<ParticleSystem>();
-        yield return new WaitForSeconds(currentShield.duration - 1f);
+        float duration = shieldSys.main.duration;
+        yield return new WaitForSeconds(shieldDuration - duration);
         if (shieldSys)
         {
             shieldSys.Stop();
         }
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(duration);
         enqueuedShields--;
         isShielded = false;
     }

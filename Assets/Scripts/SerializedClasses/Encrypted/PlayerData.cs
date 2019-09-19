@@ -9,7 +9,7 @@ public class PlayerData : EncryptedData
     public const short THRUSTFORCE_MAX_POINTS = 30;
     private const float HEALTH_INCREASE = 50f;
     public ushort thrustForcePoints;
-    public float health;
+    public float resilience;
     public PlayerManager.PlayerState playerState;
     public bool isFirstLaunch;
 
@@ -22,7 +22,7 @@ public class PlayerData : EncryptedData
     public PlayerData()
     {
         thrustForcePoints = 1;
-        health = 100f;
+        resilience = 100f;
         playerState = PlayerManager.PlayerState.ASTEROID;
         isFirstLaunch = true;
         playerLevel = 1;
@@ -85,11 +85,11 @@ public class PlayerData : EncryptedData
 
     public void IncreaseHealth()
     {
-        health += HEALTH_INCREASE;
+        resilience += HEALTH_INCREASE;
     }
    
     public int GetHealthPoints()
     {
-        return (int)(health / HEALTH_INCREASE) - 1;
+        return (int)(resilience / HEALTH_INCREASE) - 1;
     }
 }

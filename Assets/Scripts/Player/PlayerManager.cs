@@ -51,15 +51,15 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public float resilience;
     private float initialResilience;
     private PlayerData playerData;
-    /*[HideInInspector] */public List<GameObstacle> gravityFieldsGens;
+    [HideInInspector] public List<GameObstacle> gravityFieldsGens;
     [HideInInspector] public PlayerState playerState;
     [HideInInspector] public int dangerZoneCount = 0;
     [HideInInspector] public HUDManager hudManagerInstance;
     [HideInInspector] public bool isDead = false;
     private int sessionObstaclesHit = 0;
 
-    /*[HideInInspector]*/ public float scoreMultiplier = 1f;
-    /*[HideInInspector] */public float timeDistortion = 1f;
+    [HideInInspector] public float scoreMultiplier = 1f;
+    [HideInInspector] public float timeDistortion = 1f;
     [HideInInspector] public bool isGravityTdActive = true;
 
     [HideInInspector] public float properTime = 0f;
@@ -92,7 +92,7 @@ public class PlayerManager : MonoBehaviour
         if (playerData != null)
         {
             playerState = playerData.playerState;
-            initialResilience = playerData.health;
+            initialResilience = playerData.resilience;
         }
         dangerZoneCount = 0;
     }
@@ -446,7 +446,6 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerData data = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
         int exp = GameplayMath.GetInstance().GetExp(gravityPoints, obt);
-        Debug.Log(exp);
         int res = data.CalculateLevel(exp);
         SaveManager.GetInstance().SavePersistentData<PlayerData>(data, SaveManager.PLAYER_DATA);
         return res;

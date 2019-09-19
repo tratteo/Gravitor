@@ -39,6 +39,8 @@ public abstract class GameMode : MonoBehaviour
 
     protected Spawner obstacleSpawner, extraSpawner;
 
+    protected CurrencyData currencyData;
+
     #endregion
 
     protected virtual void InstantiateObstacle() { }
@@ -51,11 +53,6 @@ public abstract class GameMode : MonoBehaviour
         currentLevel = LevelLoader.GetInstance().GetCurrentLevel();
     }
 
-    void OnDisable()
-    {
-        GoogleAdsManager.GetInstance().UnsubscribeToRewardClaimed(EarnReward);
-    }
-
     void Start()
     {
         playerManager = FindObjectOfType<PlayerManager>();
@@ -63,14 +60,12 @@ public abstract class GameMode : MonoBehaviour
 
         SaveObject objectData;     
         
-        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
-        currentGravityPoints = objectData != null ? currentGravityPoints = objectData.GetData<int>() : 0;
+        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH);
+        currencyData = objectData.GetData<CurrencyData>();
+        currentGravityPoints = objectData != null ? currencyData.gravityPoints : 0;
 
         LevelsData data = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>();
         currentHighscore = data.GetLevelHighScore(currentLevel.id);
-
-        //Events subscriptions
-        GoogleAdsManager.GetInstance().SubscribeToRewardClaimed(EarnReward);
 
         HUDManager.GetInstance().DisplayLevelObjectivePanel();
 
@@ -137,15 +132,7 @@ public abstract class GameMode : MonoBehaviour
         sessionScore += bonusScore;
     }
 
-    private void EarnReward(string reward)
-    {
-        if (reward == "Attempt" || reward == "coins")
-        {
-            Attempt();
-        }
-    }
-
-    private void Attempt()
+    public void Attempt()
     {
         if (!attemptUsed)
         {
@@ -180,7 +167,8 @@ public abstract class GameMode : MonoBehaviour
 
             obt = CheckForGradeBonusGP();
         }
-        SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+        currencyData.gravityPoints = sessionGravityPoints + currentGravityPoints;
+        SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
 
         CheckForPlayerLevelUp(obt);
 
@@ -212,7 +200,8 @@ public abstract class GameMode : MonoBehaviour
         sessionGravityPoints = GameplayMath.GetInstance().GetGravityPointsFromSession(sessionScore, playerManager.properTime, currentLevel);
         
         GradeObtained obt = CheckForGradeBonusGP();
-        SaveManager.GetInstance().SavePersistentData<int>(sessionGravityPoints + currentGravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+        currencyData.gravityPoints = sessionGravityPoints + currentGravityPoints;
+        SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
 
         CheckForPlayerLevelUp(obt);
 

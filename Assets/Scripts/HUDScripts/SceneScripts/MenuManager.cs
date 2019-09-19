@@ -19,6 +19,7 @@ public class MenuManager : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private Text highScoreText = null;
     [SerializeField] private Text gravityPointsText = null;
+    [SerializeField] private Text gravitonsText = null;
     [SerializeField] private Text levelText = null;
     [SerializeField] private Text currentExpText = null;
     [SerializeField] private Text expNeededText = null;
@@ -29,18 +30,12 @@ public class MenuManager : MonoBehaviour
 
     private SettingsData settingsData;
 
-    void OnDisable()
-    {
-        GoogleIAPManager.GetInstance().UnSubscribeToProductPurchasedEvent(ProductBought);
-    }
 
     private void Start()
     {
         InitializeData();
         AudioManager.GetInstance().NotifyAudioSettings(settingsData);
         AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
-
-        GoogleIAPManager.GetInstance().SubscribeToProductPurchasedEvent(ProductBought);
     }
 
     public void QuitApp()
@@ -120,27 +115,27 @@ public class MenuManager : MonoBehaviour
         highScoreText.text = data.GetLevelHighScore(LevelsData.ENDLESS_ID).ToString();
 
 
-        //GRAVITY POINTS
+        //CURRENCY DATA
+        SaveObject currencyObj = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH);
+        if (currencyObj == null)
+        {
+            currencyObj = SaveManager.GetInstance().SavePersistentData<CurrencyData>(new CurrencyData(), SaveManager.CURRENCY_PATH);
+        }
+        CurrencyData currencyData = currencyObj.GetData<CurrencyData>();
+        currencyData.InitializeMissingData();
+
+        int currentGP = 0;
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
-        if (objectData == null)
+        if (objectData != null)
         {
-            objectData = SaveManager.GetInstance().SavePersistentData<int>(0, SaveManager.GRAVITYPOINTS_PATH);
+            currentGP = objectData.GetData<int>();
+            currencyData.gravityPoints = currentGP;
         }
-        gravityPointsText.text = objectData.GetData<int>().ToString();
+        SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
+        SaveManager.GetInstance().DeleteData(SaveManager.GRAVITYPOINTS_PATH);
+        gravityPointsText.text = currencyData.gravityPoints.ToString();
+        gravitonsText.text = currencyData.gravitons.ToString();
 
-    }
-
-    private void ProductBought(string id)
-    {
-        switch (id)
-        {
-            case GoogleIAPManager.PRODUCT_GRBLVL3:
-
-                PlayerSkillsData skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
-                skillsData.gammaRayBurstPoints = PlayerSkillsData.GRB_MAX_POINTS;
-                SaveManager.GetInstance().SavePersistentData<PlayerSkillsData>(skillsData, SaveManager.SKILLSDATA_PATH);
-                break;
-        }
     }
 
     private GameObject GetLevelEffect(int level)

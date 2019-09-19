@@ -24,8 +24,10 @@ public class PersistentPlayerPrefs : MonoBehaviour
     #endregion
 
     [HideInInspector] public PlayerAchievementsData playerAchievements;
-    public List<AchievementInfo> achievements;
 
+    [Header("Achievements")]
+    public List<AchievementInfo> achievements;
+    [Header("Skins")]
     public List<Material> playerSkins;
 
     private void Start()

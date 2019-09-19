@@ -393,9 +393,9 @@ MonoBehaviour:
   bronzeScore: 160000
   silverScore: 200000
   goldScore: 450000
-  bronzeGP: 4500
-  silverGP: 6500
-  goldGP: 9000
+  bronzeGP: 6000
+  silverGP: 8000
+  goldGP: 10000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -578,15 +578,14 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1815915483}
+  m_Children: []
   m_Father: {fileID: 539314277}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -175, y: -80}
-  m_SizeDelta: {x: 350, y: 102}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -70, y: -70}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &194996386
 MonoBehaviour:
@@ -601,14 +600,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8627451, g: 0.8627451, b: 0.8627451, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 839adab64279fec45a4e777455d92e13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b97906d63d2f5c45a80e269e5748413, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -860,15 +859,14 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 635793810}
+  m_Children: []
   m_Father: {fileID: 539314277}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 175, y: -80}
-  m_SizeDelta: {x: 350, y: 102}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: -110}
+  m_SizeDelta: {x: 185, y: 185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &317662490
 MonoBehaviour:
@@ -883,14 +881,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8627451, g: 0.8627451, b: 0.8627451, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 839adab64279fec45a4e777455d92e13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54414617dcc43dd42bf893beb8701d2b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1202,9 +1200,9 @@ MonoBehaviour:
   bronzeScore: 85000
   silverScore: 135000
   goldScore: 220000
-  bronzeGP: 4000
-  silverGP: 6000
-  goldGP: 8000
+  bronzeGP: 6000
+  silverGP: 8000
+  goldGP: 10000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1586,12 +1584,12 @@ MonoBehaviour:
   levelInfo: 'Reach the max allowed speed of 0.9c.
 
     Tip: use Gravitational slingshot'
-  bronzeScore: 320000
-  silverScore: 450000
-  goldScore: 800000
-  bronzeGP: 12750
-  silverGP: 20500
-  goldGP: 37500
+  bronzeScore: 400000
+  silverScore: 600000
+  goldScore: 1200000
+  bronzeGP: 8500
+  silverGP: 10000
+  goldGP: 24000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -1721,7 +1719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.15686275, g: 0.15686275, b: 0.1764706, a: 0.92156863}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1781,7 +1779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -220}
+  m_AnchoredPosition: {x: 150, y: -250}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &543221086
@@ -1976,85 +1974,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593281384}
-  m_CullTransparentMesh: 0
---- !u!1 &635793809
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 635793810}
-  - component: {fileID: 635793812}
-  - component: {fileID: 635793811}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &635793810
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635793809}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 317662489}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &635793811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635793809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 7a5dd5701f9f4584e9cbfe629fdd3768, type: 3}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Play
---- !u!222 &635793812
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 635793809}
   m_CullTransparentMesh: 0
 --- !u!1 &640192019
 GameObject:
@@ -2336,7 +2255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.88235295, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2636,9 +2555,9 @@ MonoBehaviour:
   bronzeScore: 750000
   silverScore: 1000000
   goldScore: 2000000
-  bronzeGP: 50000
-  silverGP: 67000
-  goldGP: 85000
+  bronzeGP: 10000
+  silverGP: 15000
+  goldGP: 30000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -2984,24 +2903,24 @@ MonoBehaviour:
   constSpawnRate: 8.25
   a: 900
   b: 0.0625
-  g: 45
-  d: 23.75
+  g: 44
+  d: 24
   category: 4
   targetTime: 0
   targetTimeDilated: 0
   targetDistance: 0
-  targetObstaclesDestoryed: 100
-  levelObjective: Destroy 100 celestial bodies
-  levelInfo: 'Destroy 100 celestial bodies.
+  targetObstaclesDestoryed: 160
+  levelObjective: Destroy 160 celestial bodies
+  levelInfo: 'Destroy 160 celestial bodies.
 
     Tip: Use GRB, Solar Flare and Magnetic
     Shields'
-  bronzeScore: 800000
-  silverScore: 2500000
-  goldScore: 8000000
-  bronzeGP: 60000
-  silverGP: 85000
-  goldGP: 100500
+  bronzeScore: 850000
+  silverScore: 2000000
+  goldScore: 5000000
+  bronzeGP: 80000
+  silverGP: 100000
+  goldGP: 125000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -3010,12 +2929,12 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
           type: 3}
         poolSize: 200
-        spawnProbability: 0.5
+        spawnProbability: 0.45
       - tag: Star
         prefab: {fileID: 3010830646087042782, guid: 7e26b872983bbf644852b255444256ec,
           type: 3}
         poolSize: 150
-        spawnProbability: 0.2
+        spawnProbability: 0.25
       - tag: WhiteDwarf
         prefab: {fileID: 3010830646087042782, guid: f739e7623a479554cb9070449135aa53,
           type: 3}
@@ -3025,12 +2944,12 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: 6b4d9a20840f28844b724bbfe000cdc3,
           type: 3}
         poolSize: 60
-        spawnProbability: 0.055
+        spawnProbability: 0.075
       - tag: OrbNeutronStar
         prefab: {fileID: 8324389532378526095, guid: 3327f8b37123819438a376f9ed82a3ea,
           type: 3}
         poolSize: 20
-        spawnProbability: 0.01
+        spawnProbability: 0.012
     - name: Extras
       pools:
       - tag: MagneticShield
@@ -3191,8 +3110,8 @@ MonoBehaviour:
   constSpawnRate: 4
   a: 1100
   b: 0.0625
-  g: 60
-  d: 20.5
+  g: 58
+  d: 21.5
   category: 1
   targetTime: 0
   targetTimeDilated: 86400
@@ -3204,12 +3123,12 @@ MonoBehaviour:
     Tip: High level
     Anti Gravity recommended. Use Anti Gravity to pass close to orbital neutron stars
     clusters in order to achieve massive time dilation'
-  bronzeScore: 8000000
-  silverScore: 12000000
-  goldScore: 16000000
-  bronzeGP: 170000
-  silverGP: 200000
-  goldGP: 250000
+  bronzeScore: 10000000
+  silverScore: 13000000
+  goldScore: 16500000
+  bronzeGP: 30000
+  silverGP: 60000
+  goldGP: 120000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -3602,7 +3521,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 844096571}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.34037858
+  m_Size: 0.36663336
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3974,7 +3893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 6
-  extrasSpawnRateRange: {x: 0.12, y: 0.2}
+  extrasSpawnRateRange: {x: 0.12, y: 0.18}
   overrideSpawnArea: 0
   randXSpawn: {x: 0, y: 0}
   randYSpawn: {x: 0, y: 0}
@@ -3984,19 +3903,19 @@ MonoBehaviour:
   a: 800
   b: 0.0625
   g: 40
-  d: 23.5
+  d: 24
   category: 2
   targetTime: 0
   targetTimeDilated: 0
-  targetDistance: 16000000
+  targetDistance: 18000000
   targetObstaclesDestoryed: 0
-  levelObjective: Travel 16 000 000 Km
-  levelInfo: Travel for a total of 16 000 000 Km
-  bronzeScore: 600000
-  silverScore: 900000
-  goldScore: 2000000
-  bronzeGP: 42500
-  silverGP: 55000
+  levelObjective: Travel 18 000 000 Km
+  levelInfo: Travel for a total of 18 000 000 Km
+  bronzeScore: 1000000
+  silverScore: 1300000
+  goldScore: 1800000
+  bronzeGP: 50000
+  silverGP: 65000
   goldGP: 90000
   poolManager:
     poolsCategory:
@@ -4928,7 +4847,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -220}
+  m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1379981733
@@ -5072,8 +4991,8 @@ MonoBehaviour:
   constSpawnRate: 0
   a: 900
   b: 0.0625
-  g: 50
-  d: 22.75
+  g: 42
+  d: 25.25
   category: 0
   targetTime: 180
   targetTimeDilated: 0
@@ -5082,11 +5001,11 @@ MonoBehaviour:
   levelObjective: Endure for 180 seconds
   levelInfo: Endure for a total of 180 seconds
   bronzeScore: 900000
-  silverScore: 1500000
-  goldScore: 3500000
-  bronzeGP: 50000
-  silverGP: 67500
-  goldGP: 75750
+  silverScore: 1150000
+  goldScore: 2100000
+  bronzeGP: 55000
+  silverGP: 75000
+  goldGP: 100000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -5365,9 +5284,9 @@ MonoBehaviour:
   bronzeScore: 200000
   silverScore: 350000
   goldScore: 600000
-  bronzeGP: 8000
-  silverGP: 12500
-  goldGP: 18750
+  bronzeGP: 8500
+  silverGP: 10000
+  goldGP: 12000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -6322,20 +6241,20 @@ MonoBehaviour:
   a: 900
   b: 0.0625
   g: 48
-  d: 23.4
+  d: 23.45
   category: 2
   targetTime: 60
   targetTimeDilated: 0
-  targetDistance: 30000000
+  targetDistance: 40000000
   targetObstaclesDestoryed: 0
-  levelObjective: Travel for 30 000 000 Km
-  levelInfo: Travel for a total of 30 000 000 Km
-  bronzeScore: 2000000
-  silverScore: 3500000
-  goldScore: 7500000
-  bronzeGP: 155000
-  silverGP: 185000
-  goldGP: 225000
+  levelObjective: Travel for 40 000 000 Km
+  levelInfo: Travel for a total of 40 000 000 Km
+  bronzeScore: 2500000
+  silverScore: 3200000
+  goldScore: 5000000
+  bronzeGP: 115000
+  silverGP: 145000
+  goldGP: 185000
   poolManager:
     poolsCategory:
     - name: Obstacles
@@ -6344,7 +6263,7 @@ MonoBehaviour:
         prefab: {fileID: 3010830646087042782, guid: 1040ba35173038d458d29d519b505d1d,
           type: 3}
         poolSize: 250
-        spawnProbability: 0.5
+        spawnProbability: 0.48
       - tag: Star
         prefab: {fileID: 3010830646087042782, guid: 7e26b872983bbf644852b255444256ec,
           type: 3}
@@ -6726,85 +6645,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789500773}
   m_CullTransparentMesh: 0
---- !u!1 &1815915482
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1815915483}
-  - component: {fileID: 1815915485}
-  - component: {fileID: 1815915484}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1815915483
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815915482}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 194996385}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1815915484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815915482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 7a5dd5701f9f4584e9cbfe629fdd3768, type: 3}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Cancel
---- !u!222 &1815915485
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815915482}
-  m_CullTransparentMesh: 0
 --- !u!1 &1870352179
 GameObject:
   m_ObjectHideFlags: 0
@@ -7070,7 +6910,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -150, y: -220}
+  m_AnchoredPosition: {x: -150, y: -250}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1913679102

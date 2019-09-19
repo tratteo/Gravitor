@@ -5,7 +5,6 @@ using UnityEngine;
 public class Shield : Extra
 {
     [Header("Shield")]
-    public float duration = 5f;
     public GameObject shieldEffect = null;
     public GameObject destroyShieldEffect = null;
 

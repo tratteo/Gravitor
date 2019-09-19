@@ -1,13 +1,11 @@
 ﻿using GoogleMobileAds.Api;
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class GoogleAdsManager : MonoBehaviour
 {
     public enum RewardedAdType { EXTRA_ATTEMPT }
     public const string ATTEMPT_ID = "Attempt";
-    public const string BONUSGP_ID = "GravityPoints";
 
 
     private static GoogleAdsManager instance = null;

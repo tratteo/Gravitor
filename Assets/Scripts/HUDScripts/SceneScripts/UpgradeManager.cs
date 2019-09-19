@@ -5,11 +5,11 @@ using UnityEngine.UI;
 /// </summary>
 public class UpgradeManager : MonoBehaviour
 {
-    public const int INIT_HEALTH_COST = 9000;
-    public const int INIT_THRUST_COST = 3500;
-    public const int INIT_ANTIGRAVITY_COST = 7500;
-    public const int INIT_QUANTUMTUNNEL_COST = 6000;
-    public const int INIT_SOLARFLARE_COST = 5200;
+    public const int INIT_HEALTH_COST = 10000;
+    public const int INIT_THRUST_COST = 2500;
+    public const int INIT_ANTIGRAVITY_COST = 8000;
+    public const int INIT_QUANTUMTUNNEL_COST = 6500;
+    public const int INIT_SOLARFLARE_COST = 6250;
 
     public const int EVOLVE_COST = 90000;
 
@@ -29,7 +29,7 @@ public class UpgradeManager : MonoBehaviour
     [Header("Health")]
     [SerializeField] private Text healthPointsText = null;
     [SerializeField] private Text healthCostText = null;
-    [SerializeField] private Text healthInfoText = null;
+    [SerializeField] private Text resilienceInfoText = null;
     [Header("ThrustForce")]
     [SerializeField] private Text thrustPointsText = null;
     [SerializeField] private Text thrustCostText = null;
@@ -50,46 +50,47 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] private Text solarflareInfoText = null;
     [SerializeField] private Text solarflareCostText = null;
     [Header("GammaRayBurstUI")]
-    [SerializeField] private GameObject gammaRayBurstEffect = null;
+    [SerializeField] private GameObject GRBEffectParent = null;
+    [SerializeField] private GameObject GRB1Effect = null;
+    [SerializeField] private GameObject GRB2Effect = null;
+    [SerializeField] private GameObject GRB3Effect = null;
+    [SerializeField] private GameObject GRB4Effect = null;
     [SerializeField] private Text GRBCostText = null;
     [SerializeField] private Text GRBInfoText = null;
-    [SerializeField] private Color GRB1;
-    [SerializeField] private Color GRB2;
-    [SerializeField] private Color GRB3;
+    private GameObject currentGRBEffect = null;
 
 
-    private int healthUpgradeCost;
+    private int resilienceUpgradeCost;
     private int thrustForceUpgradeCost;
     private int antigravityUpgradeCost;
     private int quantumTunnelUpgradeCost;
     private int solarflareUpgradeCost;
     private int GRBUpgradeCost;
 
-    private int gravityPoints;
     private PlayerData playerData;
     private PlayerSkillsData skillsData;
+    private CurrencyData currencyData;
     #endregion
 
     private void Start()
     {
         playerData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
 
-        thrustForceUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.thrustForcePoints, INIT_THRUST_COST);
-        healthUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.GetHealthPoints(), INIT_HEALTH_COST);
+        thrustForceUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.thrustForcePoints, INIT_THRUST_COST, GameplayMath.DEFAULT_RATIO);
+        resilienceUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.GetHealthPoints(), INIT_HEALTH_COST, GameplayMath.RESILIENCE_RATIO);
 
         SaveObject objectData;
-        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.GRAVITYPOINTS_PATH);
-        gravityPoints = objectData != null ? gravityPoints = objectData.GetData<int>() : 0;
-
+        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH);
+        currencyData = objectData.GetData<CurrencyData>();
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
 
-        antigravityUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.antigravityPoints, INIT_ANTIGRAVITY_COST);
-        quantumTunnelUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.quantumTunnelPoints, INIT_QUANTUMTUNNEL_COST);
-        solarflareUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.solarflarePoints, INIT_SOLARFLARE_COST);
+        antigravityUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.antigravityPoints, INIT_ANTIGRAVITY_COST, GameplayMath.DEFAULT_RATIO);
+        quantumTunnelUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.quantumTunnelPoints, INIT_QUANTUMTUNNEL_COST, GameplayMath.DEFAULT_RATIO);
+        solarflareUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.solarflarePoints, INIT_SOLARFLARE_COST, GameplayMath.DEFAULT_RATIO);
         GRBUpgradeCost = GameplayMath.GetInstance().GetGRBCost(skillsData.gammaRayBurstPoints);
 
-        EnableUIBasedOnPlayerState();
         UpdateUI();
+        EnableUIBasedOnPlayerState();
     }
 
     private void FixedUpdate()
@@ -119,8 +120,9 @@ public class UpgradeManager : MonoBehaviour
                 evolveCostText.gameObject.SetActive(true);
                 unlockSkillText.gameObject.SetActive(true);
 
+                GRBEffectParent.SetActive(false);
                 unlockGammaRayBurstText.gameObject.SetActive(true);
-                gammaRayBurstEffect.SetActive(false);
+                currentGRBEffect?.SetActive(false);
                 break;
 
             case PlayerManager.PlayerState.COMET:
@@ -141,8 +143,9 @@ public class UpgradeManager : MonoBehaviour
                 evolveCostText.gameObject.SetActive(false);
                 unlockSkillText.gameObject.SetActive(false);
 
+                GRBEffectParent.SetActive(true);
                 unlockGammaRayBurstText.gameObject.SetActive(false);
-                gammaRayBurstEffect.SetActive(true);
+                currentGRBEffect?.SetActive(true);
                 break;
         }
     }
@@ -151,9 +154,9 @@ public class UpgradeManager : MonoBehaviour
     {
         stateText.text = playerData.playerState.ToString();
 
-        if (gravityPoints != -1)
+        if (currencyData.gravityPoints != -1)
         {
-            gravityPointsText.text = gravityPoints.ToString();
+            gravityPointsText.text = currencyData.gravityPoints.ToString();
         }
 
         if (playerData.thrustForcePoints < PlayerData.THRUSTFORCE_MAX_POINTS)
@@ -167,7 +170,7 @@ public class UpgradeManager : MonoBehaviour
 
         if (playerData.GetHealthPoints() < PlayerData.RESILIENCE_MAX_POINTS)
         {
-            healthCostText.text = healthUpgradeCost.ToString();
+            healthCostText.text = resilienceUpgradeCost.ToString();
         }
         else
         {
@@ -202,16 +205,19 @@ public class UpgradeManager : MonoBehaviour
             solarflareCostText.gameObject.SetActive(false);
         }
         //GRB
-        if(skillsData.gammaRayBurstPoints < PlayerSkillsData.GRB_MAX_POINTS)
+        if(skillsData.gammaRayBurstPoints < PlayerSkillsData.GRB_MAX_POINTS - 1)
         {
             GRBCostText.text = GRBUpgradeCost.ToString();
+        }
+        else if(skillsData.gammaRayBurstPoints == PlayerSkillsData.GRB_MAX_POINTS - 1)
+        {
+            GRBCostText.text = "Visit the store to unlock <color=cyan><b>GRB level 4</b></color>";
         }
         else
         {
             GRBCostText.gameObject.SetActive(false);
         }
-        UpdateGRBColor();
-
+        UpdateGRBEffect();
         evolveCostText.text = EVOLVE_COST.ToString();
 
         if (playerData != null)
@@ -219,7 +225,7 @@ public class UpgradeManager : MonoBehaviour
             thrustPointsText.text = playerData.thrustForcePoints.ToString();
             healthPointsText.text = playerData.GetHealthPoints().ToString();
             thrustForceText.text = "Thrust Force: " + GameplayMath.GetInstance().GetPlayerThrustForceFromPoints(playerData.thrustForcePoints).ToString("0.00");
-            healthInfoText.text = "Health: " + playerData.health.ToString();
+            resilienceInfoText.text = "Resilience: " + playerData.resilience.ToString();
         }
 
         if (skillsData != null)
@@ -270,12 +276,15 @@ public class UpgradeManager : MonoBehaviour
             if(skillsData.gammaRayBurstPoints < PlayerSkillsData.GRB_MAX_POINTS)
             {
                 GRBInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints).ToString("0.0") + "s</b>"
+                                   + ", ray radius: <b>" + GameplayMath.GetInstance().GetGRBUnscaledRadius(skillsData.gammaRayBurstPoints).ToString() + "</b>"
                                    + "\n<color=cyan>Next Upgrade: </color>\n"
-                                   + "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints + 1).ToString("0.0") + "s</b>";
+                                   + "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints + 1).ToString("0.0") + "s</b>"
+                                   + ", ray radius: <b>" + GameplayMath.GetInstance().GetGRBUnscaledRadius(skillsData.gammaRayBurstPoints + 1).ToString() + "</b>";
             }
             else
             {
-                GRBInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints).ToString("0.0") + "s</b>";
+                GRBInfoText.text = "Cooldown: <b>" + GameplayMath.GetInstance().GetGRBCooldown(skillsData.gammaRayBurstPoints).ToString("0.0") + "s</b>"
+                                    + ", ray radius: <b>" + GameplayMath.GetInstance().GetGRBUnscaledRadius(skillsData.gammaRayBurstPoints).ToString() + "</b>";
             }
         }
     }
@@ -290,16 +299,16 @@ public class UpgradeManager : MonoBehaviour
             return;
         }
 
-        if (antigravityUpgradeCost <= gravityPoints)
+        if (antigravityUpgradeCost <= currencyData.gravityPoints)
         {
             if (skillsData != null)
             {
                 skillsData.antigravityPoints++;
-                gravityPoints -= antigravityUpgradeCost;
-                antigravityUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.antigravityPoints, INIT_ANTIGRAVITY_COST);
+                currencyData.gravityPoints -= antigravityUpgradeCost;
+                antigravityUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.antigravityPoints, INIT_ANTIGRAVITY_COST, GameplayMath.DEFAULT_RATIO);
             }
             SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
         }
         else
@@ -316,16 +325,16 @@ public class UpgradeManager : MonoBehaviour
             return;
         }
 
-        if (quantumTunnelUpgradeCost <= gravityPoints)
+        if (quantumTunnelUpgradeCost <= currencyData.gravityPoints)
         {
             if (skillsData != null)
             {
                 skillsData.quantumTunnelPoints++;
-                gravityPoints -= quantumTunnelUpgradeCost;
-                quantumTunnelUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.quantumTunnelPoints, INIT_QUANTUMTUNNEL_COST);
+                currencyData.gravityPoints -= quantumTunnelUpgradeCost;
+                quantumTunnelUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.quantumTunnelPoints, INIT_QUANTUMTUNNEL_COST, GameplayMath.DEFAULT_RATIO);
             }
             SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
         }
         else
@@ -342,16 +351,16 @@ public class UpgradeManager : MonoBehaviour
             return;
         }
 
-        if (solarflareUpgradeCost <= gravityPoints)
+        if (solarflareUpgradeCost <= currencyData.gravityPoints)
         {
             if (skillsData != null)
             {
                 skillsData.solarflarePoints++;
-                gravityPoints -= solarflareUpgradeCost;
-                solarflareUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.solarflarePoints, INIT_SOLARFLARE_COST);
+                currencyData.gravityPoints -= solarflareUpgradeCost;
+                solarflareUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.solarflarePoints, INIT_SOLARFLARE_COST, GameplayMath.DEFAULT_RATIO);
             }
             SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
         }
         else
@@ -368,16 +377,16 @@ public class UpgradeManager : MonoBehaviour
             toast.ShowToast("Already at max level", null, 1.5f);
             return;
         }
-        if (thrustForceUpgradeCost <= gravityPoints)
+        if (thrustForceUpgradeCost <= currencyData.gravityPoints)
         {
             if (playerData != null)
             {
                 playerData.thrustForcePoints++;
-                gravityPoints -= thrustForceUpgradeCost;
-                thrustForceUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.thrustForcePoints, INIT_THRUST_COST);
+                currencyData.gravityPoints -= thrustForceUpgradeCost;
+                thrustForceUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.thrustForcePoints, INIT_THRUST_COST, GameplayMath.DEFAULT_RATIO);
             }
             SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
-            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
         }
         else
@@ -393,16 +402,16 @@ public class UpgradeManager : MonoBehaviour
             toast.ShowToast("Already at max level", null, 1.5f);
             return;
         }
-        if (healthUpgradeCost <= gravityPoints)
+        if (resilienceUpgradeCost <= currencyData.gravityPoints)
         {
             if (playerData != null)
             {
                 playerData.IncreaseHealth();
-                gravityPoints -= healthUpgradeCost;
-                healthUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.GetHealthPoints(), INIT_HEALTH_COST);
+                currencyData.gravityPoints -= resilienceUpgradeCost;
+                resilienceUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(playerData.GetHealthPoints(), INIT_HEALTH_COST, GameplayMath.RESILIENCE_RATIO);
             }
             SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
-            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
         }
         else
@@ -414,21 +423,26 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeGRB()
     {
-        if (skillsData.gammaRayBurstPoints >= PlayerSkillsData.GRB_MAX_POINTS)
+        if (skillsData.gammaRayBurstPoints == PlayerSkillsData.GRB_MAX_POINTS - 1)
         {
-            toast.ShowToast("Already at max level", null, 1.5f);
+            toast.ShowToast("GRB level 4 can be unlocked only in the store", null, 2f);
             return;
         }
-        if (GRBUpgradeCost <= gravityPoints)
+        else if(skillsData.gammaRayBurstPoints >= PlayerSkillsData.GRB_MAX_POINTS)
+        {
+            toast.ShowToast("GRB already at max level", null, 1.5f);
+            return;
+        }
+        if (GRBUpgradeCost <= currencyData.gravityPoints)
         {
             if (skillsData != null)
             {
                 skillsData.gammaRayBurstPoints++;
-                gravityPoints -= GRBUpgradeCost;
+                currencyData.gravityPoints -= GRBUpgradeCost;
                 GRBUpgradeCost = GameplayMath.GetInstance().GetGRBCost(skillsData.gammaRayBurstPoints);
             }
             SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
         }
         else
@@ -438,38 +452,41 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
-    private void UpdateGRBColor()
+    private void UpdateGRBEffect()
     {
-        ParticleSystemRenderer[] systems = gammaRayBurstEffect.GetComponentsInChildren<ParticleSystemRenderer>();
-        Color colorToSet = new Color(255, 255, 255, 255);
+        GameObject currentEff = GRBEffectParent.GetComponentInChildren<ParticleSystem>()?.gameObject;
+        if (currentEff != null) Destroy(currentEff);
+
         switch (skillsData.gammaRayBurstPoints)
         {
             case 1:
-                colorToSet = GRB1;
+                currentGRBEffect = Instantiate(GRB1Effect);
                 break;
             case 2:
-                colorToSet = GRB2;
+                currentGRBEffect = Instantiate(GRB2Effect);
                 break;
             case 3:
-                colorToSet = GRB3;
+                currentGRBEffect = Instantiate(GRB3Effect);
+                break;
+            case 4:
+                currentGRBEffect = Instantiate(GRB4Effect);
                 break;
         }
-        foreach (ParticleSystemRenderer system in systems)
-        {
-            system.material.SetColor("_TintColor", colorToSet);
-        }
+        currentGRBEffect.transform.SetParent(GRBEffectParent.transform);
+        currentGRBEffect.transform.localScale = new Vector3(1, 1, 1);
+        currentGRBEffect.transform.localPosition = new Vector3(0, 0, 0);
     }
 
     public void Evolve()
     {
-        if (gravityPoints >= EVOLVE_COST && playerData.playerState == PlayerManager.PlayerState.ASTEROID)
+        if (currencyData.gravityPoints >= EVOLVE_COST && playerData.playerState == PlayerManager.PlayerState.ASTEROID)
         {
-            gravityPoints -= EVOLVE_COST;
+            currencyData.gravityPoints -= EVOLVE_COST;
             playerData.playerState = PlayerManager.PlayerState.COMET;
             SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
-            SaveManager.GetInstance().SavePersistentData(gravityPoints, SaveManager.GRAVITYPOINTS_PATH);
-            EnableUIBasedOnPlayerState();
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
+            EnableUIBasedOnPlayerState();
         }
         else
         {

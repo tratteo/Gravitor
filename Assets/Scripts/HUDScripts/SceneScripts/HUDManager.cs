@@ -456,7 +456,7 @@ public class HUDManager : MonoBehaviour
             StopCoroutine(shieldHUDAnim_C);
         }
 
-        shieldHUDAnim_C = SharedUtilities.GetInstance().UnfillImage(this, shieldChargeIcon, playerManager.extraManager.GetCurrentShield().duration);
+        shieldHUDAnim_C = SharedUtilities.GetInstance().UnfillImage(this, shieldChargeIcon, playerManager.extraManager.shieldDuration);
 
     }
     public void ShieldDestroyed()

@@ -35,6 +35,7 @@ public class SaveManager
     public static readonly string SETTINGS_PATH = Application.persistentDataPath + "/settings.data";
     public static readonly string ACHIEVMENTS_PATH = Application.persistentDataPath + "/achievments_v2.data";
     public static readonly string LEVELSDATA_PATH = Application.persistentDataPath + "/levels.data";
+    public static readonly string CURRENCY_PATH = Application.persistentDataPath + "/currency.data";
     //I.E 
     //public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
     //Calling the methods will look like:
@@ -68,10 +69,10 @@ public class SaveManager
             if (stream.Length == 0)
                 return null;
             object data = formatter.Deserialize(stream);
-            if(data is EncryptedData)
+            if (data is EncryptedData)
             {
                 EncryptedData enc = (EncryptedData)data;
-                if(enc.deviceId != SystemInfo.deviceUniqueIdentifier)
+                if (enc.deviceId != SystemInfo.deviceUniqueIdentifier)
                 {
                     Debug.Log("Unauthorized to open file, file not coming from this device, aborting");
                     stream.Close();
@@ -86,5 +87,10 @@ public class SaveManager
         {
             return null;
         }
+    }
+
+    public void DeleteData(string path)
+    {
+        File.Delete(path);
     }
 }

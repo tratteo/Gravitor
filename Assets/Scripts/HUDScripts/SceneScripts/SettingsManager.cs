@@ -208,12 +208,10 @@ public class SettingsManager : MonoBehaviour
         if(newState)
         {
             image.sprite = enabled;
-            image.color = new Color32(0, 235, 255, 210);
         }
         else
         {
             image.sprite = disabled;
-            image.color = new Color32(200, 0, 0, 210);
         }
     }
 

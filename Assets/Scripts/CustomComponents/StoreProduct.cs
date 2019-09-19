@@ -1,28 +1,26 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Purchasing;
 
-public class ProductInfo : MonoBehaviour
+public class StoreProduct : MonoBehaviour
 {
-    private Color32 PURCHASED_COLOR = new Color32(0, 255, 80, 100);
-    private Color32 AVAILABLE_COLOR = new Color32(0, 220, 255, 120);
-    private Color32 INACTIVE_COLOR = new Color32(80, 80, 80, 150);
+    protected static Color32 PURCHASED_COLOR = new Color32(0, 255, 80, 100);
+    protected static Color32 AVAILABLE_COLOR = new Color32(0, 220, 255, 120);
+    protected static Color32 INACTIVE_COLOR = new Color32(80, 80, 80, 150);
 
     public enum ProductState { AVAILABLE, PURCHASED, INACTIVE }
 
 
     public string id;
+    public float price;
     [HideInInspector] public Image mainImage;
     [HideInInspector] public Text priceText;
-    [HideInInspector] public Product product;
 
-    private void OnEnable()
+    protected void OnEnable()
     {
-        product = GoogleIAPManager.GetInstance().GetProductWithID(id);
         priceText = SharedUtilities.GetInstance().GetFirstComponentInChildrenWithTag<Text>(gameObject, "Price");
-        priceText.text = product.metadata.localizedPrice.ToString("0.00") + " €";
+        priceText.text = price.ToString();
         mainImage = GetComponent<Image>();
     }
 

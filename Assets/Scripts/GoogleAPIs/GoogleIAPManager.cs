@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
 
@@ -11,13 +10,14 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
     private static IStoreController storeController = null;          // The Unity Purchasing system.
     private static IExtensionProvider storeExtension = null; // The store-specific Purchasing subsystems.
 
-
-    public const string PRODUCT_GRBLVL3 = "grblvl3";
-    public const string PRODUCT_GP1_250M = "gp1_250m";
+    public const string PRODUCT_500_GR = "500_gr";
+    public const string PRODUCT_750_GR = "750_gr";
+    public const string PRODUCT_1000_GR = "1000_gr";
+    public const string PRODUCT_2000_GR = "2000_gr";
 
     private Action<string> ProductPurchased;
-    public void SubscribeToProductPurchasedEvent(Action<string> funcToSub) { ProductPurchased += funcToSub; }
-    public void UnSubscribeToProductPurchasedEvent(Action<string> funcToUnsub) { ProductPurchased -= funcToUnsub; }
+    public void SubscribeToProductPurchased(Action<string> funcToSub) { ProductPurchased += funcToSub; }
+    public void UnsubscribeToProductPurchased(Action<string> funcToUnsub) { ProductPurchased -= funcToUnsub; }
 
     void OnEnable()
     {
@@ -54,8 +54,10 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
 
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-        builder.AddProduct(PRODUCT_GRBLVL3, ProductType.NonConsumable);
-        builder.AddProduct(PRODUCT_GP1_250M, ProductType.Consumable);
+        builder.AddProduct(PRODUCT_500_GR, ProductType.Consumable);
+        builder.AddProduct(PRODUCT_750_GR, ProductType.Consumable);
+        builder.AddProduct(PRODUCT_1000_GR, ProductType.Consumable);
+        builder.AddProduct(PRODUCT_2000_GR, ProductType.Consumable);
 
         UnityPurchasing.Initialize(this, builder);
     }
@@ -72,17 +74,20 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
     {
         switch (id)
         {
-            case PRODUCT_GRBLVL3:
-                BuyProductID(PRODUCT_GRBLVL3);
+            case PRODUCT_500_GR:
                 break;
-            case PRODUCT_GP1_250M:
-                BuyProductID(PRODUCT_GP1_250M);
+            case PRODUCT_750_GR:
+                break;
+            case PRODUCT_1000_GR:
+                break;
+            case PRODUCT_2000_GR:
                 break;
             default:
                 Debug.Log("ERROR PRODUCT NOT FOUND");
                 break;
         }
-        
+
+        BuyProductID(id);
     }
 
 
@@ -140,20 +145,36 @@ public class GoogleIAPManager : MonoBehaviour, IStoreListener
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
     {
-        if (String.Equals(args.purchasedProduct.definition.id, PRODUCT_GRBLVL3, StringComparison.Ordinal))
-        {
-            Executer.GetInstance().AddJob(() => 
-            {
-                Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
-                ProductPurchased(PRODUCT_GRBLVL3);
-            });  
-        }
-        else if(String.Equals(args.purchasedProduct.definition.id, PRODUCT_GP1_250M, StringComparison.Ordinal))
+        if (String.Equals(args.purchasedProduct.definition.id, PRODUCT_500_GR, StringComparison.Ordinal))
         {
             Executer.GetInstance().AddJob(() =>
             {
                 Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
-                ProductPurchased(PRODUCT_GP1_250M);
+                ProductPurchased?.Invoke(PRODUCT_500_GR);
+            });
+        }
+        else if (String.Equals(args.purchasedProduct.definition.id, PRODUCT_750_GR, StringComparison.Ordinal))
+        {
+            Executer.GetInstance().AddJob(() =>
+            {
+                Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
+                ProductPurchased?.Invoke(PRODUCT_750_GR);
+            });
+        }
+        else if (String.Equals(args.purchasedProduct.definition.id, PRODUCT_1000_GR, StringComparison.Ordinal))
+        {
+            Executer.GetInstance().AddJob(() =>
+            {
+                Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
+                ProductPurchased?.Invoke(PRODUCT_1000_GR);
+            });
+        }
+        else if (String.Equals(args.purchasedProduct.definition.id, PRODUCT_2000_GR, StringComparison.Ordinal))
+        {
+            Executer.GetInstance().AddJob(() =>
+            {
+                Debug.Log("Purchased: " + args.purchasedProduct.definition.id);
+                ProductPurchased?.Invoke(PRODUCT_2000_GR);
             });
         }
         else

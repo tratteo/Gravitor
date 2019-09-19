@@ -17,6 +17,9 @@ public class GameplayMath
     private const float RadToDegree = 57.3f;
     private const double Td_constant = 9E5f * (G/(c*c));
 
+    public static float DEFAULT_RATIO = 2.4f;
+    public static float RESILIENCE_RATIO = 3.12f;
+
     public float GetGravityTd(GameObject player, GameObstacle obstacle)
     {
         float intern = (float)(1f - ((Td_constant * obstacle.mass) / Vector3.Magnitude(player.transform.position - obstacle.transform.position)));
@@ -51,7 +54,7 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return 4.85E-8f * mass;
+        return 4.9E-8f * mass;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)
@@ -104,9 +107,28 @@ public class GameplayMath
             case 1:
                 return 45;
             case 2:
-                return 30;
+                return 35;
             case 3:
+                return 25;
+            case 4:
                 return 18;
+            default:
+                return -1;
+        }
+    }
+
+    public int GetGRBUnscaledRadius(int points)
+    {
+        switch (points)
+        {
+            case 1:
+                return 45;
+            case 2:
+                return 65;
+            case 3:
+                return 80;
+            case 4:
+                return 110;
             default:
                 return -1;
         }
@@ -118,9 +140,9 @@ public class GameplayMath
         return x * x * x;
     }
 
-    public int GetCostFromInitCost(int points, int initCost)
+    public int GetCostFromInitCost(int points, int initCost, float ratio)
     {
-        return (int)(572 * Mathf.Pow(points, 2.46f) + initCost - 572);
+        return (int)(835 * Mathf.Pow(points, ratio) + initCost - 835);
     }
 
     public int GetGRBSpawnExceptionTime(int points)
@@ -133,6 +155,8 @@ public class GameplayMath
                 return 4;
             case 3:
                 return 5;
+            case 4:
+                return 6;
             default:
                 return -1;
         }
@@ -140,23 +164,23 @@ public class GameplayMath
 
     public int GetGravityPointsFromSession(float score, float properTime, Level level)
     {
-        int gravityPoints = (int)(0.35f * (0.42f * score * (properTime / 325f)));
+        int gravityPoints = (int)(0.225f * (0.35f * score * (properTime / 300f)));
         return gravityPoints;
     }
 
     public int GetExp(int gravityPoints, GameMode.GradeObtained obt)
     { 
-        int exp = gravityPoints / 10;
+        int exp = gravityPoints / 8;
         switch (obt)
         {
             case GameMode.GradeObtained.BRONZE:
-                exp = (int)(exp * 1.7f);
+                exp = (int)(exp * 1.5f);
                 break;
             case GameMode.GradeObtained.SILVER:
-                exp = (int)(exp * 2.5f);
+                exp = (int)(exp * 2.25f);
                 break;
             case GameMode.GradeObtained.GOLD:
-                exp = (int)(exp * 3.25f);
+                exp = (int)(exp * 3.2f);
                 break;
             default:
                 break;
