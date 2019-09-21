@@ -102,7 +102,6 @@ public class StoreManager : MonoBehaviour
     public void BuyIAPPProduct(IAPProduct product)
     {
         GoogleIAPManager.GetInstance().BuyProduct(product.id);
-        toast.ShowToast("Purchase completed", null, 2f);
     }
 
     public void BuyHighlightedProduct()
