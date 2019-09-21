@@ -62,7 +62,7 @@ public class Tutorial : MonoBehaviour
                     elementsArray[index++].SetActive(false);
                     hudManagerInstance.Pause(false);
                     hudManagerInstance.tutorialPanel.SetActive(false);
-                    hudManagerInstance.EnableStatsPanel(true);
+                    hudManagerInstance.EnableHUDPanel(true);
                     this.enabled = false;
                 }
             }

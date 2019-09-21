@@ -329,7 +329,7 @@ public class HUDManager : MonoBehaviour
             loadingAdText.gameObject.SetActive(false);
             levelText.transform.parent.gameObject.SetActive(false);
 
-            EnableStatsPanel(true);
+            EnableHUDPanel(true);
 
             gameOverPanel.SetActive(false);
 
@@ -481,7 +481,7 @@ public class HUDManager : MonoBehaviour
         highScorePanel.SetActive(false);
         gameOverInfoText.text = "Difference between distorted time and normal time flow: " + SharedUtilities.GetInstance().GetTimeStringFromSeconds(playerManager.relativeExTime - playerManager.properTime);
 
-        EnableStatsPanel(false);
+        EnableHUDPanel(false);
 
         gameOverPanel.SetActive(true);
         gameOverScoreText.text = gameMode.sessionScore.ToString("0");
@@ -556,9 +556,9 @@ public class HUDManager : MonoBehaviour
         levelObjectivePanel.GetComponentInChildren<Text>().text = level.levelObjective;
     }
 
-    public void EnableStatsPanel(bool state)
+    public void EnableHUDPanel(bool state)
     {
-        statsPanel.SetActive(state);
+        HUDPanel.SetActive(state);
     }
 
     private IEnumerator DisplayLevelCompleted_C()
