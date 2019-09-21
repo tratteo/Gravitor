@@ -19,9 +19,9 @@ public class AchievementsSceneManager : MonoBehaviour
         {
             GameObject instance = Instantiate(achievementPrefab);
             instance.transform.SetParent(layout.transform);
-            Image image = instance.GetComponent<Image>();
+            Image image = instance.GetComponentInChildren<Image>();
             image.sprite = achInfo.sprite;
-            instance.GetComponentInChildren<Text>().text = achInfo.description;
+            instance.GetComponent<Text>().text = achInfo.description;
             instance.transform.localScale = new Vector3(1, 1, 1);
             if(achievementsData.IsAchievementUnlocked(achInfo.id))
             {
