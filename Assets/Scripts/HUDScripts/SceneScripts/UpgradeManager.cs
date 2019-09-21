@@ -15,17 +15,10 @@ public class UpgradeManager : MonoBehaviour
 
     #region Variables
     [Header("Preview")]
-    [SerializeField] private GameObject previewStateSphere = null;
-    [SerializeField] private Material asteroid = null;
-    [SerializeField] private Material comet = null;
+    [SerializeField] private Transform playerPreviewParent = null;
+    private GameObject previewSphere = null;
     [SerializeField] private ToastScript toast = null;
     [SerializeField] private Text gravityPointsText = null;
-    [SerializeField] private Text unlockSkillText = null;
-    [SerializeField] private Text unlockGammaRayBurstText = null;
-    [Header("Evolve")]
-    [SerializeField] private GameObject evolveBtn = null;
-    [SerializeField] private Text stateText = null;
-    [SerializeField] private Text evolveCostText = null;
     [Header("Health")]
     [SerializeField] private Text healthPointsText = null;
     [SerializeField] private Text healthCostText = null;
@@ -84,75 +77,28 @@ public class UpgradeManager : MonoBehaviour
         currencyData = objectData.GetData<CurrencyData>();
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
 
+        PlayerAspectData aspect = SaveManager.GetInstance().LoadPersistentData(SaveManager.ASPECTDATA_PATH).GetData<PlayerAspectData>();
+        previewSphere = Instantiate(PersistentPlayerPrefs.GetInstance().GetAspectWithId(aspect.equippedSkinId).prefab);
+        previewSphere.transform.SetParent(playerPreviewParent);
+        previewSphere.transform.localScale = new Vector3(200, 200, 200);
+        previewSphere.transform.localPosition = new Vector3(0, 0, -1);
+
         antigravityUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.antigravityPoints, INIT_ANTIGRAVITY_COST, GameplayMath.DEFAULT_RATIO);
         quantumTunnelUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.quantumTunnelPoints, INIT_QUANTUMTUNNEL_COST, GameplayMath.DEFAULT_RATIO);
         solarflareUpgradeCost = GameplayMath.GetInstance().GetCostFromInitCost(skillsData.solarflarePoints, INIT_SOLARFLARE_COST, GameplayMath.DEFAULT_RATIO);
         GRBUpgradeCost = GameplayMath.GetInstance().GetGRBCost(skillsData.gammaRayBurstPoints);
 
         UpdateUI();
-        EnableUIBasedOnPlayerState();
+        UpdateGRBEffect();
     }
 
     private void FixedUpdate()
     {
-        previewStateSphere.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
-    }
-
-    private void EnableUIBasedOnPlayerState()
-    {
-        switch (playerData.playerState)
-        {
-            case PlayerManager.PlayerState.ASTEROID:
-                previewStateSphere.GetComponent<MeshRenderer>().material = asteroid;
-                upgradeAntigravityBtn.gameObject.SetActive(true);
-                antigravityPointsText.gameObject.SetActive(true);
-                antigravityInfoText.gameObject.SetActive(true);
-
-                upgradeQuantumTunnelBtn.gameObject.SetActive(true);
-                quantumTunnelPointsText.gameObject.SetActive(true);
-                quantumTunnelInfoText.gameObject.SetActive(true);
-
-                upgradeSolarflareBtn.gameObject.SetActive(false);
-                solarflarePointsText.gameObject.SetActive(false);
-                solarflareInfoText.gameObject.SetActive(false);
-
-                evolveBtn.gameObject.SetActive(true);
-                evolveCostText.gameObject.SetActive(true);
-                unlockSkillText.gameObject.SetActive(true);
-
-                GRBEffectParent.SetActive(false);
-                unlockGammaRayBurstText.gameObject.SetActive(true);
-                currentGRBEffect?.SetActive(false);
-                break;
-
-            case PlayerManager.PlayerState.COMET:
-                previewStateSphere.GetComponent<MeshRenderer>().material = comet;
-                upgradeAntigravityBtn.gameObject.SetActive(true);
-                antigravityPointsText.gameObject.SetActive(true);
-                antigravityInfoText.gameObject.SetActive(true);
-
-                upgradeQuantumTunnelBtn.gameObject.SetActive(true);
-                quantumTunnelPointsText.gameObject.SetActive(true);
-                quantumTunnelInfoText.gameObject.SetActive(true);
-
-                upgradeSolarflareBtn.gameObject.SetActive(true);
-                solarflarePointsText.gameObject.SetActive(true);
-                solarflareInfoText.gameObject.SetActive(true);
-
-                evolveBtn.gameObject.SetActive(false);
-                evolveCostText.gameObject.SetActive(false);
-                unlockSkillText.gameObject.SetActive(false);
-
-                GRBEffectParent.SetActive(true);
-                unlockGammaRayBurstText.gameObject.SetActive(false);
-                currentGRBEffect?.SetActive(true);
-                break;
-        }
+        previewSphere.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
     }
 
     private void UpdateUI()
     {
-        stateText.text = playerData.playerState.ToString();
 
         if (currencyData.gravityPoints != -1)
         {
@@ -217,8 +163,6 @@ public class UpgradeManager : MonoBehaviour
         {
             GRBCostText.gameObject.SetActive(false);
         }
-        UpdateGRBEffect();
-        evolveCostText.text = EVOLVE_COST.ToString();
 
         if (playerData != null)
         {
@@ -425,7 +369,7 @@ public class UpgradeManager : MonoBehaviour
     {
         if (skillsData.gammaRayBurstPoints == PlayerSkillsData.GRB_MAX_POINTS - 1)
         {
-            toast.ShowToast("GRB level 4 can be unlocked only in the store", null, 2f);
+            toast.ShowToast("Visit the store to unlock GRB LVL 4", null, 2f);
             return;
         }
         else if(skillsData.gammaRayBurstPoints >= PlayerSkillsData.GRB_MAX_POINTS)
@@ -444,6 +388,7 @@ public class UpgradeManager : MonoBehaviour
             SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
             SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
             UpdateUI();
+            UpdateGRBEffect();
         }
         else
         {
@@ -476,22 +421,4 @@ public class UpgradeManager : MonoBehaviour
         currentGRBEffect.transform.localScale = new Vector3(1, 1, 1);
         currentGRBEffect.transform.localPosition = new Vector3(0, 0, 0);
     }
-
-    public void Evolve()
-    {
-        if (currencyData.gravityPoints >= EVOLVE_COST && playerData.playerState == PlayerManager.PlayerState.ASTEROID)
-        {
-            currencyData.gravityPoints -= EVOLVE_COST;
-            playerData.playerState = PlayerManager.PlayerState.COMET;
-            SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
-            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
-            UpdateUI();
-            EnableUIBasedOnPlayerState();
-        }
-        else
-        {
-            toast.ShowToast("Not enough Gravity Points", null, 1.5f);
-        }
-    }
-
 }

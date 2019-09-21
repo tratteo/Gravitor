@@ -31,6 +31,7 @@ public abstract class GameMode : MonoBehaviour
     [HideInInspector] public int sessionGravityPoints = 0;
     private int currentGravityPoints;
     [HideInInspector] public float sessionScore;
+    [HideInInspector] public int sessionGravitons;
     [HideInInspector] public bool attemptUsed = false;
     private float alpha, beta, gamma, delta;
 
@@ -166,6 +167,10 @@ public abstract class GameMode : MonoBehaviour
             SaveManager.GetInstance().SavePersistentData<LevelsData>(data, SaveManager.LEVELSDATA_PATH);
 
             obt = CheckForGradeBonusGP();
+
+            sessionGravitons = GameplayMath.GetInstance().GetGravitonsFromGame(playerManager.properTime, sessionScore);
+            currencyData.gravitons += sessionGravitons;
+            SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
         }
         currencyData.gravityPoints = sessionGravityPoints + currentGravityPoints;
         SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
@@ -174,11 +179,11 @@ public abstract class GameMode : MonoBehaviour
 
         if (currentLevel.category == Level.LevelCategory.ENDLESS)
         {
-            HUDManager.GetInstance().DisplayGameOverPanel(true);
+            HUDManager.GetInstance().DisplayGameOverPanel(true, true);
         }
         else
         {
-            HUDManager.GetInstance().DisplayGameOverPanel(false);
+            HUDManager.GetInstance().DisplayGameOverPanel(false, false);
         }
         HUDManager.GetInstance().EnableHighGravityFieldPanel(false);
     }

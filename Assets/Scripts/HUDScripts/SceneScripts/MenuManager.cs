@@ -25,8 +25,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Text expNeededText = null;
     [SerializeField] private Image levelBar = null;
     [SerializeField] private Transform playerLevelTransform = null;
-
     [SerializeField] private LevelEffect[] levelsEffect;
+
+    public float timePlayed;
+    public float score;
 
     private SettingsData settingsData;
 
@@ -43,6 +45,31 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            timePlayed += 25;
+        }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            score += 200000;
+        }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            int result = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                result += GameplayMath.GetInstance().GetGravitonsFromGame(timePlayed, score);
+            }
+            Debug.Log("gravitons: " + result);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            score = 0;
+            timePlayed = 0;
+        }
+    }
 
     private void InitializeData()
     {
@@ -136,6 +163,15 @@ public class MenuManager : MonoBehaviour
         gravityPointsText.text = currencyData.gravityPoints.ToString();
         gravitonsText.text = currencyData.gravitons.ToString();
 
+        //ASPECT DATA
+        objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ASPECTDATA_PATH);
+        if (objectData == null)
+        {
+            objectData = SaveManager.GetInstance().SavePersistentData(new PlayerAspectData(), SaveManager.ASPECTDATA_PATH);
+        }
+        PlayerAspectData aspectData = objectData.GetData<PlayerAspectData>();
+        aspectData.InitializeMissingData();
+        SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
     }
 
     private GameObject GetLevelEffect(int level)

@@ -44,7 +44,7 @@ public class Button : MonoBehaviour
         }
         if (resizeOnPress)
         {
-            Vector2 newScale = new Vector2(sprite.rectTransform.localScale.x * pressedScaleMultiplier.x, sprite.rectTransform.localScale.y * pressedScaleMultiplier.y);
+            Vector3 newScale = new Vector3(sprite.rectTransform.localScale.x * pressedScaleMultiplier.x, sprite.rectTransform.localScale.y * pressedScaleMultiplier.y, sprite.rectTransform.localScale.z * pressedScaleMultiplier.x);
             sprite.rectTransform.localScale = newScale;
         }
     }
@@ -57,7 +57,7 @@ public class Button : MonoBehaviour
         }
         if(resizeOnPress)
         {
-            sprite.rectTransform.localScale = Vector2.one;
+            sprite.rectTransform.localScale = Vector3.one;
         }
         if(playSound)
         {

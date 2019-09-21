@@ -73,8 +73,6 @@ public class PlayerData : EncryptedData
 
         switch (playerState)
         {
-            case PlayerManager.PlayerState.ASTEROID:
-                break;
             case PlayerManager.PlayerState.COMET:
                 break;
             default:

@@ -25,6 +25,7 @@ public class HUDManagerC_E : Editor
             script.fpsText = (Text)EditorGUILayout.ObjectField("FPS text", script.fpsText, typeof(Text), true);
             script.gameOverScoreText = (Text)EditorGUILayout.ObjectField("GameOverScore text", script.gameOverScoreText, typeof(Text), true);
             script.gameOverGravityPointsText = (Text)EditorGUILayout.ObjectField("GameOver GP text", script.gameOverGravityPointsText, typeof(Text), true);
+            script.gravitonsText = (Text)EditorGUILayout.ObjectField("Gravitons text", script.gravitonsText, typeof(Text), true);
             script.gameOverInfoText = (Text)EditorGUILayout.ObjectField("GameOverInfo text", script.gameOverInfoText, typeof(Text), true);
             script.healthText = (Text)EditorGUILayout.ObjectField("Health text", script.healthText, typeof(Text), true);
             script.loadingAdText = (Text)EditorGUILayout.ObjectField("LoadingAd text", script.loadingAdText, typeof(Text), true);

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2934803689511727113}
   m_Layer: 14
   m_Name: ShieldPickUp
-  m_TagString: Shield
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe84ad643316a84899914ff2342d0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 10
   shieldEffect: {fileID: 1253372487661935805, guid: c075d42bb7f91f74e8345196074bfa3c,
     type: 3}
   destroyShieldEffect: {fileID: 3992505816184032464, guid: bf228336eb4affe4e8c5fd876f1338a8,

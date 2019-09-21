@@ -17,9 +17,7 @@ public class PlayerManager : MonoBehaviour
     public Camera mainCamera;
     [SerializeField] private Canvas directionArrow = null;
     [Header("Effects")]
-    public GameObject asteroidDE;
-    public GameObject cometDE;
-    private GameObject deathEffect;
+    [SerializeField] private GameObject deathEffect;
     [SerializeField] private GameObject damageNebula;
     private ParticleSystem latDamageNebulaEffect;
     private ParticleSystem verticalDamageNebulaEffect;
@@ -35,9 +33,6 @@ public class PlayerManager : MonoBehaviour
     [Header("Collision parameters")]
     [SerializeField] private float collisionTimerMultiplier = 2f;
     [SerializeField] private float collisionSlowMotionDuration = 2f;
-    [Header("Aspect")]
-    [SerializeField] private Material asteroidMaterial = null;
-    [SerializeField] private Material cometMaterial = null;
 
     //Player references
     [HideInInspector] public MovementManager movementManager;
@@ -57,6 +52,8 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public HUDManager hudManagerInstance;
     [HideInInspector] public bool isDead = false;
     private int sessionObstaclesHit = 0;
+
+    private GameObject aspect; 
 
     [HideInInspector] public float scoreMultiplier = 1f;
     [HideInInspector] public float timeDistortion = 1f;
@@ -94,6 +91,14 @@ public class PlayerManager : MonoBehaviour
             playerState = playerData.playerState;
             initialResilience = playerData.resilience;
         }
+
+        PlayerAspectData aspectsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ASPECTDATA_PATH).GetData<PlayerAspectData>();
+        aspect = Instantiate(PersistentPlayerPrefs.GetInstance().GetAspectWithId(aspectsData.equippedSkinId).prefab);
+        aspect.transform.SetParent(gameObject.transform);
+        aspect.transform.localScale = new Vector3(1, 1, 1);
+        Material mat = aspect.GetComponent<MeshRenderer>().material;
+        deathEffect.GetComponent<Renderer>().material = mat;
+
         dangerZoneCount = 0;
     }
 
@@ -102,19 +107,6 @@ public class PlayerManager : MonoBehaviour
         gravityFieldsGens = new List<GameObstacle>();
 
         resilience = initialResilience;
-        MeshRenderer renderer = GetComponent<MeshRenderer>();
-        switch (playerState)
-        {
-            case PlayerState.ASTEROID:
-                renderer.material = asteroidMaterial;
-                deathEffect = asteroidDE;
-                break;
-
-            case PlayerState.COMET:
-                renderer.material = cometMaterial;
-                deathEffect = cometDE;
-                break;
-        }
 
         hudManagerInstance = HUDManager.GetInstance();
 
@@ -391,7 +383,7 @@ public class PlayerManager : MonoBehaviour
 
         Instantiate(deathEffect, transform.position, transform.rotation);
         gameObject.GetComponent<SphereCollider>().enabled = false;
-        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        aspect.GetComponent<MeshRenderer>().enabled = false;
 
         if (level.category == Level.LevelCategory.ENDLESS)
         {

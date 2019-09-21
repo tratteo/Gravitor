@@ -10,14 +10,12 @@ TagManager:
   - Score
   - GravityField
   - DangerZone
-  - Shield
   - ViewContent
-  - BonusGP
   - ComposedObstacle
-  - WarpDrive
   - Margins
   - FilledOverlay
   - Price
+  - Preview
   layers:
   - Default
   - TransparentFX

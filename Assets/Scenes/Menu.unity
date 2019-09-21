@@ -1194,6 +1194,8 @@ MonoBehaviour:
       type: 3}
     startLevel: 100
     endLevel: -1
+  timePlayed: 0
+  score: 0
 --- !u!114 &567465298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3529,7 +3531,17 @@ MonoBehaviour:
   - id: session_Vmax
     sprite: {fileID: 21300000, guid: 7cdd8bd92c577384484bae91a5936166, type: 3}
     description: Reach the max allowed speed
-  playerSkins: []
+  playerAspects:
+  - id: default
+    prefab: {fileID: 907749890234462143, guid: b991995f2214b5843a4f7da762ded408, type: 3}
+  - id: comet
+    prefab: {fileID: 907749890234462143, guid: 93af093c5caeeae45a05e2b3d79c2c08, type: 3}
+  - id: damascus_steel
+    prefab: {fileID: 907749890234462143, guid: 134e682d9ce80a94cb92f52497286bad, type: 3}
+  - id: sci_fi
+    prefab: {fileID: 907749890234462143, guid: e765e791ef8e58647bf69a0faf4d5632, type: 3}
+  - id: golden
+    prefab: {fileID: 907749890234462143, guid: ced13fc83f468a148acb7b02aec76e41, type: 3}
 --- !u!114 &2025963507
 MonoBehaviour:
   m_ObjectHideFlags: 0

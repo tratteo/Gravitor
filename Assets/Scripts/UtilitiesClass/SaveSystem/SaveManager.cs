@@ -36,6 +36,7 @@ public class SaveManager
     public static readonly string ACHIEVMENTS_PATH = Application.persistentDataPath + "/achievments_v2.data";
     public static readonly string LEVELSDATA_PATH = Application.persistentDataPath + "/levels.data";
     public static readonly string CURRENCY_PATH = Application.persistentDataPath + "/currency.data";
+    public static readonly string ASPECTDATA_PATH = Application.persistentDataPath + "/aspects.data";
     //I.E 
     //public static readonly string PLAYER_DATA = Application.persistentDataPath + "/player_data.data";
     //Calling the methods will look like:

@@ -107,11 +107,11 @@ public class GameplayMath
             case 1:
                 return 45;
             case 2:
-                return 35;
+                return 36;
             case 3:
-                return 25;
+                return 28;
             case 4:
-                return 18;
+                return 17;
             default:
                 return -1;
         }
@@ -166,6 +166,19 @@ public class GameplayMath
     {
         int gravityPoints = (int)(0.225f * (0.35f * score * (properTime / 300f)));
         return gravityPoints;
+    }
+
+    public int GetGravitonsFromGame(float timePlayed, float score)
+    {
+        float prob = 1f / ((90f / timePlayed) + 1f);
+        float coeff = 1f / ((1500 / Mathf.Pow(score, 0.56f)) + 1);
+        int quantity = (int)(coeff * 19f);
+        float result = Random.Range(0f, 1f);
+        if(prob > result)
+        {
+            return quantity;
+        }
+        return 0;
     }
 
     public int GetExp(int gravityPoints, GameMode.GradeObtained obt)

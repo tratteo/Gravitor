@@ -35,28 +35,27 @@ public class ExtraManager : MonoBehaviour
         else
         {
             maxCollectableShields = 3;
-            shieldDuration = 8;
+            shieldDuration = 10;
         }
     }
 
     //PICKUPS
     public void ApplyPickUp(Extra pickup)
     {
-        switch (pickup.gameObject.tag)
+        if(pickup is Shield)
         {
-            case "Shield":
-                if(shieldCount < maxCollectableShields)
-                {
-                    Shield shield = (Shield)pickup;
-                    shields.Enqueue(shield);
-                    shieldCount++;
-                    HUDManager.GetInstance().CollectShield(shieldCount);
-                }
-                break;
-            case "WarpDrive":
-                warpDrive = (Wormhole)pickup;
-                StartCoroutine(Wormhole_C(warpDrive));
-                break;
+            if (shieldCount < maxCollectableShields)
+            {
+                Shield shield = (Shield)pickup;
+                shields.Enqueue(shield);
+                shieldCount++;
+                HUDManager.GetInstance().CollectShield(shieldCount);
+            }
+        }
+        else if(pickup is Wormhole)
+        {
+            warpDrive = (Wormhole)pickup;
+            StartCoroutine(Wormhole_C(warpDrive));
         }
     }
 

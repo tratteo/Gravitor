@@ -27,8 +27,8 @@ public class PersistentPlayerPrefs : MonoBehaviour
 
     [Header("Achievements")]
     public List<AchievementInfo> achievements;
-    [Header("Skins")]
-    public List<Material> playerSkins;
+    [Header("Aspects")]
+    public List<PlayerAspect> playerAspects;
 
     private void Start()
     {
@@ -128,6 +128,19 @@ public class PersistentPlayerPrefs : MonoBehaviour
             if(achievements[i].id == id)
             {
                 return achievements[i];
+            }
+        }
+        return null;
+    }
+
+    public PlayerAspect GetAspectWithId(string id)
+    {
+        int length = playerAspects.Count;
+        for (int i = 0; i < length; i++)
+        {
+            if (playerAspects[i].id == id)
+            {
+                return playerAspects[i];
             }
         }
         return null;

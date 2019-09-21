@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,7 +29,7 @@ public class SharedUtilities
 
     public Type GetFirstComponentInChildrenWithTag<Type>(GameObject parent, string tag)
     {
-        Transform[] transforms = parent.GetComponentsInChildren<Transform>();
+        Transform[] transforms = parent.GetComponentsInChildren<Transform>(true);
         for (int i = 1; i < transforms.Length; i++)
         {
             if (transforms[i].tag == tag)
@@ -41,7 +42,7 @@ public class SharedUtilities
 
     public Type GetFirstComponentInParentWithTag<Type>(GameObject parent, string tag)
     {
-        Transform[] transforms = parent.GetComponentsInParent<Transform>();
+        Transform[] transforms = parent.GetComponentsInParent<Transform>(true);
         for (int i = 1; i < transforms.Length; i++)
         {
             if (transforms[i].tag == tag)
@@ -67,6 +68,19 @@ public class SharedUtilities
         return null;
     }
 
+    public List<GameObject> GetGameObjectsInChildrenWithTag(GameObject parent, string tag)
+    {
+        List<GameObject> objs = new List<GameObject>();
+        Transform[] transforms = parent.GetComponentsInChildren<Transform>(true);
+        for (int i = 1; i < transforms.Length; i++)
+        {
+            if (transforms[i].tag == tag)
+            {
+                objs.Add(transforms[i].gameObject);
+            }
+        }
+        return objs;
+    }
 
     public IEnumerator UnfillImage(MonoBehaviour context, Image image, float duration)
     {
@@ -124,13 +138,14 @@ public class SharedUtilities
 
     public void MakeGameObjectVisible(GameObject obj, bool state)
     {
+        if (obj == null) return;
         Transform[] transforms = obj.GetComponentsInChildren<Transform>();
         Renderer renderer;
         int length = transforms.Length;
         for (int i = 0; i < length; i++)
         {
             renderer = transforms[i].gameObject.GetComponent<Renderer>();
-            if (renderer)
+            if (renderer != null)
             {
                 renderer.enabled = state;
             }

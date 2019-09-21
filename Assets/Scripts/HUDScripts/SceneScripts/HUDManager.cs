@@ -38,6 +38,7 @@ public class HUDManager : MonoBehaviour
     public Text fpsText = null;
     public Text gameOverScoreText = null;
     public Text gameOverGravityPointsText = null;
+    public Text gravitonsText = null;
     public Text gameOverInfoText = null;
     public Text healthText = null;
     public Text loadingAdText = null;
@@ -191,13 +192,6 @@ public class HUDManager : MonoBehaviour
     {
         switch (playerData.playerState)
         {
-            case PlayerManager.PlayerState.ASTEROID:
-                gammaRayBurstBtn.gameObject.SetActive(false);
-
-                antigravityBtn.gameObject.SetActive(true);
-                quantumTunnelBtn.gameObject.SetActive(true);
-                solarflareBtn.gameObject.SetActive(false);
-                break;
             case PlayerManager.PlayerState.COMET:
                 gammaRayBurstBtn.gameObject.SetActive(true);
 
@@ -481,7 +475,7 @@ public class HUDManager : MonoBehaviour
         highScorePanel.SetActive(true);
     }
 
-    public void DisplayGameOverPanel(bool showGradeButton)
+    public void DisplayGameOverPanel(bool showGradeButton, bool displayGravitonsEarned)
     {
         QuantumTunnelSelectionActive(false);
         highScorePanel.SetActive(false);
@@ -524,6 +518,15 @@ public class HUDManager : MonoBehaviour
             }
             StartCoroutine(GradeGPAnim_C(targetGP));
         }
+        if(displayGravitonsEarned)
+        {
+            gravitonsText.text = "+"+ gameMode.sessionGravitons.ToString();
+            gravitonsText.gameObject.SetActive(true);
+        }
+        else
+        {
+            gravitonsText.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator GradeGPAnim_C(int targetPoints)
@@ -565,7 +568,7 @@ public class HUDManager : MonoBehaviour
         Animator animator = levelCompletedPanel.GetComponent<Animator>();
         float length = animator.runtimeAnimatorController.animationClips[0].length;
         yield return new WaitForSeconds(length);
-        DisplayGameOverPanel(true);
+        DisplayGameOverPanel(true, false);
     }
     
     public void DisplayPlayerLevelUp(int level)

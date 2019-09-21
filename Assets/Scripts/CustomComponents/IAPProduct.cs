@@ -5,11 +5,11 @@ public class IAPProduct : StoreProduct
 {
     [HideInInspector] public Product product;
 
-    private void OnEnable()
+    private void Awake()
     {
         product = GoogleIAPManager.GetInstance().GetProductWithID(id);
         price = (float)product.metadata.localizedPrice;
-        base.OnEnable();
+        base.Awake();
         priceText.text += " €";
     }
 
