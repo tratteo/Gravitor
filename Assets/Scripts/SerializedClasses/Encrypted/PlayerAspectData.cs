@@ -8,6 +8,7 @@ public class PlayerAspectData : EncryptedData
     public const string DAMASCUS_STEEL = "damascus_steel";
     public const string SCI_FI = "sci_fi";
     public const string GOLDEN = "golden";
+    public const string CHRISTMAS = "christmas";
 
     private List<string> unlockedSkinsId;
     public string equippedSkinId = null;

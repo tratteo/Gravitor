@@ -3542,6 +3542,8 @@ MonoBehaviour:
     prefab: {fileID: 907749890234462143, guid: e765e791ef8e58647bf69a0faf4d5632, type: 3}
   - id: golden
     prefab: {fileID: 907749890234462143, guid: ced13fc83f468a148acb7b02aec76e41, type: 3}
+  - id: christmas
+    prefab: {fileID: 907749890234462143, guid: 09cc283d36bb2ee43bb26650444c4844, type: 3}
 --- !u!114 &2025963507
 MonoBehaviour:
   m_ObjectHideFlags: 0

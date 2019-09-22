@@ -162,6 +162,12 @@ public class StoreManager : MonoBehaviour
                 GetProductWithID(PlayerAspectData.GOLDEN)?.SetProductState(StoreProduct.ProductState.PURCHASED);
                 toast.ShowToast("Aspect purchased: Golden", null, 2f); 
                 break;
+            case PlayerAspectData.CHRISTMAS:
+                aspectData.UnlockAspect(PlayerAspectData.CHRISTMAS);
+                SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
+                GetProductWithID(PlayerAspectData.CHRISTMAS)?.SetProductState(StoreProduct.ProductState.PURCHASED);
+                toast.ShowToast("Aspect purchased: Christmas", null, 2f);
+                break;
         }
         gravitonsText.text = currencyData.gravitons.ToString();
         disclaimerPanel.SetActive(false);
@@ -253,6 +259,12 @@ public class StoreManager : MonoBehaviour
         {
             GetProductWithID(PlayerAspectData.GOLDEN)?.SetProductState(StoreProduct.ProductState.PURCHASED);
         }
+
+        if (aspectData.IsAspectUnlocked(PlayerAspectData.CHRISTMAS))
+        {
+            GetProductWithID(PlayerAspectData.CHRISTMAS)?.SetProductState(StoreProduct.ProductState.PURCHASED);
+        }
+
         GetProductWithID(aspectData.equippedSkinId)?.SetProductState(StoreProduct.ProductState.CONSUMED);
     }
 }
