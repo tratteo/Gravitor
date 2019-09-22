@@ -112,30 +112,25 @@ public class StoreManager : MonoBehaviour
             case "GRB4":
                 skillsData.gammaRayBurstPoints = 4;
                 SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-                SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
                 GetProductWithID("GRB4")?.SetProductState(StoreProduct.ProductState.CONSUMED);
                 iconToast.EnqueueToast("GRB 4 purchased", grbSprite, 2f);
                 break;
             case "MSU":
                 skillsData.magneticShieldBundleUnlocked = true;
                 SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-                SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
                 GetProductWithID("MSU")?.SetProductState(StoreProduct.ProductState.CONSUMED);
                 iconToast.EnqueueToast("Magnetic shield bundle purchased", shieldSprite, 1.5f);
                 break;
             case "1_5M":
                 currencyData.gravityPoints += 1500000;
-                SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
                 iconToast.EnqueueToast("1 500 000 Gravity Points purchased", GPSprite, 1.5f);
                 break;
             case "2_5M":
                 currencyData.gravityPoints += 2500000;
-                SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
                 iconToast.EnqueueToast("2 500 000 Gravity Points purchased", GPSprite, 1.5f);
                 break;
             case "4M":
                 currencyData.gravityPoints += 4000000;
-                SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
                 iconToast.EnqueueToast("4 000 000 Gravity Points purchased", GPSprite, 1.5f);
                 break;
             case PlayerAspectData.COMET:
@@ -168,7 +163,11 @@ public class StoreManager : MonoBehaviour
                 GetProductWithID(PlayerAspectData.CHRISTMAS)?.SetProductState(StoreProduct.ProductState.PURCHASED);
                 toast.ShowToast("Aspect purchased: Christmas", null, 2f);
                 break;
+            default:
+                currencyData.gravitons += (int)highlightedProduct.price;
+                break;
         }
+        SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
         gravitonsText.text = currencyData.gravitons.ToString();
         disclaimerPanel.SetActive(false);
         highlightedProduct = null;
