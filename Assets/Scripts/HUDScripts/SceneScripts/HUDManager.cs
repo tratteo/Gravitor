@@ -124,7 +124,7 @@ public class HUDManager : MonoBehaviour
         //Start tutorial
         if (SharedUtilities.GetInstance().IsFirstLaunch())
         {
-            statsPanel.SetActive(false);
+            EnableHUDPanel(false);
 
             Time.timeScale = 0f;
             gameMode.isPaused = true;

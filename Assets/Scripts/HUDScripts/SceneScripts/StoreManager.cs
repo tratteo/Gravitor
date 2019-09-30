@@ -176,6 +176,7 @@ public class StoreManager : MonoBehaviour
     public void ShowGravitonsStore(bool state)
     {
         gravitonsStorePanel.SetActive(state);
+        parentScrollRect.content.gameObject.SetActive(!state);
     }
 
     public void EnableViewport(string viewPortId)

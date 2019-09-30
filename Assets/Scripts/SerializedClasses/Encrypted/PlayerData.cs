@@ -63,7 +63,7 @@ public class PlayerData : EncryptedData
     {
         base.InitializeDeviceId();
         playerLevel = playerLevel == 0 ? 1 : playerLevel;
-
+        resilience = resilience < 100f ? 100f : resilience;
         if (currentExp > GetLevelExpNeeded())
         {
             int exp = currentExp;

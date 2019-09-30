@@ -170,9 +170,9 @@ public class GameplayMath
 
     public int GetGravitonsFromGame(float timePlayed, float score)
     {
-        float prob = 1f / ((90f / timePlayed) + 1f);
+        float prob = 1f / ((110f / timePlayed) + 1f);
         float coeff = 1f / ((1500 / Mathf.Pow(score, 0.56f)) + 1);
-        int quantity = (int)(coeff * 19f);
+        int quantity = (int)(coeff * 18f);
         float result = Random.Range(0f, 1f);
         if(prob > result)
         {
@@ -183,17 +183,17 @@ public class GameplayMath
 
     public int GetExp(int gravityPoints, GameMode.GradeObtained obt)
     { 
-        int exp = gravityPoints / 8;
+        int exp = gravityPoints / 6;
         switch (obt)
         {
             case GameMode.GradeObtained.BRONZE:
-                exp = (int)(exp * 1.5f);
+                exp = (int)(exp * 1.25f);
                 break;
             case GameMode.GradeObtained.SILVER:
-                exp = (int)(exp * 2.25f);
+                exp = (int)(exp * 2f);
                 break;
             case GameMode.GradeObtained.GOLD:
-                exp = (int)(exp * 3.2f);
+                exp = (int)(exp * 3f);
                 break;
             default:
                 break;
