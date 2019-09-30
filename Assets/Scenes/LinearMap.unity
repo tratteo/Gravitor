@@ -7144,7 +7144,7 @@ MonoBehaviour:
   solarflareBtn: {fileID: 8860004520694636301}
   gammaRayBurstBtn: {fileID: 8860004521156526307}
   adButton: {fileID: 8860004521311727367}
-  showPanelsField: 0
+  showPanelsField: 1
   controlPanel: {fileID: 8860004521168791566}
   HUDPanel: {fileID: 3119795629055098712}
   timerPanel: {fileID: 3436082294046964469}
@@ -7156,7 +7156,6 @@ MonoBehaviour:
   highScorePanel: {fileID: 8860004520556574384}
   quantumTunnelPanel: {fileID: 8860004519814355167}
   highGravityFieldPanel: {fileID: 3119795628032070672}
-  statsPanel: {fileID: 3060681185855780723}
   showToastsField: 0
   inGameToast: {fileID: 6968338996237166777}
   achievementToast: {fileID: 1481151227}

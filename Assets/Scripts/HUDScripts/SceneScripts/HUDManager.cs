@@ -67,7 +67,6 @@ public class HUDManager : MonoBehaviour
     public GameObject highScorePanel = null;
     public GameObject quantumTunnelPanel = null;
     public GameObject highGravityFieldPanel = null;
-    public GameObject statsPanel = null;
 
     public bool showToastsField;
     public ToastScript inGameToast = null;
