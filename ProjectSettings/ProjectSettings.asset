@@ -87,7 +87,7 @@ PlayerSettings:
   useMacAppStoreValidation: 0
   macAppStoreCategory: public.app-category.games
   gpuSkinning: 1
-  graphicsJobs: 0
+  graphicsJobs: 1
   xboxPIXTextureCapture: 0
   xboxEnableAvatar: 0
   xboxEnableKinect: 0
@@ -122,7 +122,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 2.2.1
+  bundleVersion: 2.2.2
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -166,7 +166,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.NAG.Gravitor
   buildNumber: {}
-  AndroidBundleVersionCode: 32
+  AndroidBundleVersionCode: 33
   AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0

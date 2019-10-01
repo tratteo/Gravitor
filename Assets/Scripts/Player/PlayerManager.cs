@@ -376,6 +376,7 @@ public class PlayerManager : MonoBehaviour
     {
         timeDistortion = 1f;
         scoreMultiplier = 1f;
+        Time.timeScale = 1f;
         isDead = true;
         directionArrow.gameObject.SetActive(false);
 
@@ -385,21 +386,11 @@ public class PlayerManager : MonoBehaviour
         gameObject.GetComponent<SphereCollider>().enabled = false;
         aspect.GetComponent<MeshRenderer>().enabled = false;
 
-        if (level.category == Level.LevelCategory.ENDLESS)
-        {
-            LevelsData levelsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.LEVELSDATA_PATH).GetData<LevelsData>();
-            levelsData.UpdateLevelScore(level.id, (int)gameMode.sessionScore);
-            SaveManager.GetInstance().SavePersistentData<LevelsData>(levelsData, SaveManager.LEVELSDATA_PATH);
-        }
-
         ParticleSystem[] effects = skillManager.skillSpawn.GetComponentsInChildren<ParticleSystem>();
-        if (effects != null)
+        int length = effects.Length;
+        for (int i = 0; i < length; i++)
         {
-            int length = effects.Length;
-            for (int i = 0; i < length; i++)
-            {
-                Destroy(effects[i].gameObject);
-            }
+            Destroy(effects[i].gameObject);
         }
 
         dangerZoneCount = 0;
@@ -446,13 +437,15 @@ public class PlayerManager : MonoBehaviour
     private void BroadcastStats()
     {
         //Send broadcast stats
-        SessionStats stats = new SessionStats();
-        stats.maxSpeedReached = movementManager.GetMaxSpeedReached();
-        stats.maxSpeed = movementManager.maxSpeed;
-        stats.timePlayed = properTime;
-        stats.distortedTime = relativeExTime - properTime;
-        stats.score = gameMode.sessionScore;
-        stats.obstaclesHit = sessionObstaclesHit;
+        SessionStats stats = new SessionStats
+        {
+            maxSpeedReached = movementManager.GetMaxSpeedReached(),
+            maxSpeed = movementManager.maxSpeed,
+            timePlayed = properTime,
+            distortedTime = relativeExTime - properTime,
+            score = gameMode.sessionScore,
+            obstaclesHit = sessionObstaclesHit
+        };
         PersistentPlayerPrefs.GetInstance().CheckAchievements(stats);
     }
 

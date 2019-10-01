@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class LevelsManager : MonoBehaviour
 {
+    private Color32 SELECTED_COLOR = new Color32(0, 225, 255, 225);
+    private Color32 DESELECTED_COLOR = new Color32(225, 225, 225, 255);
+
     [SerializeField] private Text bronzeScore;
     [SerializeField] private Text silverScore;
     [SerializeField] private Text goldScore;
@@ -11,14 +14,18 @@ public class LevelsManager : MonoBehaviour
     [SerializeField] private Text goldGP;
     [SerializeField] private Text info;
     [SerializeField] private Text highScore;
+    [SerializeField] private Image tutorialButton = null;
 
     [SerializeField] private GameObject levelInfoPanel;
 
     private Level selectedLevel;
+    private PlayerData playerData;
 
     void Start()
     {
         AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
+        playerData = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
+        tutorialButton.color = playerData.showTutorial ? SELECTED_COLOR : DESELECTED_COLOR;
     }
 
     public void LoadCurrentSelectedLevel()
@@ -48,5 +55,12 @@ public class LevelsManager : MonoBehaviour
     {
         selectedLevel = null;
         levelInfoPanel.SetActive(false);
+    }
+
+    public void ToggleTutorial()
+    {
+        playerData.showTutorial = !playerData.showTutorial;
+        tutorialButton.color = playerData.showTutorial ? SELECTED_COLOR : DESELECTED_COLOR;
+        SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
     }
 }

@@ -101,7 +101,10 @@ public class StoreManager : MonoBehaviour
 
     public void BuyIAPPProduct(IAPProduct product)
     {
-        GoogleIAPManager.GetInstance().BuyProduct(product.id);
+        Executer.GetInstance().AddJob(() =>
+        {
+            GoogleIAPManager.GetInstance().BuyProduct(product.id);
+        });
     }
 
     public void BuyHighlightedProduct()

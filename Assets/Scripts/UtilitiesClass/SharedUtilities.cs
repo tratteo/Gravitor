@@ -123,19 +123,6 @@ public class SharedUtilities
         }
     }
 
-
-    public bool IsFirstLaunch()
-    {
-        PlayerData data = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
-        if(data.isFirstLaunch == true)
-        {
-            data.isFirstLaunch = false;
-            SaveManager.GetInstance().SavePersistentData<PlayerData>(data, SaveManager.PLAYER_DATA);
-            return true;
-        }
-        return false;
-    }
-
     public void MakeGameObjectVisible(GameObject obj, bool state)
     {
         if (obj == null) return;

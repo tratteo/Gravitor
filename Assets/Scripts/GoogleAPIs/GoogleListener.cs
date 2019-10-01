@@ -57,7 +57,7 @@ public class GoogleListener : MonoBehaviour
     private void IapProductPurchased(string id)
     {
         Executer.GetInstance().AddJob(() =>
-       {
+        {
            CurrencyData currencyData = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH).GetData<CurrencyData>();
            switch (id)
            {

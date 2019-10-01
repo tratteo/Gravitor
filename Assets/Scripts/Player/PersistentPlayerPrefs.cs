@@ -18,6 +18,7 @@ public class PersistentPlayerPrefs : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
         DontDestroyOnLoad(gameObject);
     }

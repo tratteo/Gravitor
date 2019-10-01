@@ -118,13 +118,12 @@ public class HUDManager : MonoBehaviour
         }
 
         SetControls(settingsData.controlsLayout);
-        EnableHUDBasedOnPlayerState();
 
         //Start tutorial
-        if (SharedUtilities.GetInstance().IsFirstLaunch())
+        if (playerData.showTutorial)
         {
-            EnableHUDPanel(false);
 
+            EnableHUDPanel(false);
             Time.timeScale = 0f;
             gameMode.isPaused = true;
 
@@ -183,21 +182,6 @@ public class HUDManager : MonoBehaviour
         if (gameMode != null && !gameMode.isGameOver && !gameMode.isPaused)
         {
             Pause(true);
-        }
-    }
-
-
-    private void EnableHUDBasedOnPlayerState()
-    {
-        switch (playerData.playerState)
-        {
-            case PlayerManager.PlayerState.COMET:
-                gammaRayBurstBtn.gameObject.SetActive(true);
-
-                antigravityBtn.gameObject.SetActive(true);
-                quantumTunnelBtn.gameObject.SetActive(true);
-                solarflareBtn.gameObject.SetActive(true);
-                break;
         }
     }
 

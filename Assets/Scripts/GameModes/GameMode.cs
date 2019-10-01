@@ -31,7 +31,7 @@ public abstract class GameMode : MonoBehaviour
     [HideInInspector] public int sessionGravityPoints = 0;
     private int currentGravityPoints;
     [HideInInspector] public float sessionScore;
-    [HideInInspector] public int sessionGravitons;
+    [HideInInspector] public int sessionGravitons = 0;
     [HideInInspector] public bool attemptUsed = false;
     private float alpha, beta, gamma, delta;
 
@@ -152,7 +152,6 @@ public abstract class GameMode : MonoBehaviour
     public void EndSession()
     {
         GradeObtained obt = GradeObtained.UNRANKED;
-        Time.timeScale = 1f;
         isGameOver = true;
 
         obstacleSpawner.PauseSpawnTimer(true);
@@ -170,7 +169,6 @@ public abstract class GameMode : MonoBehaviour
 
             sessionGravitons = GameplayMath.GetInstance().GetGravitonsFromGame(playerManager.properTime, sessionScore);
             currencyData.gravitons += sessionGravitons;
-            SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
         }
         currencyData.gravityPoints = sessionGravityPoints + currentGravityPoints;
         SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);

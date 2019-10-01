@@ -11,20 +11,18 @@ public class PlayerData : EncryptedData
     public ushort thrustForcePoints;
     public float resilience;
     public PlayerManager.PlayerState playerState;
-    public bool isFirstLaunch;
+    public bool showTutorial;
 
     public int playerLevel;
     public int currentExp;
 
-    /// <summary>
-    /// Create instance and set points values to default and playerState to ASTEROID  
-    /// </summary>
+
     public PlayerData()
     {
         thrustForcePoints = 1;
         resilience = 100f;
         playerState = PlayerManager.PlayerState.ASTEROID;
-        isFirstLaunch = true;
+        showTutorial = true;
         playerLevel = 1;
     }
 
