@@ -209,10 +209,11 @@ public class SkillManager : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, solarflareRadius, mask);
         int castedObstacles = 0;
         float bonusScore = 0;
-        foreach (Collider collider in hitColliders)
-        {
+        int length = hitColliders.Length;
+        for (int i = 0; i < length; i++)
+        { 
             GameObstacle obstacleToDestroy;
-            obstacleToDestroy = collider.transform.gameObject.GetComponent<GameObstacle>();
+            obstacleToDestroy = hitColliders[i].transform.gameObject.GetComponent<GameObstacle>();
             if (obstacleToDestroy != null)
             {
                 castedObstacles++;
@@ -280,10 +281,11 @@ public class SkillManager : MonoBehaviour
 
         int castedObstacles = 0;
         float bonusScore = 0;
-        foreach (RaycastHit hit in hitColliders)
+        int length = hitColliders.Length;
+        for (int i = 0; i < length; i++)
         {
             GameObstacle obstacleToDestroy;
-            obstacleToDestroy = hit.transform.gameObject.GetComponent<GameObstacle>();
+            obstacleToDestroy = hitColliders[i].transform.gameObject.GetComponent<GameObstacle>();
             if (obstacleToDestroy != null)
             {
                 castedObstacles++;
@@ -293,7 +295,6 @@ public class SkillManager : MonoBehaviour
             }
         }
         playerManager.gameMode.BonusScore(bonusScore);
-        Debug.Log("GRB D: " + castedObstacles);
         sessionObstaclesDestroyed += castedObstacles;
         if (playerManager.level.category == Level.LevelCategory.OBSTACLES_DESTROY && sessionObstaclesDestroyed >= playerManager.level.targetObstaclesDestoryed)
         {
@@ -306,7 +307,6 @@ public class SkillManager : MonoBehaviour
         {
             hudManager.EnableHighGravityFieldPanel(false);
         }
-        //yield return new WaitForSeconds(raySystem.main.duration);
     }
 
     //Utils

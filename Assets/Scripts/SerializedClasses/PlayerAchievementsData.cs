@@ -6,7 +6,7 @@ public class PlayerAchievementsData
     public const string SESSION_30TD = "session_30Td";
     public const string SESSION_45TD = "session_45Td";
     public const string SESSION_60TD = "session_60Td";
-    public const string SESSION_M_TD = "session_M_td";
+    public const string SESSION_M_TD = "session_M_Td";
     public const string SESSION_H_500K = "session_H_500K";
     public const string SESSION_H_1M = "session_H_1M";
     public const string SESSION_H_2M = "session_H_2M";
@@ -36,6 +36,7 @@ public class PlayerAchievementsData
 
     public bool IsAchievementUnlocked(string achievement)
     {
+        if (achievement == null) return false;
         return unlockedAchievementsIds.Contains(achievement);
     }
 }

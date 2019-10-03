@@ -6,7 +6,9 @@ using System.Collections;
 /// </summary>
 public class ParticleSystemAutoDestroy : MonoBehaviour
 {
+    public enum Type { DEACTIVATE, DESTROY }
     private new ParticleSystem particleSystem;
+    public Type destroyType;
 
     public void Start()
     {
@@ -19,7 +21,15 @@ public class ParticleSystemAutoDestroy : MonoBehaviour
         {
             if (!particleSystem.IsAlive())
             {
-                Destroy(gameObject);
+                switch(destroyType)
+                {
+                    case Type.DEACTIVATE:
+                        gameObject.SetActive(false);
+                        break;
+                    case Type.DESTROY:
+                        Destroy(gameObject);
+                        break;
+                }
             }
         }
     }

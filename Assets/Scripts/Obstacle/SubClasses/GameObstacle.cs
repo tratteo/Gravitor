@@ -22,7 +22,6 @@ public class GameObstacle : Obstacle, IDestroyEffect
         gravityComponent = GetComponentInChildren<ObstacleGravity>();
         rigidbody = GetComponent<Rigidbody>();
     }
-
     //Collision and triggers
 
     public override void OnObjectSpawn()
@@ -82,13 +81,29 @@ public class GameObstacle : Obstacle, IDestroyEffect
     {
         if (instantiateEffect)
         {
-            GameObject effect = Instantiate(deathEffect, transform.position, transform.rotation);
-            switch (gameMode.GetType().Name)
+            string deString = "Planet";
+            switch(type)
             {
-                case "LinearMode":
-                    effect.AddComponent<LinearMovementComponent>();
+                case ObstacleType.PLANET:
+                    deString = "Planet";
+                    break;
+                case ObstacleType.STAR:
+                    deString = "Star";
+                    break;
+                case ObstacleType.WHITE_DWARF:
+                    deString = "WhiteDwarf";
+                    break;
+                case ObstacleType.NEUTRON_STAR:
+                    deString = "NeutronStar";
                     break;
             }
+            gameMode.currentLevel.poolManager.Spawn("DeathEffects", deString, transform.position, Quaternion.identity);
+            //switch (gameMode.GetType().Name)
+            //{
+            //    case "LinearMode":
+            //        effect.AddComponent<LinearMovementComponent>();
+            //        break;
+            //}
         }
         base.DeactivateObstacle();
     }

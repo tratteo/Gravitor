@@ -164,7 +164,7 @@ public class GameplayMath
 
     public int GetGravityPointsFromSession(float score, float properTime, Level level)
     {
-        int gravityPoints = (int)(0.25f * (0.375f * score * (properTime / 300f)));
+        int gravityPoints = (int)(0.275f * (0.38f * score * (properTime / 300f)));
         return gravityPoints;
     }
 
@@ -183,11 +183,11 @@ public class GameplayMath
 
     public int GetExp(int gravityPoints, GameMode.GradeObtained obt)
     { 
-        int exp = gravityPoints / 5;
+        int exp = gravityPoints / 4;
         switch (obt)
         {
             case GameMode.GradeObtained.BRONZE:
-                exp = (int)(exp * 1.25f);
+                exp = (int)(exp * 1.3f);
                 break;
             case GameMode.GradeObtained.SILVER:
                 exp = (int)(exp * 2f);

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public abstract class GameMode : MonoBehaviour
@@ -59,8 +58,8 @@ public abstract class GameMode : MonoBehaviour
         playerManager = FindObjectOfType<PlayerManager>();
         InitializeLevelParameters();
 
-        SaveObject objectData;     
-        
+        SaveObject objectData;
+
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH);
         currencyData = objectData.GetData<CurrencyData>();
         currentGravityPoints = objectData != null ? currencyData.gravityPoints : 0;
@@ -82,7 +81,7 @@ public abstract class GameMode : MonoBehaviour
 
         extrasSpawnRateRange = currentLevel.extrasSpawnRateRange;
 
-        if(currentLevel.overrideSpawnArea)
+        if (currentLevel.overrideSpawnArea)
         {
             randXSpawn = currentLevel.randXSpawn;
             randYSpawn = currentLevel.randYSpawn;
@@ -167,8 +166,15 @@ public abstract class GameMode : MonoBehaviour
 
             obt = CheckForGradeBonusGP();
 
-            sessionGravitons = GameplayMath.GetInstance().GetGravitonsFromGame(playerManager.properTime, sessionScore);
-            currencyData.gravitons += sessionGravitons;
+            if (attemptUsed)
+            {
+                sessionGravitons = 0;
+            }
+            else
+            {
+                sessionGravitons = GameplayMath.GetInstance().GetGravitonsFromGame(playerManager.properTime, sessionScore);
+                currencyData.gravitons += sessionGravitons;
+            }
         }
         currencyData.gravityPoints = sessionGravityPoints + currentGravityPoints;
         SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
@@ -201,7 +207,7 @@ public abstract class GameMode : MonoBehaviour
         SaveManager.GetInstance().SavePersistentData<LevelsData>(levelsData, SaveManager.LEVELSDATA_PATH);
 
         sessionGravityPoints = GameplayMath.GetInstance().GetGravityPointsFromSession(sessionScore, playerManager.properTime, currentLevel);
-        
+
         GradeObtained obt = CheckForGradeBonusGP();
         currencyData.gravityPoints = sessionGravityPoints + currentGravityPoints;
         SaveManager.GetInstance().SavePersistentData<CurrencyData>(currencyData, SaveManager.CURRENCY_PATH);
@@ -221,7 +227,7 @@ public abstract class GameMode : MonoBehaviour
     {
         LayerMask mask = LayerMask.GetMask("Obstacles", "Extras");
         Collider[] hitColliders = Physics.OverlapBox(new Vector3(0, 0, 1500), new Vector3(300, 300, 1500), Quaternion.identity, mask);
-        foreach(Collider collider in hitColliders)
+        foreach (Collider collider in hitColliders)
         {
             collider.gameObject.SetActive(false);
         }
@@ -235,7 +241,7 @@ public abstract class GameMode : MonoBehaviour
     private void CheckForPlayerLevelUp(GradeObtained obt)
     {
         int newLevel = playerManager.CalculateLevel(sessionGravityPoints, obt);
-        if(newLevel != 0)
+        if (newLevel != 0)
         {
             HUDManager.GetInstance().DisplayPlayerLevelUp(newLevel);
         }

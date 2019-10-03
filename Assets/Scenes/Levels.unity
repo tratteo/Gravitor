@@ -422,6 +422,18 @@ MonoBehaviour:
           type: 3}
         poolSize: 50
         spawnProbability: 1
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 35
+        spawnProbability: 1
 --- !u!114 &133994641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1229,6 +1241,18 @@ MonoBehaviour:
           type: 3}
         poolSize: 25
         spawnProbability: 1
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 35
+        spawnProbability: 1
 --- !u!1 &375025790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,6 +1633,23 @@ MonoBehaviour:
           type: 3}
         poolSize: 80
         spawnProbability: 0.05
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 35
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 25
+        spawnProbability: 1
 --- !u!114 &525417299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2594,6 +2635,28 @@ MonoBehaviour:
           type: 3}
         poolSize: 50
         spawnProbability: 0.4
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 40
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 30
+        spawnProbability: 1
+      - tag: NeutronStar
+        prefab: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
+          type: 3}
+        poolSize: 20
+        spawnProbability: 1
 --- !u!114 &741440341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2876,6 +2939,28 @@ MonoBehaviour:
           type: 3}
         poolSize: 50
         spawnProbability: 1
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 40
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 30
+        spawnProbability: 1
+      - tag: NeutronStar
+        prefab: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
+          type: 3}
+        poolSize: 25
+        spawnProbability: 1
 --- !u!114 &773140341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3078,6 +3163,23 @@ MonoBehaviour:
         prefab: {fileID: 1942656736390226775, guid: 34c9bfb76a74c464f841097594527e3d,
           type: 3}
         poolSize: 20
+        spawnProbability: 1
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 40
+        spawnProbability: 1
+      - tag: NeutronStar
+        prefab: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
+          type: 3}
+        poolSize: 50
         spawnProbability: 1
 --- !u!114 &785818387
 MonoBehaviour:
@@ -3439,8 +3541,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 844096572}
   m_HandleRect: {fileID: 844096571}
   m_Direction: 0
-  m_Value: 0.00000002764774
-  m_Size: 0.33254722
+  m_Value: 0
+  m_Size: 0.32791972
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3872,6 +3974,28 @@ MonoBehaviour:
           type: 3}
         poolSize: 50
         spawnProbability: 0.5
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 40
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 30
+        spawnProbability: 1
+      - tag: NeutronStar
+        prefab: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
+          type: 3}
+        poolSize: 25
+        spawnProbability: 1
 --- !u!114 &1005383703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5091,6 +5215,28 @@ MonoBehaviour:
           type: 3}
         poolSize: 50
         spawnProbability: 1
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 40
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 30
+        spawnProbability: 1
+      - tag: NeutronStar
+        prefab: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
+          type: 3}
+        poolSize: 25
+        spawnProbability: 1
 --- !u!114 &1430775123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5361,6 +5507,23 @@ MonoBehaviour:
         prefab: {fileID: 7568984893206684663, guid: df9714f4ec9b598429704ac952be7087,
           type: 3}
         poolSize: 50
+        spawnProbability: 1
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 35
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 25
         spawnProbability: 1
 --- !u!114 &1449990521
 MonoBehaviour:
@@ -5957,6 +6120,28 @@ MonoBehaviour:
           type: 3}
         poolSize: 40
         spawnProbability: 0.75
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 35
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 20
+        spawnProbability: 1
+      - tag: NeutronStar
+        prefab: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
+          type: 3}
+        poolSize: 15
+        spawnProbability: 1
 --- !u!1 &1664270669
 GameObject:
   m_ObjectHideFlags: 0
@@ -6418,6 +6603,28 @@ MonoBehaviour:
         prefab: {fileID: 7568984893206684663, guid: df9714f4ec9b598429704ac952be7087,
           type: 3}
         poolSize: 50
+        spawnProbability: 1
+    - name: DeathEffects
+      pools:
+      - tag: Planet
+        prefab: {fileID: 8793235789949313078, guid: c280a97f5d161464794a9b3ee4048d60,
+          type: 3}
+        poolSize: 50
+        spawnProbability: 1
+      - tag: Star
+        prefab: {fileID: 8793235789949313078, guid: fbe77748734131941aabc7ad67123545,
+          type: 3}
+        poolSize: 40
+        spawnProbability: 1
+      - tag: WhiteDwarf
+        prefab: {fileID: 8793235789949313078, guid: 569c535f01b1fdb408cc28ff3ee3b15e,
+          type: 3}
+        poolSize: 35
+        spawnProbability: 1
+      - tag: NeutronStar
+        prefab: {fileID: 8793235789949313078, guid: b95faace0b8be8e4d924d4cde5040b1f,
+          type: 3}
+        poolSize: 40
         spawnProbability: 1
 --- !u!114 &1725854679
 MonoBehaviour:

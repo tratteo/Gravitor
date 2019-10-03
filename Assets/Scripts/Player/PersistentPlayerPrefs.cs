@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PersistentPlayerPrefs : MonoBehaviour
 {
@@ -51,7 +49,7 @@ public class PersistentPlayerPrefs : MonoBehaviour
         {
             NotifyAchievement(GetAchievementWithId(PlayerAchievementsData.SESSION_60TD));
         }
-        if (stats.distortedTime > 5400)
+        if (stats.distortedTime > 9000)
         {
             NotifyAchievement(GetAchievementWithId(PlayerAchievementsData.SESSION_M_TD));
         }
@@ -113,10 +111,13 @@ public class PersistentPlayerPrefs : MonoBehaviour
 
     private void NotifyAchievement(AchievementInfo achInfo)
     {
-        if (!playerAchievements.IsAchievementUnlocked(achInfo.id))
+        if (achInfo != null)
         {
-            HUDManager.GetInstance().Toast(HUDManager.ToastType.ACHIEVEMENT_TOAST, "Achievement unlocked", achInfo.sprite, 2.5f, 0.25f, true);
-            playerAchievements.UnlockAchievement(achInfo.id);
+            if (!playerAchievements.IsAchievementUnlocked(achInfo.id))
+            {
+                HUDManager.GetInstance().Toast(HUDManager.ToastType.ACHIEVEMENT_TOAST, "Achievement unlocked", achInfo.sprite, 2.5f, 0.25f, true);
+                playerAchievements.UnlockAchievement(achInfo.id);
+            }
         }
     }
 

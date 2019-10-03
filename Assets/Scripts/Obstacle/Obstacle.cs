@@ -19,7 +19,11 @@ public class Obstacle : MonoBehaviour, IPooledObject
 
     [HideInInspector] public float targetScale;
     private Vector3 rotationVelocity;
+
     protected void Awake()
+    { }
+
+    protected void Start()
     {
         meshRenderer = GetComponent<MeshRenderer>();
         gameMode = FindObjectOfType<GameMode>();

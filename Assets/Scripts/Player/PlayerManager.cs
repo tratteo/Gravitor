@@ -30,9 +30,6 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float shakeRoughness = 8f;
     [SerializeField] private float shakeFadeInTime = 0.25f;
     [SerializeField] private float shakeFadeOutTime = 0.8f;
-    [Header("Collision parameters")]
-    [SerializeField] private float collisionTimerMultiplier = 2f;
-    [SerializeField] private float collisionSlowMotionDuration = 2f;
 
     //Player references
     [HideInInspector] public MovementManager movementManager;
@@ -115,14 +112,6 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(UpdateTimeDistortion());
     }
 
-    void Update()
-    {
-        if (Time.timeScale < 1 && gameMode != null && !gameMode.isPaused)
-        {
-            Time.timeScale += (1 / collisionSlowMotionDuration) * Time.unscaledDeltaTime;
-        }
-    }
-
     void FixedUpdate()
     {
         if (!gameMode.isGameOver)
@@ -161,7 +150,6 @@ public class PlayerManager : MonoBehaviour
             }
 
             CameraShaker.Instance.ShakeOnce(shakeMagnitude, shakeRoughness, shakeFadeInTime, shakeFadeOutTime);
-            Time.timeScale = 1 / collisionTimerMultiplier;
 
             if (!extraManager.isShielded)
             {
@@ -344,7 +332,7 @@ public class PlayerManager : MonoBehaviour
             }
 
             gameObject.GetComponent<SphereCollider>().enabled = true;
-            gameObject.GetComponent<MeshRenderer>().enabled = true;
+            aspect.GetComponent<MeshRenderer>().enabled = true;
             transform.position = new Vector3(0f, 0f, 0f);
         });
         StartCoroutine(UpdateTimeDistortion());
@@ -384,7 +372,10 @@ public class PlayerManager : MonoBehaviour
 
         Instantiate(deathEffect, transform.position, transform.rotation);
         gameObject.GetComponent<SphereCollider>().enabled = false;
-        aspect.GetComponent<MeshRenderer>().enabled = false;
+        if (aspect != null)
+        {
+            aspect.GetComponent<MeshRenderer>().enabled = false;
+        }
 
         ParticleSystem[] effects = skillManager.skillSpawn.GetComponentsInChildren<ParticleSystem>();
         int length = effects.Length;
