@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44479245, g: 0.49434233, b: 0.5735407, a: 1}
+  m_IndirectSpecularColor: {r: 0.44479212, g: 0.49434167, b: 0.5735395, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -620,7 +620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 840, y: -319.74866}
+  m_AnchoredPosition: {x: 840, y: -327.29724}
   m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &218333888
@@ -4236,7 +4236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1390, y: -319.74866}
+  m_AnchoredPosition: {x: 1390, y: -327.29724}
   m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &942108516
@@ -4681,7 +4681,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 290, y: -319.74866}
+  m_AnchoredPosition: {x: 290, y: -327.29724}
   m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1001868594
@@ -5698,7 +5698,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1940, y: -319.74866}
+  m_AnchoredPosition: {x: 1940, y: -327.29724}
   m_SizeDelta: {x: 350, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1315281183
@@ -9537,8 +9537,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2060503714234418355}
   m_HandleRect: {fileID: 2060503714234418356}
   m_Direction: 0
-  m_Value: 0.00000013120199
-  m_Size: 0.78997743
+  m_Value: 0
+  m_Size: 0.77615756
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9636,8 +9636,8 @@ RectTransform:
   m_Father: {fileID: 2060503716027977477}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000000027555378, y: 0}
-  m_AnchorMax: {x: 0.7899775, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.77615756, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9718,8 +9718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -14.999973, y: 0}
-  m_SizeDelta: {x: 495.19995, y: 0}
+  m_AnchoredPosition: {x: -14.999997, y: 0}
+  m_SizeDelta: {x: 525.81104, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2060503715305920771
 GameObject:

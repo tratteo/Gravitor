@@ -2092,12 +2092,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.25
-  m_Text: "During a game it is possible to stack up maximum <b>four</b> shields and
-    use them when needed. When a shield is used a <color=cyan>duration is shown</color>
-    near the shield icon. \nKeep in mind that it is possible to activate more than
-    one shield in order to form a queue: when there are more shield enqueued, as
-    soon as the current shield expires or gets destroyed, another shield is automatically
-    activated. The number of the shield enqueued is shown under the duration animation.\n<b>Keep
+  m_Text: "During a game it is possible to stack up shields and use them when needed.
+    When a shield is used a <color=cyan>duration is shown</color> near the shield
+    icon. \nKeep in mind that it is possible to activate more than one shield in
+    order to form a queue: when there are more shield enqueued, as soon as the current
+    shield expires or gets destroyed, another shield is automatically activated.
+    The number of the shield enqueued is shown under the duration animation.\n<b>Keep
     in mind</b> that colliding with a celestial body with a shield activated will
     increase the score based on the body destruction bonus points algorithm (proportional
     to mass)."
@@ -4989,8 +4989,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 307482130159894293}
   m_HandleRect: {fileID: 307482130159894292}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.3963879
+  m_Value: 1
+  m_Size: 0.31241447
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

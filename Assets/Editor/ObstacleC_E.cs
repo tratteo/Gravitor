@@ -39,7 +39,6 @@ public class ObstacleC_E : Editor
 
             case Obstacle.ObstacleType.STAR:
                 EditorGUILayout.LabelField("Star fields", EditorStyles.boldLabel);
-                script.starFlare = (GameObject)EditorGUILayout.ObjectField("Star Flare", script.starFlare, typeof(GameObject), false);
                 break;
 
             case Obstacle.ObstacleType.WHITE_DWARF:

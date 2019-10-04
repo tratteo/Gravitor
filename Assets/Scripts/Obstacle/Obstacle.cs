@@ -13,7 +13,6 @@ public class Obstacle : MonoBehaviour, IPooledObject
     public Material[] materialsPool;
     public int minScale;
     public int maxScale;
-    public GameObject starFlare;
     public bool rotate = false;
 
 
@@ -62,24 +61,38 @@ public class Obstacle : MonoBehaviour, IPooledObject
         StartCoroutine(ScaleCoroutine());
 
         Light pointLight;
-        switch (type)
+        int quality = QualitySettings.GetQualityLevel();
+        if (quality != SettingsManager.LOW)
         {
-            case ObstacleType.STAR:
-                GameObject starFlareRef = Instantiate(starFlare, transform.position, transform.rotation);
-                starFlareRef.transform.SetParent(transform);
-                starFlareRef.transform.localScale = Vector3.one;
-                ParticleSystem.ShapeModule shapeModule = starFlareRef.GetComponent<ParticleSystem>().shape;
-                shapeModule.radius = transform.localScale.x / 2;
-                pointLight = GetComponentInChildren<Light>();
-                pointLight.range = transform.localScale.x * 2f;
-                pointLight.intensity = transform.localScale.x * 10;
-                break;
+            switch (type)
+            {
+                case ObstacleType.STAR:
+                    pointLight = GetComponentInChildren<Light>();
+                    pointLight.range = targetScale;
+                    pointLight.intensity = targetScale;
+                    break;
 
-            case ObstacleType.WHITE_DWARF:
-                pointLight = GetComponentInChildren<Light>();
-                pointLight.range = transform.localScale.x * 5f;
-                pointLight.intensity = transform.localScale.x * 60;
-                break;
+                case ObstacleType.WHITE_DWARF:
+                    pointLight = GetComponentInChildren<Light>();
+                    pointLight.range = targetScale * 6f;
+                    pointLight.intensity = targetScale * 12f;
+                    break;
+            }
+        }
+        else
+        {
+            switch (type)
+            {
+                case ObstacleType.STAR:
+                    pointLight = GetComponentInChildren<Light>();
+                    pointLight.enabled = false;
+                    break;
+
+                case ObstacleType.WHITE_DWARF:
+                    pointLight = GetComponentInChildren<Light>();
+                    pointLight.enabled = false;
+                    break;
+            }
         }
     }
 

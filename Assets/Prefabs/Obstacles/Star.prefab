@@ -171,7 +171,7 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 1, g: 0.64705884, b: 0, a: 0.78431374}
-  m_Intensity: 400000
+  m_Intensity: 1000
   m_Range: 80
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -321,4 +321,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea01490898eff0449817cde9db52f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fieldID: 0
