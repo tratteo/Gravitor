@@ -78,7 +78,7 @@ public class UpgradeManager : MonoBehaviour
         skillsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SKILLSDATA_PATH).GetData<PlayerSkillsData>();
 
         PlayerAspectData aspect = SaveManager.GetInstance().LoadPersistentData(SaveManager.ASPECTDATA_PATH).GetData<PlayerAspectData>();
-        previewSphere = Instantiate(PersistentPlayerPrefs.GetInstance().GetAspectWithId(aspect.equippedSkinId).prefab);
+        previewSphere = Instantiate(PersistentPrefs.GetInstance().GetAspectWithId(aspect.equippedSkinId).prefab);
         previewSphere.transform.SetParent(playerPreviewParent);
         previewSphere.transform.localScale = new Vector3(200, 200, 200);
         previewSphere.transform.localPosition = new Vector3(0, 0, -1);

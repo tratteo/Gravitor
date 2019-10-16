@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         PlayerAspectData aspectsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ASPECTDATA_PATH).GetData<PlayerAspectData>();
-        aspect = Instantiate(PersistentPlayerPrefs.GetInstance().GetAspectWithId(aspectsData.equippedSkinId).prefab);
+        aspect = Instantiate(PersistentPrefs.GetInstance().GetAspectWithId(aspectsData.equippedSkinId).prefab);
         aspect.transform.SetParent(gameObject.transform);
         aspect.transform.localScale = new Vector3(1, 1, 1);
         Material mat = aspect.GetComponent<MeshRenderer>().material;
@@ -437,7 +437,7 @@ public class PlayerManager : MonoBehaviour
             score = gameMode.sessionScore,
             obstaclesHit = sessionObstaclesHit
         };
-        PersistentPlayerPrefs.GetInstance().CheckAchievements(stats);
+        PersistentPrefs.GetInstance().CheckAchievements(stats);
     }
 
     private IEnumerator UpdateTimeDistortion()

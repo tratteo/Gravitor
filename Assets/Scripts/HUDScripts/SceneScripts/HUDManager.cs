@@ -86,7 +86,6 @@ public class HUDManager : MonoBehaviour
     private int resumeTimer;
     private IEnumerator checkAdC = null;
     private Text enqueuedShieldsText = null;
-    private bool isAdLoading = false;
 
     private Level level;
 
@@ -346,11 +345,6 @@ public class HUDManager : MonoBehaviour
                         adButton.SetActive(false);
                         loadingAdText.gameObject.SetActive(true);
                     }
-                    if (!isAdLoading)
-                    {
-                        GoogleAdsManager.GetInstance().LoadAd(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT);
-                        isAdLoading = true;
-                    }
                 }
             }
             else
@@ -582,7 +576,6 @@ public class HUDManager : MonoBehaviour
     public void ShowRewardedAd()
     {
         GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.EXTRA_ATTEMPT);
-        isAdLoading = false;
     }
 
     public void UpdatePlayerHealthUI(float health, float initialHealth)

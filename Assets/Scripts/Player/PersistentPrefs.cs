@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PersistentPlayerPrefs : MonoBehaviour
+public class PersistentPrefs : MonoBehaviour
 {
     #region SINGLETON
-    private static PersistentPlayerPrefs instance = null;
-    public static PersistentPlayerPrefs GetInstance() { return instance; }
+    private static PersistentPrefs instance = null;
+    public static PersistentPrefs GetInstance() { return instance; }
 
     private void Awake()
     {
@@ -23,6 +23,11 @@ public class PersistentPlayerPrefs : MonoBehaviour
     #endregion
 
     [HideInInspector] public PlayerAchievementsData playerAchievements;
+
+    [Header("Timed Reward")]
+    public int timeDelay;
+    public int gravitonsCost;
+
 
     [Header("Achievements")]
     public List<AchievementInfo> achievements;
@@ -153,4 +158,16 @@ public class PersistentPlayerPrefs : MonoBehaviour
         return achievements;
     }
 
+
+
+    private void OnApplicationPause(bool pause)
+    {
+        ServicesData servData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SERVICES_PATH).GetData<ServicesData>();
+        if (servData != null)
+        {
+            servData.lastAccess = System.DateTime.Now;
+            SaveManager.GetInstance().SavePersistentData(servData, SaveManager.SERVICES_PATH);
+            print("Paused, saved last access: " + servData.lastAccess);
+        }
+    }
 }

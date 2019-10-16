@@ -54,7 +54,7 @@ public class GameplayMath
 
     public float GetBonusPointsFromObstacleMass(float mass)
     {
-        return 4.9E-8f * mass;
+        return 5.175E-8f * mass;
     }
 
     public float GetPlayerThrustForceFromPoints(int points)
@@ -164,7 +164,7 @@ public class GameplayMath
 
     public int GetGravityPointsFromSession(float score, float properTime, Level level)
     {
-        int gravityPoints = (int)(0.28f * (0.38f * score * (properTime / 300f)));
+        int gravityPoints = (int)(0.35f * (0.38f * score * (properTime / 300f)));
         return gravityPoints;
     }
 

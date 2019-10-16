@@ -13,7 +13,7 @@ public class AchievementsSceneManager : MonoBehaviour
     void Start()
     {
         achievementsData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH).GetData<PlayerAchievementsData>();
-        achievements = PersistentPlayerPrefs.GetInstance().GetAllAchievements();
+        achievements = PersistentPrefs.GetInstance().GetAllAchievements();
 
         foreach(AchievementInfo achInfo in achievements)
         {
