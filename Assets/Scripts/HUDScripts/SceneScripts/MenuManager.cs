@@ -25,8 +25,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Text levelText = null;
     [SerializeField] private Text currentExpText = null;
     [SerializeField] private Text expNeededText = null;
+    [Header("Timed reward")]
     [SerializeField] private Text rewardTimeText = null;
-    [SerializeField] private Text rewardText = null;
+    [SerializeField] private GameObject adIcon = null;
+    [SerializeField] private GameObject gravitonsIcon = null;
+    [SerializeField] private Text costText = null;
+
     [SerializeField] private Image levelBar = null;
     [SerializeField] private Transform playerLevelTransform = null;
     [SerializeField] private LevelEffect[] levelsEffect;
@@ -210,25 +214,29 @@ public class MenuManager : MonoBehaviour
 
             if (difference < PersistentPrefs.GetInstance().timeDelay)
             {
+                gravitonsIcon.SetActive(true);
+                adIcon.SetActive(false);
                 rewardTimeText.text = SharedUtilities.GetInstance().GetTimeStringFromSeconds(PersistentPrefs.GetInstance().timeDelay - difference);
-                difference = (int)(System.DateTime.Now - servData.lastRewardClaimed).TotalSeconds;
                 rewardTimeText.gameObject.SetActive(true);
+                costText.text = PersistentPrefs.GetInstance().gravitonsCost.ToString();
+
+                difference = (int)(System.DateTime.Now - servData.lastRewardClaimed).TotalSeconds;
                 rewardReady = false;
-                rewardText.text = PersistentPrefs.GetInstance().gravitonsCost + " Gravitons";
             }
             else
             {
                 if (GoogleAdsManager.GetInstance().IsRewardedAdLoaded(GoogleAdsManager.RewardedAdType.TIMED_REWARD))
                 {
+                    gravitonsIcon.SetActive(false);
+                    adIcon.SetActive(true);
                     rewardTimeText.gameObject.SetActive(false);
-                    rewardText.text = "Watch an ad and get the reward";
                     rewardReady = true;
                 }
                 else
                 {
                     rewardTimeText.gameObject.SetActive(true);
-                    rewardText.text = PersistentPrefs.GetInstance().gravitonsCost + " Gravitons";
-                    rewardTimeText.text = "Loading ad..";
+                    rewardTimeText.text = "Loading ad...";
+                    costText.text = PersistentPrefs.GetInstance().gravitonsCost.ToString();
                     rewardReady = false;
                 }
 
@@ -244,6 +252,7 @@ public class MenuManager : MonoBehaviour
         {
             rewardReady = false;
             GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.TIMED_REWARD);
+            TimedRewardedEarned();
         }
         else
         {
