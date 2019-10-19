@@ -110,61 +110,36 @@ public class StoreManager : MonoBehaviour
     public void BuyHighlightedProduct()
     { 
         currencyData.gravitons -= (int)highlightedProduct.price;
-        switch (highlightedProduct.id)
+        switch (highlightedProduct.type)
         {
-            case "GRB4":
-                skillsData.gammaRayBurstPoints = 4;
-                SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-                GetProductWithID("GRB4")?.SetProductState(StoreProduct.ProductState.CONSUMED);
-                iconToast.EnqueueToast("GRB 4 purchased", grbSprite, 2f);
+            case StoreProduct.ProductType.GRAVITY_POINT:
+                currencyData.gravityPoints += highlightedProduct.amount;
+                iconToast.EnqueueToast(highlightedProduct.amount + " Gravity Points purchased", GPSprite, 1.5f);
                 break;
-            case "MSU":
-                skillsData.magneticShieldBundleUnlocked = true;
-                SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
-                GetProductWithID("MSU")?.SetProductState(StoreProduct.ProductState.CONSUMED);
-                iconToast.EnqueueToast("Magnetic shield bundle purchased", shieldSprite, 1.5f);
-                break;
-            case "1_5M":
-                currencyData.gravityPoints += 1500000;
-                iconToast.EnqueueToast("1 500 000 Gravity Points purchased", GPSprite, 1.5f);
-                break;
-            case "2_5M":
-                currencyData.gravityPoints += 2500000;
-                iconToast.EnqueueToast("2 500 000 Gravity Points purchased", GPSprite, 1.5f);
-                break;
-            case "4M":
-                currencyData.gravityPoints += 4000000;
-                iconToast.EnqueueToast("4 000 000 Gravity Points purchased", GPSprite, 1.5f);
-                break;
-            case PlayerAspectData.COMET:
-                aspectData.UnlockAspect(PlayerAspectData.COMET);
+
+            case StoreProduct.ProductType.ASPECT:
+                aspectData.UnlockAspect(highlightedProduct.id);
                 SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
-                GetProductWithID(PlayerAspectData.COMET)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-                toast.ShowToast("Aspect purchased: Comet", null, 2f);
+                GetProductWithID(highlightedProduct.id)?.SetProductState(StoreProduct.ProductState.PURCHASED);
+                toast.ShowToast("Aspect purchased: " + aspectData.AspectStringFromId(highlightedProduct.id), null, 2f);
                 break;
-            case PlayerAspectData.DAMASCUS_STEEL:
-                aspectData.UnlockAspect(PlayerAspectData.DAMASCUS_STEEL);
-                SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
-                GetProductWithID(PlayerAspectData.DAMASCUS_STEEL)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-                toast.ShowToast("Aspect purchased: Damascus Steel", null, 2f);
-                break;
-            case PlayerAspectData.SCI_FI:
-                aspectData.UnlockAspect(PlayerAspectData.SCI_FI);
-                SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
-                GetProductWithID(PlayerAspectData.SCI_FI)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-                toast.ShowToast("Aspect purchased: Sci-Fi", null, 2f);
-                break;
-            case PlayerAspectData.GOLDEN:
-                aspectData.UnlockAspect(PlayerAspectData.GOLDEN);
-                SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
-                GetProductWithID(PlayerAspectData.GOLDEN)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-                toast.ShowToast("Aspect purchased: Golden", null, 2f); 
-                break;
-            case PlayerAspectData.CHRISTMAS:
-                aspectData.UnlockAspect(PlayerAspectData.CHRISTMAS);
-                SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
-                GetProductWithID(PlayerAspectData.CHRISTMAS)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-                toast.ShowToast("Aspect purchased: Christmas", null, 2f);
+
+            case StoreProduct.ProductType.POWER_UP:
+
+                if(highlightedProduct.id.Equals("GRB4"))
+                {
+                    skillsData.gammaRayBurstPoints = 4;
+                    SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
+                    GetProductWithID("GRB4")?.SetProductState(StoreProduct.ProductState.CONSUMED);
+                    iconToast.EnqueueToast("GRB 4 purchased", grbSprite, 2f);
+                }
+                else if(highlightedProduct.id.Equals("MSU"))
+                {
+                    skillsData.magneticShieldBundleUnlocked = true;
+                    SaveManager.GetInstance().SavePersistentData(skillsData, SaveManager.SKILLSDATA_PATH);
+                    GetProductWithID("MSU")?.SetProductState(StoreProduct.ProductState.CONSUMED);
+                    iconToast.EnqueueToast("Magnetic shield bundle purchased", shieldSprite, 1.5f);
+                }
                 break;
             default:
                 currencyData.gravitons += (int)highlightedProduct.price;
@@ -266,6 +241,16 @@ public class StoreManager : MonoBehaviour
         if (aspectData.IsAspectUnlocked(PlayerAspectData.CHRISTMAS))
         {
             GetProductWithID(PlayerAspectData.CHRISTMAS)?.SetProductState(StoreProduct.ProductState.PURCHASED);
+        }
+
+        if (aspectData.IsAspectUnlocked(PlayerAspectData.RED_COMET))
+        {
+            GetProductWithID(PlayerAspectData.RED_COMET)?.SetProductState(StoreProduct.ProductState.PURCHASED);
+        }
+
+        if (aspectData.IsAspectUnlocked(PlayerAspectData.VIOLET_COMET))
+        {
+            GetProductWithID(PlayerAspectData.VIOLET_COMET)?.SetProductState(StoreProduct.ProductState.PURCHASED);
         }
 
         GetProductWithID(aspectData.equippedSkinId)?.SetProductState(StoreProduct.ProductState.CONSUMED);

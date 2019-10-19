@@ -46,7 +46,7 @@ public class GoogleListener : MonoBehaviour
             case "coins":
                 Executer.GetInstance().AddJob(() =>
                 {
-                    FindObjectOfType<MenuManager>()?.TimedRewardedEarned();
+                    FindObjectOfType<MenuManager>()?.EarnReward(true);
                 });
                 break;
             default:
@@ -54,7 +54,7 @@ public class GoogleListener : MonoBehaviour
             case GoogleAdsManager.TIMED_REWARD_ID:
                 Executer.GetInstance().AddJob(() =>
                 {
-                    FindObjectOfType<MenuManager>().TimedRewardedEarned();
+                    FindObjectOfType<MenuManager>().EarnReward(true);
                 });
                 break;
         }

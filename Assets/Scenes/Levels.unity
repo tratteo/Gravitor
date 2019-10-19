@@ -2891,9 +2891,9 @@ MonoBehaviour:
   targetTime: 0
   targetTimeDilated: 0
   targetDistance: 0
-  targetObstaclesDestoryed: 160
-  levelObjective: Destroy 160 celestial bodies
-  levelInfo: 'Destroy 160 celestial bodies.
+  targetObstaclesDestoryed: 140
+  levelObjective: Destroy 140 celestial bodies
+  levelInfo: 'Destroy 140 celestial bodies.
 
     Tip: Use GRB, Solar Flare and Magnetic
     Shields'
@@ -3542,7 +3542,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 844096571}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.32791972
+  m_Size: 0.33711264
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6065,7 +6065,7 @@ MonoBehaviour:
   a: 950
   b: 0.0625
   g: 50
-  d: 24
+  d: 24.75
   category: 5
   targetTime: 0
   targetTimeDilated: 0
@@ -6554,14 +6554,14 @@ MonoBehaviour:
   a: 900
   b: 0.0625
   g: 48
-  d: 23.45
+  d: 25
   category: 2
   targetTime: 60
   targetTimeDilated: 0
   targetDistance: 40000000
   targetObstaclesDestoryed: 0
   levelObjective: Travel for 40 000 000 Km
-  levelInfo: Travel for a total of 40 000 000 Km
+  levelInfo: Travel for a total of 30 000 000 Km
   bronzeScore: 2500000
   silverScore: 3200000
   goldScore: 5000000

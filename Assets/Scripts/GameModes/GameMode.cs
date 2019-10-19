@@ -152,6 +152,7 @@ public abstract class GameMode : MonoBehaviour
     {
         GradeObtained obt = GradeObtained.UNRANKED;
         isGameOver = true;
+        highScoreReached = false;
 
         obstacleSpawner.PauseSpawnTimer(true);
         extraSpawner.PauseSpawnTimer(true);

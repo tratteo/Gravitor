@@ -3,6 +3,7 @@
     Properties
     {
         _Color ("Color", Color) = (1,1,1,1)
+		_Transparency("Transparency", Range(0.0,1)) = 0
 		[MaterialToggle] _EnableHDR("Enable HDR", Float) = 0
 		[HDR]_HDRColor("HDR Color", Color) = (1,1,1,1)
         _MainTex ("Albedo (RGB)", 2D) = "white" {}
@@ -14,13 +15,15 @@
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 200
+		Tags {"Queue" = "Transparent" "RenderType" = "Transparent" }
+		LOD 100
+
+		ZWrite Off
+		Blend SrcAlpha OneMinusSrcAlpha
 
         CGPROGRAM
         // Physically based Standard lighting model, and enable shadows on all light types
-        #pragma surface surf Standard fullforwardshadows
-
+        #pragma surface surf Standard fullforwardshadows alpha:fade
         // Use shader model 3.0 target, to get nicer looking lighting
         #pragma target 3.0
 
@@ -33,6 +36,7 @@
 		float _Metallic;
 		float _Glossiness;
 		float _EnableHDR;
+		float _Transparency;
 
         struct Input
         {
@@ -55,7 +59,7 @@
 			o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
-            o.Alpha = c.a;
+            o.Alpha = (1 - _Transparency);
         }
         ENDCG
     }

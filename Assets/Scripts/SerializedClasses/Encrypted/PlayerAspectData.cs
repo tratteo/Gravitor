@@ -5,6 +5,8 @@ public class PlayerAspectData : EncryptedData
 {
     public const string DEFAULT = "default";
     public const string COMET = "comet";
+    public const string RED_COMET = "red_comet";
+    public const string VIOLET_COMET = "violet_comet";
     public const string DAMASCUS_STEEL = "damascus_steel";
     public const string SCI_FI = "sci_fi";
     public const string GOLDEN = "golden";
@@ -31,6 +33,22 @@ public class PlayerAspectData : EncryptedData
     public bool IsAspectUnlocked(string achievement)
     {
         return unlockedSkinsId.Contains(achievement);
+    }
+
+    public string AspectStringFromId(string id)
+    {
+        switch(id)
+        {
+            case DEFAULT: return "Asteroid";
+            case COMET: return "Comet";
+            case RED_COMET: return "Red Comet";
+            case VIOLET_COMET: return "Violet Comet";
+            case DAMASCUS_STEEL: return "Damascus Steel";
+            case SCI_FI: return "Sci-Fi";
+            case GOLDEN: return "Golden";
+            case CHRISTMAS: return "Christmas";
+            default: return "";
+        }
     }
 
     public void InitializeMissingData()

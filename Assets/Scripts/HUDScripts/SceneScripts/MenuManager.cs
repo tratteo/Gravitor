@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 
 /// <summary>
@@ -8,6 +9,8 @@ using System.Collections;
 /// </summary>
 public class MenuManager : MonoBehaviour
 {
+    public enum RewardPanelConfigure { REWARD, INFO }
+
     [System.Serializable]
     private struct LevelEffect
     {
@@ -30,7 +33,18 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject adIcon = null;
     [SerializeField] private GameObject gravitonsIcon = null;
     [SerializeField] private Text costText = null;
+    [SerializeField] private Image rewardIcon = null;
+    [SerializeField] private Text rewardText = null;
+    [SerializeField] private Text rewardInfoText = null;
 
+    [Header("Reward Panel")]
+    [SerializeField] private GameObject rewardPanel = null;
+
+    [Header("Available rewards panel")]
+    [SerializeField] private GameObject availableRewardsPanel = null;
+    [SerializeField] private Transform availableRewardsParent = null;
+    [SerializeField] private GameObject rewardPrefab = null;
+    [Header("Level")]
     [SerializeField] private Image levelBar = null;
     [SerializeField] private Transform playerLevelTransform = null;
     [SerializeField] private LevelEffect[] levelsEffect;
@@ -38,10 +52,15 @@ public class MenuManager : MonoBehaviour
 
     private SettingsData settingsData;
     private ServicesData servData = null;
+    private CurrencyData currencyData = null;
+    private PlayerAspectData aspectData = null;
 
     private SceneLoader sceneLoader;
     private IEnumerator timedReward_c;
     private bool rewardReady = false;
+    private List<GameObject> availableAspectRewardRefs = new List<GameObject>();
+    private GameObject obtainedAspect = null;
+    private Dictionary<string, GameObject> availableRewards = new Dictionary<string, GameObject>();
 
     private void OnEnable()
     {
@@ -57,6 +76,7 @@ public class MenuManager : MonoBehaviour
 
     private void SceneChanged(string name)
     {
+        servData.lastAccess = System.DateTime.Now;
         SaveManager.GetInstance().SavePersistentData(servData, SaveManager.SERVICES_PATH);
     }
 
@@ -66,11 +86,53 @@ public class MenuManager : MonoBehaviour
 
         AudioManager.GetInstance().NotifyAudioSettings(settingsData);
         AudioManager.GetInstance().currentMusic = AudioManager.GetInstance().PlaySound(AudioManager.MENU_SONG);
+        PersistentPrefs.GetInstance().SetUnlockableAspects();
 
         timedReward_c = DailyReward_C();
         StartCoroutine(timedReward_c);
+
+        List<PersistentPrefs.Reward> rewards = PersistentPrefs.GetInstance().GetAllRewards();
+        foreach (PersistentPrefs.Reward r in rewards)
+        {
+            GameObject obj = Instantiate(rewardPrefab);
+            obj.transform.SetParent(availableRewardsParent);
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            switch (r.type)
+            {
+                case PersistentPrefs.RewardType.GRAVITY_POINT:
+                    obj.GetComponentInChildren<Text>().text = r.amount.ToString();
+                    obj.GetComponentsInChildren<Image>()[1].sprite = PersistentPrefs.GetInstance().gravityPointsIcon;
+                    break;
+                case PersistentPrefs.RewardType.GRAVITON:
+                    obj.GetComponentInChildren<Text>().text = r.amount.ToString();
+                    obj.GetComponentsInChildren<Image>()[1].sprite = PersistentPrefs.GetInstance().gravitonsIcon;
+                    break;
+                case PersistentPrefs.RewardType.ASPECT:
+                    GameObject aspectRef = SharedUtilities.GetInstance().GetGameObjectsInChildrenWithTag(obj, "Preview")[0];
+                    aspectRef.SetActive(true);
+                    obj.GetComponentInChildren<Text>().text = aspectData.AspectStringFromId(r.id);
+                    aspectRef.GetComponent<MeshRenderer>().material = PersistentPrefs.GetInstance().GetAspectWithId(r.id).UI_material;
+                    availableAspectRewardRefs.Add(aspectRef);
+                    break;
+            }
+            availableRewards.Add(r.id, obj);
+        }
     }
 
+    private void FixedUpdate()
+    {
+        if(availableAspectRewardRefs != null && availableRewardsPanel.activeSelf)
+        {
+            for (int i = 0; i < availableAspectRewardRefs.Count; i++)
+            {
+                availableAspectRewardRefs[i]?.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
+            }
+        }
+        if(obtainedAspect != null && rewardPanel.activeSelf)
+        {
+            obtainedAspect.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
+        }
+    }
 
     public void QuitApp()
     {
@@ -155,7 +217,7 @@ public class MenuManager : MonoBehaviour
         {
             currencyObj = SaveManager.GetInstance().SavePersistentData<CurrencyData>(new CurrencyData(), SaveManager.CURRENCY_PATH);
         }
-        CurrencyData currencyData = currencyObj.GetData<CurrencyData>();
+        currencyData = currencyObj.GetData<CurrencyData>();
         currencyData.InitializeMissingData();
 
         int currentGP = 0;
@@ -176,7 +238,7 @@ public class MenuManager : MonoBehaviour
         {
             objectData = SaveManager.GetInstance().SavePersistentData(new PlayerAspectData(), SaveManager.ASPECTDATA_PATH);
         }
-        PlayerAspectData aspectData = objectData.GetData<PlayerAspectData>();
+        aspectData = objectData.GetData<PlayerAspectData>();
         aspectData.InitializeMissingData();
         SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
 
@@ -246,33 +308,134 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+
     public void GetDailyReward()
     {
         if(rewardReady)
         {
             rewardReady = false;
             GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.TIMED_REWARD);
-            TimedRewardedEarned();
+            EarnReward(true);
         }
         else
         {
-            CurrencyData currency = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH).GetData<CurrencyData>();
-            if(currency.gravitons < PersistentPrefs.GetInstance().gravitonsCost)
+            currencyData = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH).GetData<CurrencyData>();
+            if(currencyData.gravitons < PersistentPrefs.GetInstance().gravitonsCost)
             {
                 toast.EnqueueToast("Not enough gravitons", null, 1.5f);
                 return;
             }
-            currency.gravitons -= PersistentPrefs.GetInstance().gravitonsCost;
-            gravitonsText.text = currency.gravitons.ToString();
-            SaveManager.GetInstance().SavePersistentData(currency, SaveManager.CURRENCY_PATH);
-            toast.EnqueueToast("Reward paid", null, 1.5f);
+            currencyData.gravitons -= PersistentPrefs.GetInstance().gravitonsCost;
+            gravitonsText.text = currencyData.gravitons.ToString();
+            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
+            EarnReward(false);
         }
     }
 
-    public void TimedRewardedEarned()
+    public void OpenAvailableRewardsPanel()
     {
-        toast.EnqueueToast("Reward claimed", null, 1.5f);
-        servData.lastRewardClaimed = System.DateTime.Now;
-        SaveManager.GetInstance().SavePersistentData(servData, SaveManager.SERVICES_PATH);
+        availableRewardsPanel.SetActive(true);
+    }
+
+
+    public void EarnReward(bool restartTimer)
+    {
+        PersistentPrefs.Reward reward = PersistentPrefs.GetInstance().GetRandomReward();
+
+        switch(reward.type)
+        {
+            case PersistentPrefs.RewardType.ASPECT:
+
+                aspectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ASPECTDATA_PATH).GetData<PlayerAspectData>();
+                rewardInfoText.text = aspectData.AspectStringFromId(reward.id);
+                rewardIcon.sprite = PersistentPrefs.GetInstance().transparentIcon;
+                rewardText.text = "Aspect unlocked !";
+                obtainedAspect = Instantiate(PersistentPrefs.GetInstance().GetAspectWithId(reward.id).prefab);
+                obtainedAspect.transform.SetParent(rewardIcon.transform);
+                obtainedAspect.transform.localScale = new Vector3(200, 200, 200);
+                obtainedAspect.transform.localPosition = new Vector3(0, 0, -20);
+
+                StartCoroutine(FadeInObtainedAspect());
+
+                aspectData.UnlockAspect(reward.id);
+                SaveManager.GetInstance().SavePersistentData(aspectData, SaveManager.ASPECTDATA_PATH);
+
+                GameObject tmp = availableRewards[reward.id];
+                Debug.Log(availableAspectRewardRefs.Remove(SharedUtilities.GetInstance().GetGameObjectsInChildrenWithTag(tmp, "Preview")[0]));
+                Destroy(tmp);
+                availableRewards.Remove(reward.id);
+
+                PersistentPrefs.GetInstance().SetUnlockableAspects();
+                //TODO reward
+                break;
+
+            case PersistentPrefs.RewardType.GRAVITON:
+                rewardIcon.sprite = PersistentPrefs.GetInstance().gravitonsIcon;
+                rewardInfoText.text = reward.amount.ToString();
+                rewardText.text = "Gravitons earned !";
+                currencyData.gravitons += reward.amount;
+                SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
+                break;
+
+            case PersistentPrefs.RewardType.GRAVITY_POINT:
+                rewardIcon.sprite = PersistentPrefs.GetInstance().gravityPointsIcon;
+                rewardInfoText.text = reward.amount.ToString();
+                rewardText.text = "Gravity Points earned !";
+                currencyData.gravityPoints += reward.amount;
+                SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
+                break;
+        }
+
+        rewardPanel.SetActive(true);
+
+        if (restartTimer)
+        {
+            servData.lastRewardClaimed = System.DateTime.Now;
+            SaveManager.GetInstance().SavePersistentData(servData, SaveManager.SERVICES_PATH);
+        }
+    }
+
+
+    private IEnumerator FadeInObtainedAspect()
+    {
+        float delay = rewardPanel.GetComponent<Animator>().runtimeAnimatorController.animationClips[0].length - 1;
+        MeshRenderer renderer = obtainedAspect.GetComponent<MeshRenderer>();
+
+        float transparency = 1;
+        renderer.material.SetFloat("_Transparency", 1f);
+
+        float stride = Time.fixedDeltaTime / delay;
+        yield return new WaitForSecondsRealtime(1f);
+        while (transparency - stride > 0)
+        {
+            transparency -= stride;
+            renderer.material.SetFloat("_Transparency", transparency);
+            yield return new WaitForFixedUpdate();
+        }
+        renderer.material.SetFloat("_Transparency", 0f);
+    }
+
+
+    public void CloseAvailableRewardsPanel()
+    {
+        availableRewardsPanel.SetActive(false);
+    }
+
+    public void CloseRewardPanel()
+    {
+        rewardPanel.SetActive(false);
+
+        if(obtainedAspect != null)
+        {
+            Destroy(obtainedAspect);
+            obtainedAspect = null;
+        }
+        UpdateView();
+    }
+
+    public void UpdateView()
+    {
+        gravitonsText.text = currencyData.gravitons.ToString();
+        gravityPointsText.text = currencyData.gravityPoints.ToString();
     }
 }

@@ -90,6 +90,7 @@ Material:
     - _SpecularHighlights: 0
     - _SrcBlend: 5
     - _Surface: 1
+    - _Transparency: 0
     - _UVSec: 0
     - _UseAoMap: 0
     - _UseColorMap: 0

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameDevManager : MonoBehaviour
 {
-    [SerializeField] private GameObject gravityUnlockable;
-    [SerializeField] private GameObject gravFieldsUnlockable;
-    [SerializeField] private GameObject gravTimeDilation1Unlockable;
-    [SerializeField] private GameObject gravTimeDilation2Unlockable;
-    [SerializeField] private GameObject velocityTimeDilationUnlockable;
+    [SerializeField] private GameObject gravityUnlockable = null;
+    [SerializeField] private GameObject gravFieldsUnlockable = null;
+    [SerializeField] private GameObject gravTimeDilation1Unlockable = null;
+    [SerializeField] private GameObject gravTimeDilation2Unlockable = null;
+    [SerializeField] private GameObject velocityTimeDilationUnlockable = null;
 
     void Start()
     {

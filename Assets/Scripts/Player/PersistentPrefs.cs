@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using UnityEngine.UI;
 
 public class PersistentPrefs : MonoBehaviour
 {
@@ -22,25 +24,48 @@ public class PersistentPrefs : MonoBehaviour
     }
     #endregion
 
+    public enum RewardType { GRAVITY_POINT, GRAVITON, ASPECT}
+    [System.Serializable]
+    public struct Reward
+    {
+        public string id;
+        public RewardType type;
+        [Range(0f, 1f)]
+        public float probability;
+        public int amount;
+    }
+
     [HideInInspector] public PlayerAchievementsData playerAchievements;
 
     [Header("Timed Reward")]
     public int timeDelay;
     public int gravitonsCost;
+    [SerializeField] private List<Reward> rewards;
+    private List<Reward> originalRewards;
 
+    [Header("Shared UI")]
+    public Sprite transparentIcon = null;
+    public Sprite gravitonsIcon = null;
+    public Sprite gravityPointsIcon = null;
+    public Sprite magneticShieldIcon = null;
+    public Sprite GRBIcon = null;
+    public Sprite antiGravityIcon = null;
+    public Sprite quantumTunnelIcon = null;
+    public Sprite solarflareIcon = null;
 
     [Header("Achievements")]
     public List<AchievementInfo> achievements;
     [Header("Aspects")]
     public List<PlayerAspect> playerAspects;
 
-    private void Start()
+    private void OnEnable()
     {
-        playerAchievements = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH).GetData<PlayerAchievementsData>();
+        originalRewards = new List<Reward>(rewards);
     }
 
     public void CheckAchievements(PlayerManager.SessionStats stats)
     {
+        playerAchievements = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH).GetData<PlayerAchievementsData>();
         //TD
         if (stats.distortedTime > 1800)
         {
@@ -158,16 +183,66 @@ public class PersistentPrefs : MonoBehaviour
         return achievements;
     }
 
-
+    public List<Reward> GetAllRewards()
+    {
+        return rewards;
+    }
 
     private void OnApplicationPause(bool pause)
     {
-        ServicesData servData = SaveManager.GetInstance().LoadPersistentData(SaveManager.SERVICES_PATH).GetData<ServicesData>();
-        if (servData != null)
+        SaveObject saveObj = SaveManager.GetInstance().LoadPersistentData(SaveManager.SERVICES_PATH);
+        if (saveObj != null)
         {
+            ServicesData servData = saveObj.GetData<ServicesData>();
             servData.lastAccess = System.DateTime.Now;
             SaveManager.GetInstance().SavePersistentData(servData, SaveManager.SERVICES_PATH);
-            print("Paused, saved last access: " + servData.lastAccess);
         }
+    }
+
+    public Reward GetRandomReward()
+    {
+        int count = rewards.Count;
+        if (count == 0) return default(Reward);
+        int index = -1;
+        float radix = Random.Range(0f, 1f);
+
+        while (radix > 0 && index < count)
+        {
+            radix -= rewards[++index].probability;
+        }
+        return rewards[index];
+    }
+
+    public void SetUnlockableAspects()
+    {
+        rewards = originalRewards;
+        PlayerAspectData aspect = SaveManager.GetInstance().LoadPersistentData(SaveManager.ASPECTDATA_PATH).GetData<PlayerAspectData>();
+        int length = rewards.Count;
+        List<Reward> temp = new List<Reward>(rewards);
+        for (int i = 0; i < length; i++)
+        {
+            if(rewards[i].type == RewardType.ASPECT && aspect.IsAspectUnlocked(rewards[i].id))
+            {
+                temp.Remove(rewards[i]);
+            }
+        }
+        rewards = temp;
+        NormalizeRewardsProbabilities();
+    }
+
+    private void NormalizeRewardsProbabilities()
+    {
+        Reward[] temp = rewards.ToArray();
+        float total = 0f;
+        int length = temp.Length;
+        for (int i = 0; i < length; i++)
+        {
+            total += temp[i].probability;
+        }
+        for (int i = 0; i < length; i++)
+        {
+            temp[i].probability /= total;
+        }
+        rewards = temp.ToList();
     }
 }

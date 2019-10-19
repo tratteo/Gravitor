@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class StoreProduct : MonoBehaviour
@@ -10,9 +8,12 @@ public class StoreProduct : MonoBehaviour
     protected static Color32 INACTIVE_COLOR = new Color32(80, 80, 80, 150);
 
     public enum ProductState { AVAILABLE, PURCHASED, INACTIVE, CONSUMED }
+    public enum ProductType { GRAVITY_POINT, GRAVITON, ASPECT, POWER_UP}
 
 
+    public ProductType type;
     public string id;
+    public int amount;
     public float price;
     [HideInInspector] public Image mainImage;
     [HideInInspector] public Text priceText;

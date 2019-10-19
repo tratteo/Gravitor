@@ -158,7 +158,6 @@ public class SharedUtilities
         return hours.ToString() + "h " + minutes.ToString() + "m " + seconds.ToString("0.0") + "s";
     }
 
-
     public void SetQualitySettings(int level)
     {
         switch (level)

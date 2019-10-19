@@ -152,7 +152,6 @@ public class GoogleAdsManager : MonoBehaviour
             {
                 if (!timedRewardLoading)
                 {
-                    Debug.Log("Loading Timed reward");
                     LoadAd(RewardedAdType.TIMED_REWARD);
                     timedRewardLoading = true;
                 }
