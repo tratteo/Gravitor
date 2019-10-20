@@ -1148,7 +1148,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 14.999978}
-  m_SizeDelta: {x: 0, y: 100}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &420717177
 MonoBehaviour:
@@ -1171,7 +1171,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 350, y: 350}
-  m_Spacing: {x: 125, y: 175}
+  m_Spacing: {x: 150, y: 200}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!114 &420717178
@@ -3099,7 +3099,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 322883835}
   m_HandleRect: {fileID: 322883834}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4093,8 +4093,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 567465297}
-          m_MethodName: CloseAvailableRewardsPanel
-          m_Mode: 1
+          m_MethodName: OpenAvailableRewardsPanel
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4614,14 +4614,14 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 567465297}
           m_MethodName: OpenAvailableRewardsPanel
-          m_Mode: 1
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 0
+            m_BoolArgument: 1
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -5348,45 +5348,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeDelay: 14400
-  gravitonsCost: 25
+  gravitonsCost: 35
   rewards:
-  - id: GP35k
+  - id: GP_30K
     type: 0
-    probability: 0.5
+    probability: 0.55
     amount: 35000
-  - id: GP50k
+  - id: GP_100K
     type: 0
     probability: 0.45
-    amount: 50000
-  - id: GP100k
-    type: 0
-    probability: 0.4
     amount: 100000
-  - id: GP200k
+  - id: GP_200K
     type: 0
-    probability: 0.35
+    probability: 0.2
     amount: 200000
-  - id: GR20
+  - id: GR_35
     type: 1
-    probability: 0.25
-    amount: 20
-  - id: GR35
-    type: 1
-    probability: 0.15
+    probability: 0.131
     amount: 35
-  - id: GR50
+  - id: GR 70
     type: 1
-    probability: 0.1
-    amount: 50
-  - id: GR100
-    type: 1
-    probability: 0.05
-    amount: 100
+    probability: 0.04
+    amount: 70
   - id: comet
-    type: 2
-    probability: 0.05
-    amount: 1
-  - id: damascus_steel
     type: 2
     probability: 0.05
     amount: 1
@@ -5395,6 +5379,10 @@ MonoBehaviour:
     probability: 0.05
     amount: 1
   - id: violet_comet
+    type: 2
+    probability: 0.05
+    amount: 1
+  - id: damascus_steel
     type: 2
     probability: 0.05
     amount: 1
@@ -6107,12 +6095,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 94fe6f37e73598549ba58911e3145272, type: 3}
-    m_FontSize: 40
+    m_Font: {fileID: 12800000, guid: 7a5dd5701f9f4584e9cbfe629fdd3768, type: 3}
+    m_FontSize: 42
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 42
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

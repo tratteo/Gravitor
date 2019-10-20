@@ -218,41 +218,16 @@ public class StoreManager : MonoBehaviour
             GetProductWithID("MSU")?.SetProductState(StoreProduct.ProductState.CONSUMED);
         }
 
-        if(aspectData.IsAspectUnlocked(PlayerAspectData.COMET))
+        foreach(StoreProduct product in storeProducts)
         {
-            GetProductWithID(PlayerAspectData.COMET)?.SetProductState(StoreProduct.ProductState.PURCHASED);
+            if(product.type == StoreProduct.ProductType.ASPECT)
+            {
+                if(aspectData.IsAspectUnlocked(product.id))
+                {
+                    product.SetProductState(StoreProduct.ProductState.PURCHASED);
+                }
+            }
         }
-
-        if (aspectData.IsAspectUnlocked(PlayerAspectData.DAMASCUS_STEEL))
-        {
-            GetProductWithID(PlayerAspectData.DAMASCUS_STEEL)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-        }
-
-        if (aspectData.IsAspectUnlocked(PlayerAspectData.SCI_FI))
-        {
-            GetProductWithID(PlayerAspectData.SCI_FI)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-        }
-
-        if (aspectData.IsAspectUnlocked(PlayerAspectData.GOLDEN))
-        {
-            GetProductWithID(PlayerAspectData.GOLDEN)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-        }
-
-        if (aspectData.IsAspectUnlocked(PlayerAspectData.CHRISTMAS))
-        {
-            GetProductWithID(PlayerAspectData.CHRISTMAS)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-        }
-
-        if (aspectData.IsAspectUnlocked(PlayerAspectData.RED_COMET))
-        {
-            GetProductWithID(PlayerAspectData.RED_COMET)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-        }
-
-        if (aspectData.IsAspectUnlocked(PlayerAspectData.VIOLET_COMET))
-        {
-            GetProductWithID(PlayerAspectData.VIOLET_COMET)?.SetProductState(StoreProduct.ProductState.PURCHASED);
-        }
-
         GetProductWithID(aspectData.equippedSkinId)?.SetProductState(StoreProduct.ProductState.CONSUMED);
     }
 }

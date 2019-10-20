@@ -19,6 +19,9 @@ public class MenuManager : MonoBehaviour
         public int startLevel;
         public int endLevel;
     }
+
+    #region Variables
+
     [Header("References")]
     [SerializeField] private ToastScript toast = null;
     [Header("Texts")]
@@ -55,24 +58,13 @@ public class MenuManager : MonoBehaviour
     private CurrencyData currencyData = null;
     private PlayerAspectData aspectData = null;
 
-    private SceneLoader sceneLoader;
     private IEnumerator timedReward_c;
     private bool rewardReady = false;
     private List<GameObject> availableAspectRewardRefs = new List<GameObject>();
     private GameObject obtainedAspect = null;
     private Dictionary<string, GameObject> availableRewards = new Dictionary<string, GameObject>();
 
-    private void OnEnable()
-    {
-        sceneLoader = FindObjectOfType<SceneLoader>();
-        sceneLoader.SubscribeToSceneChangedEvent(SceneChanged);
-
-    }
-
-    private void OnDisable()
-    {
-        sceneLoader.UnSubscribeToSceneChangedEvent(SceneChanged);
-    }
+    #endregion
 
     private void SceneChanged(string name)
     {
@@ -138,6 +130,7 @@ public class MenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+
 
 
     private void InitializeData()
@@ -253,6 +246,8 @@ public class MenuManager : MonoBehaviour
         SaveManager.GetInstance().SavePersistentData(servData, SaveManager.SERVICES_PATH);
     }
 
+
+
     private GameObject GetLevelEffect(int level)
     {
         foreach(LevelEffect eff in levelsEffect)
@@ -265,15 +260,15 @@ public class MenuManager : MonoBehaviour
         return null;
     }
 
+
+
     private IEnumerator DailyReward_C()
     {
         servData.lastAccess = System.DateTime.Now;
         int difference = (int)(servData.lastAccess - servData.lastRewardClaimed).TotalSeconds;
-        yield return new WaitForSecondsRealtime(0.1f);
+        //yield return new WaitForSecondsRealtime(0.1f);
         while (true)
         {
-            servData.lastAccess = System.DateTime.Now;
-
             if (difference < PersistentPrefs.GetInstance().timeDelay)
             {
                 gravitonsIcon.SetActive(true);
@@ -281,8 +276,6 @@ public class MenuManager : MonoBehaviour
                 rewardTimeText.text = SharedUtilities.GetInstance().GetTimeStringFromSeconds(PersistentPrefs.GetInstance().timeDelay - difference);
                 rewardTimeText.gameObject.SetActive(true);
                 costText.text = PersistentPrefs.GetInstance().gravitonsCost.ToString();
-
-                difference = (int)(System.DateTime.Now - servData.lastRewardClaimed).TotalSeconds;
                 rewardReady = false;
             }
             else
@@ -301,10 +294,9 @@ public class MenuManager : MonoBehaviour
                     costText.text = PersistentPrefs.GetInstance().gravitonsCost.ToString();
                     rewardReady = false;
                 }
-
-                difference = (int)(System.DateTime.Now - servData.lastRewardClaimed).TotalSeconds;
             }
             yield return new WaitForSecondsRealtime(1f);
+            difference = (int)(System.DateTime.Now - servData.lastRewardClaimed).TotalSeconds;
         }
     }
 
@@ -332,11 +324,10 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void OpenAvailableRewardsPanel()
+    public void OpenAvailableRewardsPanel(bool state)
     {
-        availableRewardsPanel.SetActive(true);
+        availableRewardsPanel.SetActive(state);
     }
-
 
     public void EarnReward(bool restartTimer)
     {
@@ -416,10 +407,6 @@ public class MenuManager : MonoBehaviour
     }
 
 
-    public void CloseAvailableRewardsPanel()
-    {
-        availableRewardsPanel.SetActive(false);
-    }
 
     public void CloseRewardPanel()
     {

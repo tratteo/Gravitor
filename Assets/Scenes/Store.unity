@@ -5761,7 +5761,7 @@ MonoBehaviour:
   type: 2
   id: christmas
   amount: 1
-  price: 250
+  price: 600
   mainImage: {fileID: 0}
   priceText: {fileID: 0}
 --- !u!114 &1125021072
@@ -10077,7 +10077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.325, y: 0.175}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -15.037598, y: -87.499985}
+  m_AnchoredPosition: {x: -15.037598, y: -87.5}
   m_SizeDelta: {x: -30.075134, y: -175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1780796554834765298
@@ -11081,8 +11081,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2085954247374968948}
   m_HandleRect: {fileID: 2085954247374968949}
   m_Direction: 2
-  m_Value: 1.0000011
-  m_Size: 0.9599773
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
