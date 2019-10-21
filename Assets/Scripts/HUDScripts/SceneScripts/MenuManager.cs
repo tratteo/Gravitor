@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -113,14 +113,14 @@ public class MenuManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(availableAspectRewardRefs != null && availableRewardsPanel.activeSelf)
+        if (availableAspectRewardRefs != null && availableRewardsPanel.activeSelf)
         {
             for (int i = 0; i < availableAspectRewardRefs.Count; i++)
             {
                 availableAspectRewardRefs[i]?.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
             }
         }
-        if(obtainedAspect != null && rewardPanel.activeSelf)
+        if (obtainedAspect != null && rewardPanel.activeSelf)
         {
             obtainedAspect.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
         }
@@ -182,11 +182,11 @@ public class MenuManager : MonoBehaviour
         PlayerSkillsData skillData = objectData.GetData<PlayerSkillsData>();
         skillData.InitializeMissingData();
         SaveManager.GetInstance().SavePersistentData(skillData, SaveManager.SKILLSDATA_PATH);
-      
+
 
         //ACHIEVEMENTS
         objectData = SaveManager.GetInstance().LoadPersistentData(SaveManager.ACHIEVMENTS_PATH);
-        if(objectData == null)
+        if (objectData == null)
         {
             SaveManager.GetInstance().SavePersistentData(new PlayerAchievementsData(), SaveManager.ACHIEVMENTS_PATH);
         }
@@ -250,11 +250,14 @@ public class MenuManager : MonoBehaviour
 
     private GameObject GetLevelEffect(int level)
     {
-        foreach(LevelEffect eff in levelsEffect)
+        foreach (LevelEffect eff in levelsEffect)
         {
-            if(level >= eff.startLevel)
+            if (level >= eff.startLevel)
             {
-                if(eff.endLevel == -1 || level <= eff.endLevel) return eff.effectPrefab;
+                if (eff.endLevel == -1 || level <= eff.endLevel)
+                {
+                    return eff.effectPrefab;
+                }
             }
         }
         return null;
@@ -303,16 +306,19 @@ public class MenuManager : MonoBehaviour
 
     public void GetDailyReward()
     {
-        if(rewardReady)
+        if (rewardReady)
         {
             rewardReady = false;
             GoogleAdsManager.GetInstance().ShowRewardedAd(GoogleAdsManager.RewardedAdType.TIMED_REWARD);
-            EarnReward(true);
+            if (Application.isEditor)
+            {
+                EarnReward(true);
+            }
         }
         else
         {
             currencyData = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH).GetData<CurrencyData>();
-            if(currencyData.gravitons < PersistentPrefs.GetInstance().gravitonsCost)
+            if (currencyData.gravitons < PersistentPrefs.GetInstance().gravitonsCost)
             {
                 toast.EnqueueToast("Not enough gravitons", null, 1.5f);
                 return;
@@ -333,7 +339,7 @@ public class MenuManager : MonoBehaviour
     {
         PersistentPrefs.Reward reward = PersistentPrefs.GetInstance().GetRandomReward();
 
-        switch(reward.type)
+        switch (reward.type)
         {
             case PersistentPrefs.RewardType.ASPECT:
 
@@ -412,7 +418,7 @@ public class MenuManager : MonoBehaviour
     {
         rewardPanel.SetActive(false);
 
-        if(obtainedAspect != null)
+        if (obtainedAspect != null)
         {
             Destroy(obtainedAspect);
             obtainedAspect = null;

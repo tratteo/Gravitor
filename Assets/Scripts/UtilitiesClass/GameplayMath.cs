@@ -84,7 +84,7 @@ public class GameplayMath
 
     public float GetSolarflareRadius(int points)
     {
-        return (-1.3f * points * points) + 41.2f * points + 127f;
+        return 16.5f * points + 174.5f;
     }
 
     public int GetGRBCost(int points)
