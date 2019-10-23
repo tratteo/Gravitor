@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44479245, g: 0.49434233, b: 0.5735407, a: 1}
+  m_IndirectSpecularColor: {r: 0.44479212, g: 0.49434167, b: 0.5735395, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1691,25 +1691,25 @@ MonoBehaviour:
   levelBar: {fileID: 279977096}
   playerLevelTransform: {fileID: 699496907}
   levelsEffect:
-  - name: 10-19
+  - name: 5-14
     effectPrefab: {fileID: 967501926040848901, guid: 39ee988ce1f789d49bb3b32e6368c5e3,
       type: 3}
-    startLevel: 10
-    endLevel: 19
-  - name: 20-49
+    startLevel: 5
+    endLevel: 14
+  - name: 15-34
     effectPrefab: {fileID: 4049740759460624973, guid: 39515137ab83a7149a6e5aa9b4b97e8f,
       type: 3}
-    startLevel: 20
-    endLevel: 49
-  - name: 50-99
+    startLevel: 15
+    endLevel: 34
+  - name: 35-49
     effectPrefab: {fileID: 5516586250598884204, guid: 73208761c6d374d4d9539a02f617ac42,
       type: 3}
-    startLevel: 50
-    endLevel: 99
-  - name: 100
+    startLevel: 35
+    endLevel: 49
+  - name: 50
     effectPrefab: {fileID: 7444782672681446056, guid: b66285b0bf11250448f00da57b401fba,
       type: 3}
-    startLevel: 100
+    startLevel: 50
     endLevel: -1
 --- !u!114 &567465298
 MonoBehaviour:
@@ -3099,7 +3099,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 322883835}
   m_HandleRect: {fileID: 322883834}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5347,12 +5347,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a804dedbe4acab49a14d764127203d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeDelay: 14400
-  gravitonsCost: 35
+  timeDelay: 18000
+  gravitonsCost: 30
   rewards:
   - id: GP_30K
     type: 0
-    probability: 0.55
+    probability: 0.5
     amount: 35000
   - id: GP_100K
     type: 0
@@ -5362,29 +5362,29 @@ MonoBehaviour:
     type: 0
     probability: 0.2
     amount: 200000
-  - id: GR_35
+  - id: GR_30
     type: 1
-    probability: 0.131
-    amount: 35
-  - id: GR 70
+    probability: 0.12
+    amount: 30
+  - id: GR 60
     type: 1
-    probability: 0.04
-    amount: 70
+    probability: 0.06
+    amount: 60
   - id: comet
     type: 2
-    probability: 0.05
+    probability: 0.04
     amount: 1
   - id: red_comet
     type: 2
-    probability: 0.05
+    probability: 0.04
     amount: 1
   - id: violet_comet
     type: 2
-    probability: 0.05
+    probability: 0.04
     amount: 1
   - id: damascus_steel
     type: 2
-    probability: 0.05
+    probability: 0.04
     amount: 1
   transparentIcon: {fileID: 21300000, guid: a869287fb5656494c89bda817d2ab9db, type: 3}
   gravitonsIcon: {fileID: 21300000, guid: c481b8ae419245f44933a82c43c0f189, type: 3}

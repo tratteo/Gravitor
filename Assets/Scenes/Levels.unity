@@ -3127,9 +3127,9 @@ MonoBehaviour:
     Tip: High level
     Anti Gravity recommended. Use Anti Gravity to pass close to orbital neutron stars
     clusters in order to achieve massive time dilation'
-  bronzeScore: 10000000
+  bronzeScore: 11000000
   silverScore: 13000000
-  goldScore: 16500000
+  goldScore: 14000000
   bronzeGP: 30000
   silverGP: 60000
   goldGP: 120000
@@ -3541,8 +3541,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 844096572}
   m_HandleRect: {fileID: 844096571}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.33711264
+  m_Value: 0.000000026695291
+  m_Size: 0.30873343
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3932,9 +3932,9 @@ MonoBehaviour:
   targetObstaclesDestoryed: 0
   levelObjective: Travel 18 000 000 Km
   levelInfo: Travel for a total of 18 000 000 Km
-  bronzeScore: 1000000
-  silverScore: 1300000
-  goldScore: 1800000
+  bronzeScore: 950000
+  silverScore: 1200000
+  goldScore: 1500000
   bronzeGP: 50000
   silverGP: 65000
   goldGP: 90000
@@ -5165,7 +5165,7 @@ MonoBehaviour:
   a: 900
   b: 0.0625
   g: 42
-  d: 25.25
+  d: 26.5
   category: 0
   targetTime: 180
   targetTimeDilated: 0
@@ -5173,9 +5173,9 @@ MonoBehaviour:
   targetObstaclesDestoryed: 0
   levelObjective: Endure for 180 seconds
   levelInfo: Endure for a total of 180 seconds
-  bronzeScore: 900000
-  silverScore: 1150000
-  goldScore: 2100000
+  bronzeScore: 800000
+  silverScore: 1000000
+  goldScore: 1400000
   bronzeGP: 55000
   silverGP: 75000
   goldGP: 100000
