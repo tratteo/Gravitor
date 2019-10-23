@@ -43,6 +43,9 @@ public class MenuManager : MonoBehaviour
     [Header("Reward Panel")]
     [SerializeField] private GameObject rewardPanel = null;
 
+    [SerializeField] private GameObject confirmPanel = null;
+    [SerializeField] private Text confirmPanelCostText = null;
+
     [Header("Available rewards panel")]
     [SerializeField] private GameObject availableRewardsPanel = null;
     [SerializeField] private Transform availableRewardsParent = null;
@@ -57,6 +60,8 @@ public class MenuManager : MonoBehaviour
     private ServicesData servData = null;
     private CurrencyData currencyData = null;
     private PlayerAspectData aspectData = null;
+
+    private GameObject instantiatedEff = null;
 
     private IEnumerator timedReward_c;
     private bool rewardReady = false;
@@ -124,6 +129,15 @@ public class MenuManager : MonoBehaviour
         {
             obtainedAspect.transform.Rotate(new Vector3(0f, 1f, 0f) * 0.35f);
         }
+
+        if(Application.isEditor && Input.GetKeyDown(KeyCode.U))
+        {
+            PlayerData data = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
+            int exp = 5000;
+            data.CalculateLevel(exp);
+            SaveManager.GetInstance().SavePersistentData<PlayerData>(data, SaveManager.PLAYER_DATA);
+            UpdateView();
+        }
     }
 
     public void QuitApp()
@@ -166,9 +180,9 @@ public class MenuManager : MonoBehaviour
         GameObject eff = GetLevelEffect(playerData.playerLevel);
         if (eff != null)
         {
-            GameObject obj = Instantiate(eff, playerLevelTransform);
-            obj.transform.localScale = new Vector3(1, 1, 1);
-            obj.transform.localPosition = new Vector3(0, 40, 0);
+            instantiatedEff = Instantiate(eff, playerLevelTransform);
+            instantiatedEff.transform.localScale = new Vector3(1, 1, 1);
+            instantiatedEff.transform.localPosition = new Vector3(0, 40, 0);
         }
         SaveManager.GetInstance().SavePersistentData(playerData, SaveManager.PLAYER_DATA);
 
@@ -323,16 +337,35 @@ public class MenuManager : MonoBehaviour
                 toast.EnqueueToast("Not enough gravitons", null, 1.5f);
                 return;
             }
-            currencyData.gravitons -= PersistentPrefs.GetInstance().gravitonsCost;
-            gravitonsText.text = currencyData.gravitons.ToString();
-            SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
-            EarnReward(false);
+
+            OpenConfirmPanel(true);
         }
+    }
+
+    public void RewardConfirmed()
+    {
+        currencyData = SaveManager.GetInstance().LoadPersistentData(SaveManager.CURRENCY_PATH).GetData<CurrencyData>();
+        currencyData.gravitons -= PersistentPrefs.GetInstance().gravitonsCost;
+        gravitonsText.text = currencyData.gravitons.ToString();
+        SaveManager.GetInstance().SavePersistentData(currencyData, SaveManager.CURRENCY_PATH);
+        OpenConfirmPanel(false);
+        EarnReward(false);
     }
 
     public void OpenAvailableRewardsPanel(bool state)
     {
         availableRewardsPanel.SetActive(state);
+        instantiatedEff?.SetActive(!state);
+    }
+
+    public void OpenConfirmPanel(bool state)
+    {
+        confirmPanel.SetActive(state);
+        instantiatedEff?.SetActive(!state);
+        if(state)
+        {
+            confirmPanelCostText.text = PersistentPrefs.GetInstance().gravitonsCost.ToString();
+        }
     }
 
     public void EarnReward(bool restartTimer)
@@ -384,6 +417,7 @@ public class MenuManager : MonoBehaviour
         }
 
         rewardPanel.SetActive(true);
+        instantiatedEff?.SetActive(false);
 
         if (restartTimer)
         {
@@ -417,6 +451,7 @@ public class MenuManager : MonoBehaviour
     public void CloseRewardPanel()
     {
         rewardPanel.SetActive(false);
+        instantiatedEff?.SetActive(true);
 
         if (obtainedAspect != null)
         {
@@ -430,5 +465,12 @@ public class MenuManager : MonoBehaviour
     {
         gravitonsText.text = currencyData.gravitons.ToString();
         gravityPointsText.text = currencyData.gravityPoints.ToString();
+
+        PlayerData data = SaveManager.GetInstance().LoadPersistentData(SaveManager.PLAYER_DATA).GetData<PlayerData>();
+        levelText.text = data.playerLevel.ToString("0");
+        currentExpText.text = data.currentExp.ToString("0");
+        int expNeeded = data.GetLevelExpNeeded();
+        expNeededText.text = expNeeded.ToString("0");
+        levelBar.fillAmount = data.currentExp / (float)expNeeded;
     }
 }
